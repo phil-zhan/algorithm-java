@@ -24,3 +24,5 @@ hs_err_pid*
 
 # idea 配置
 *.idea
+out/*
+out
