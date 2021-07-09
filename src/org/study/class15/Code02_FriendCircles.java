@@ -9,6 +9,7 @@ public class Code02_FriendCircles {
 		int N = M.length;
 		// {0} {1} {2} {N-1}
 		UnionFind unionFind = new UnionFind(N);
+		// M数组的长和宽是一样的。只遍历举证的右上三角，且不包含对角线
 		for (int i = 0; i < N; i++) {
 			for (int j = i + 1; j < N; j++) {
 				if (M[i][j] == 1) { // i和j互相认识
@@ -19,13 +20,14 @@ public class Code02_FriendCircles {
 		return unionFind.sets();
 	}
 
+	// 数据实现并查集
 	public static class UnionFind {
-		// parent[i] = k ： i的父亲是k
+		// parent[i] = k ====> i的父亲是k
 		private int[] parent;
-		// size[i] = k ： 如果i是代表节点，size[i]才有意义，否则无意义
+		// size[i] = k ： 如果i是代表节点[也就是它没有父节点]，size[i]才有意义，否则无意义
 		// i所在的集合大小是多少
 		private int[] size;
-		// 辅助结构
+		// 辅助结构【用来实现栈】
 		private int[] help;
 		// 一共有多少个集合
 		private int sets;
