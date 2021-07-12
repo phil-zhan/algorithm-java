@@ -7,8 +7,13 @@ import java.util.List;
 // 本题为leetcode原题
 // 测试链接：https://leetcode.com/problems/number-of-islands-ii/
 // 所有方法都可以直接通过
+// 这是一个收费题。
 public class Code04_NumberOfIslandsII {
 
+	/**
+	 * positions从0位置开始，每一个元素都会影响答案。将从 0 开始每增加一个的答案都返回
+	 * @date 2021-07-09 15:17:57
+	 */
 	public static List<Integer> numIslands21(int m, int n, int[][] positions) {
 		UnionFind1 uf = new UnionFind1(m, n);
 		List<Integer> ans = new ArrayList<>();

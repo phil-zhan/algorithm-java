@@ -10,6 +10,11 @@ import java.util.Stack;
 // 所有方法都可以直接通过
 public class Code03_NumberOfIslands {
 
+
+	/**
+	 * 利用递归感染来实现【这是一个最优解】【时间复杂度是 O(m*n) m和n是二维数组的长和宽】
+	 * @date 2021-07-09 14:04:11
+	 */
 	public static int numIslands3(char[][] board) {
 		int islands = 0;
 		for (int i = 0; i < board.length; i++) {
@@ -28,18 +33,26 @@ public class Code03_NumberOfIslands {
 		if (i < 0 || i == board.length || j < 0 || j == board[0].length || board[i][j] != '1') {
 			return;
 		}
+
+		// 将当前的数改为非1的数字，防止下次递归的时候出乱子
 		board[i][j] = 0;
+
+		// 分别感染上下左右
 		infect(board, i - 1, j);
 		infect(board, i + 1, j);
 		infect(board, i, j - 1);
 		infect(board, i, j + 1);
 	}
 
+
+
+
 	public static int numIslands1(char[][] board) {
 		int row = board.length;
 		int col = board[0].length;
 		Dot[][] dots = new Dot[row][col];
 		List<Dot> dotList = new ArrayList<>();
+		// 二维数组中的 1 就new 一个dot。 0就直接留空
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 				if (board[i][j] == '1') {
@@ -49,12 +62,18 @@ public class Code03_NumberOfIslands {
 			}
 		}
 		UnionFind1<Dot> uf = new UnionFind1<>(dotList);
+
+
+		// 只用检查左边和上边需不需要合并到当前岛屿。右下的到下一次再处理
+		// 处理第一行
 		for (int j = 1; j < col; j++) {
 			// (0,j)  (0,0)跳过了  (0,1) (0,2) (0,3)
 			if (board[0][j - 1] == '1' && board[0][j] == '1') {
 				uf.union(dots[0][j - 1], dots[0][j]);
 			}
 		}
+
+		// 处理第一列
 		for (int i = 1; i < row; i++) {
 			if (board[i - 1][0] == '1' && board[i][0] == '1') {
 				uf.union(dots[i - 1][0], dots[i][0]);
