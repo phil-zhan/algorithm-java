@@ -49,8 +49,6 @@ public class MainTest09 {
                 minNode = node;
                 minDistance = distance;
 
-                // 这是自己加的，是否正确有待验证
-                answer.put(node,minDistance);
             }
         }
 
