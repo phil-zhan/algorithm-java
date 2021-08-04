@@ -7,12 +7,15 @@ public class Code03_StickersToSpellWord {
 
 	public static int minStickers1(String[] stickers, String target) {
 		int ans = process1(stickers, target);
+
+		// 可能存在拼凑不出来的情况。就返回 -1
 		return ans == Integer.MAX_VALUE ? -1 : ans;
 	}
 
+
 	// 所有贴纸stickers，每一种贴纸都有无穷张
-	// target
-	// 最少张数
+	// target：需要组成的目标
+	// 最少贴纸张数
 	public static int process1(String[] stickers, String target) {
 		if (target.length() == 0) {
 			return 0;
@@ -20,12 +23,19 @@ public class Code03_StickersToSpellWord {
 		int min = Integer.MAX_VALUE;
 		for (String first : stickers) {
 			String rest = minus(target, first);
+
+			// 也就是当前这张贴纸不能削减目标字符，就不予考虑
 			if (rest.length() != target.length()) {
+				// 本轮循环和上轮循环取最小值 作为本轮的结果
 				min = Math.min(min, process1(stickers, rest));
 			}
 		}
+
+		// 最小张数是系统最大值。就直接返回系统最大值。【没有找打答案】
+		// 最小是不是系统最大值，返回真实的结果加1【也就是把第一张加上】
 		return min + (min == Integer.MAX_VALUE ? 0 : 1);
 	}
+
 
 	public static String minus(String s1, String s2) {
 		char[] str1 = s1.toCharArray();
@@ -83,7 +93,9 @@ public class Code03_StickersToSpellWord {
 		for (int i = 0; i < N; i++) {
 			// 尝试第一张贴纸是谁
 			int[] sticker = stickers[i];
-			// 最关键的优化(重要的剪枝!这一步也是贪心!)
+			// 最关键的优化(重要的剪枝!这一步也是贪心!)【当前块贴纸中不包含目标字符的第一个字符的就 不放到第一个去考虑】
+			// 也就是先考虑有贴纸中包含目标串的第一个字符的串。【不包含第一个字符的贴纸串就不考虑了】
+			// 第一轮可以少考虑一些字符串。达到减枝的目的
 			if (sticker[target[0] - 'a'] > 0) {
 				StringBuilder builder = new StringBuilder();
 				for (int j = 0; j < 26; j++) {
