@@ -19,9 +19,17 @@ public class Code01_PalindromeSubsequence {
 		if (L == R - 1) {
 			return str[L] == str[R] ? 2 : 1;
 		}
+
+		// 情况一：最长回文子序列，既不以 L 开头 ，也不以R 结尾
 		int p1 = f(str, L + 1, R - 1);
+
+		// 情况二：最长回文子序列，以 L 开头 ，但不以R 结尾
 		int p2 = f(str, L, R - 1);
+
+		// 情况三：最长回文子序列，不以 L 开头 ，但以R 结尾
 		int p3 = f(str, L + 1, R);
+
+		// 情况四：最长回文子序列，既以 L 开头 ，也以R 结尾
 		int p4 = str[L] != str[R] ? 0 : (2 + f(str, L + 1, R - 1));
 		return Math.max(Math.max(p1, p2), Math.max(p3, p4));
 	}
@@ -33,17 +41,49 @@ public class Code01_PalindromeSubsequence {
 		char[] str = s.toCharArray();
 		int N = str.length;
 		int[][] dp = new int[N][N];
+
+
+		// 第一个维度代表  L
+		// 第二个维度代表  R
 		dp[N - 1][N - 1] = 1;
+
+		// 循环列
 		for (int i = 0; i < N - 1; i++) {
+
+			// L = R .同一个位置，值肯定是相等的
+			// 对角线 左上到右下
 			dp[i][i] = 1;
+
+
+			// 第二条斜线  左上到右下 【该对角线 也就是右边等于左边加一。也就是只剩下两个元素的情况】
 			dp[i][i + 1] = str[i] == str[i + 1] ? 2 : 1;
 		}
+
+
 		for (int L = N - 3; L >= 0; L--) {
 			for (int R = L + 2; R < N; R++) {
+				// 优化后
+				// 情况二和情况三 PK
 				dp[L][R] = Math.max(dp[L][R - 1], dp[L + 1][R]);
 				if (str[L] == str[R]) {
+					// 可能有 情况四
 					dp[L][R] = Math.max(dp[L][R], 2 + dp[L + 1][R - 1]);
+
 				}
+				/*
+				// 情况一：最长回文子序列，既不以 L 开头 ，也不以R 结尾
+				int p1 = dp[L + 1][ R - 1];
+
+				// 情况二：最长回文子序列，以 L 开头 ，但不以R 结尾
+				int p2 = dp[ L][R - 1];
+
+				// 情况三：最长回文子序列，不以 L 开头 ，但以R 结尾
+				int p3 = dp[L + 1][ R];
+
+				// 情况四：最长回文子序列，既以 L 开头 ，也以R 结尾
+				int p4 = str[L] != str[R] ? 0 : (2 + dp[L + 1][R - 1]);
+				dp[L][R] = Math.max(Math.max(p1, p2), Math.max(p3, p4));
+				*/
 			}
 		}
 		return dp[0][N - 1];
