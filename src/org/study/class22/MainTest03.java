@@ -1,7 +1,10 @@
 package org.study.class22;
 
-public class Code03_SplitNumber {
-
+/**
+ * @author phil
+ * @date 2021/8/11 10:54
+ */
+public class MainTest03 {
     // n为正数
     public static int ways(int n) {
         if (n < 0) {
@@ -81,5 +84,4 @@ public class Code03_SplitNumber {
         System.out.println(dp1(test));
         System.out.println(dp2(test));
     }
-
 }

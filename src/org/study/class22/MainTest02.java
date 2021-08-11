@@ -1,27 +1,33 @@
 package org.study.class22;
 
-public class Code02_MinCoinsNoLimit {
+/**
+ * @author phil
+ * @date 2021/8/11 10:11
+ */
+public class MainTest02 {
 
     public static int minCoins(int[] arr, int aim) {
+//        if (null == arr || arr.length == 0) {
+//            return 0;
+//        }
+
         return process(arr, 0, aim);
     }
 
-    // arr[index...]面值，每种面值张数自由选择，
-    // 搞出rest正好这么多钱，返回最小张数
-    // 拿Integer.MAX_VALUE标记怎么都搞定不了
     public static int process(int[] arr, int index, int rest) {
+
         if (index == arr.length) {
             return rest == 0 ? 0 : Integer.MAX_VALUE;
-        } else {
-            int ans = Integer.MAX_VALUE;
-            for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {
-                int next = process(arr, index + 1, rest - zhang * arr[index]);
-                if (next != Integer.MAX_VALUE) {
-                    ans = Math.min(ans, zhang + next);
-                }
-            }
-            return ans;
         }
+
+        int answer = Integer.MAX_VALUE;
+
+        for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {
+            int next = process(arr, index + 1, rest - zhang * arr[index]);
+            answer = next == Integer.MAX_VALUE ? answer : Math.min(answer, next + zhang);
+        }
+
+        return answer;
     }
 
     public static int dp1(int[] arr, int aim) {
@@ -34,20 +40,24 @@ public class Code02_MinCoinsNoLimit {
         for (int j = 1; j <= aim; j++) {
             dp[N][j] = Integer.MAX_VALUE;
         }
+
         for (int index = N - 1; index >= 0; index--) {
             for (int rest = 0; rest <= aim; rest++) {
-                int ans = Integer.MAX_VALUE;
+
+                int answer = Integer.MAX_VALUE;
+
                 for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {
-                    int next = dp[index + 1][rest - zhang * arr[index]];
-                    if (next != Integer.MAX_VALUE) {
-                        ans = Math.min(ans, zhang + next);
-                    }
+                    int next = dp[index + 1][rest - zhang * arr[index]] ;
+                    answer = next == Integer.MAX_VALUE ? answer : Math.min(answer, next + zhang);
                 }
-                dp[index][rest] = ans;
+
+                dp[index][rest] =  answer;
             }
         }
         return dp[0][aim];
     }
+
+
 
     public static int dp2(int[] arr, int aim) {
         if (aim == 0) {
@@ -59,8 +69,10 @@ public class Code02_MinCoinsNoLimit {
         for (int j = 1; j <= aim; j++) {
             dp[N][j] = Integer.MAX_VALUE;
         }
+
         for (int index = N - 1; index >= 0; index--) {
             for (int rest = 0; rest <= aim; rest++) {
+
                 dp[index][rest] = dp[index + 1][rest];
                 if (rest - arr[index] >= 0
                         && dp[index][rest - arr[index]] != Integer.MAX_VALUE) {
