@@ -53,9 +53,13 @@ public class Code02_AllLessNumSubArray {
 				}
 			}
 			count += R - L;
+
+			// 如果队列最左边的值是当前窗口的最大值，让他出队列，因为马上 L 就要往右边移动了
 			if (maxWindow.peekFirst() == L) {
 				maxWindow.pollFirst();
 			}
+
+			// 如果队列最左边的值是当前窗口的最小值，让他出队列，因为马上 L 就要往右边移动了
 			if (minWindow.peekFirst() == L) {
 				minWindow.pollFirst();
 			}

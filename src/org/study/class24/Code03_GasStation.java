@@ -19,6 +19,8 @@ public class Code03_GasStation {
 	public static boolean[] goodArray(int[] g, int[] c) {
 		int N = g.length;
 		int M = N << 1;
+
+		// 做出一个差值数组。在这个数组内，只要中途累加和小于0，就会熄火。
 		int[] arr = new int[M];
 		for (int i = 0; i < N; i++) {
 			arr[i] = g[i] - c[i];
