@@ -5,6 +5,11 @@ import java.util.Stack;
 // 测试链接：https://leetcode.com/problems/largest-rectangle-in-histogram
 public class Code03_LargestRectangleInHistogram {
 
+	/**
+	 * 求出以每个位置为高，看看左右两边能扩多远【能往左扩：左边的值必须大于等于当前值。能往右扩：右边的值必须大于等于当前值】
+	 * 利用单调栈，找出当前值的左边（右边）离它最近且小于它的值。再往中间缩一个位置。就能得到当前位置为高的长方形的面积
+	 * @date 2021-08-27 12:40:46
+	 */
 	public static int largestRectangleArea1(int[] height) {
 		if (height == null || height.length == 0) {
 			return 0;

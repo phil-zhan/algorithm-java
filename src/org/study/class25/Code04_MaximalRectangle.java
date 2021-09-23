@@ -3,6 +3,12 @@ package org.study.class25;
 import java.util.Stack;
 
 // 测试链接：https://leetcode.com/problems/maximal-rectangle/
+
+/**
+ * 从第 0 行开始，以每行的一维数组为地基，每个数对应的上方的 1 的个数为高度的一个直方图，求其最大的矩形面积【见上题】
+ * 当然，在这个压缩过程中，每行的数，如果遇到0，其高度就让它归0
+ * @date 2021-08-27 14:14:47
+ */
 public class Code04_MaximalRectangle {
 
 	public static int maximalRectangle(char[][] map) {

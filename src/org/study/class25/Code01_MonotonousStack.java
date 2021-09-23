@@ -14,19 +14,30 @@ public class Code01_MonotonousStack {
 	//     2 : [ 1, -1]
 	//     3 : [ 2, -1]
 	//  ]
+	// 只适用于没有重复值的版本
 	public static int[][] getNearLessNoRepeat(int[] arr) {
 		int[][] res = new int[arr.length][2];
-		// 只存位置！
+
+		// 只存位置！ 【存放的是从小到大】
 		Stack<Integer> stack = new Stack<>();
-		for (int i = 0; i < arr.length; i++) { // 当遍历到i位置的数，arr[i]
+
+
+		// 当遍历到i位置的数，arr[i]
+		for (int i = 0; i < arr.length; i++) {
+
+			// while 是当前数落不上去 【栈里面是从小到大的，落不上去，就意味着当前元素小于栈顶元素】
 			while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {
 				int j = stack.pop();
 				int leftLessIndex = stack.isEmpty() ? -1 : stack.peek();
 				res[j][0] = leftLessIndex;
 				res[j][1] = i;
 			}
+
+			// 不能弹了，将当前元素压栈
 			stack.push(i);
 		}
+
+		// 数组遍历完成，单独结算栈
 		while (!stack.isEmpty()) {
 			int j = stack.pop();
 			int leftLessIndex = stack.isEmpty() ? -1 : stack.peek();
@@ -36,10 +47,20 @@ public class Code01_MonotonousStack {
 		return res;
 	}
 
+	/**
+	 * 支持重复值的情况
+	 * @date 2021-08-27 10:22:11
+	 */
 	public static int[][] getNearLess(int[] arr) {
 		int[][] res = new int[arr.length][2];
+		// 栈中存放链表【值相同的数的下标】
 		Stack<List<Integer>> stack = new Stack<>();
-		for (int i = 0; i < arr.length; i++) { // i -> arr[i] 进栈
+
+		// i -> arr[i] 进栈
+		for (int i = 0; i < arr.length; i++) {
+
+
+			// while 是当前数落不上去 【栈里面是从小到大的，落不上去，就意味着当前元素小于栈顶元素】
 			while (!stack.isEmpty() && arr[stack.peek().get(0)] > arr[i]) {
 				List<Integer> popIs = stack.pop();
 				int leftLessIndex = stack.isEmpty() ? -1 : stack.peek().get(stack.peek().size() - 1);
@@ -48,14 +69,22 @@ public class Code01_MonotonousStack {
 					res[popi][1] = i;
 				}
 			}
+
+			// 将当前元素压栈。压栈的时候，得看看是否和栈顶元素相等，相等则挂在栈顶元素的链表后面
 			if (!stack.isEmpty() && arr[stack.peek().get(0)] == arr[i]) {
 				stack.peek().add(Integer.valueOf(i));
 			} else {
+
+				// 不相等，就弄一个新的链表出来，压进去
+				// 因为频繁拿最后一个位置，用 ArrayList 比LinkedList 快。。。仅限于 get(index) 的时候
+				// 当然,LinkedList 也有getLast方法，用getLast的话，和ArrayList也一样
 				ArrayList<Integer> list = new ArrayList<>();
 				list.add(i);
 				stack.push(list);
 			}
 		}
+
+		// 数组遍历完成，单独结算栈
 		while (!stack.isEmpty()) {
 			List<Integer> popIs = stack.pop();
 			int leftLessIndex = stack.isEmpty() ? -1 : stack.peek().get(stack.peek().size() - 1);
