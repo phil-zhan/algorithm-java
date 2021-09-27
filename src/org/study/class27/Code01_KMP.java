@@ -1,4 +1,4 @@
-package org.study.class28;
+package org.study.class27;
 
 public class Code01_KMP {
 
@@ -48,7 +48,6 @@ public class Code01_KMP {
 		int cn = 0; // 当前是哪个位置的值 在和 i-1 位置的字符比较【相等：当前的next 就是 cn+1 .不相等：cn就跳到对应 next值的 下标位置】
 		while (i < next.length) {
 			if (str2[i - 1] == str2[cn]) { // 配成功的时候
-
 				// 即设置了next数组的值，也修改了 cn 的值
 				next[i++] = ++cn;
 			} else if (cn > 0) {

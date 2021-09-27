@@ -1,4 +1,4 @@
-package org.study.class28;
+package org.study.class27;
 
 public class Code03_IsRotation {
 
