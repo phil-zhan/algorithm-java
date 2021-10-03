@@ -48,12 +48,16 @@ public class Code05_MinHeight {
 		while (cur != null) {
 			mostRight = cur.left;
 			if (mostRight != null) {
+				// 左节点不为空，维护一个 rightBoardSize ；统计当前节点到该树上的最右节点的高度
+
 				int rightBoardSize = 1;
 				while (mostRight.right != null && mostRight.right != cur) {
 					rightBoardSize++;
 					mostRight = mostRight.right;
 				}
 				if (mostRight.right == null) { // 第一次到达
+
+					// 第一次达到也加加。【回退的时候会减回来的】
 					curLevel++;
 					mostRight.right = cur;
 					cur = cur.left;
@@ -65,11 +69,14 @@ public class Code05_MinHeight {
 					curLevel -= rightBoardSize;
 					mostRight.right = null;
 				}
-			} else { // 只有一次到达
+			} else { // 只有一次到达。
+				// 当前节点不为空，且左孩子为空。当且节点所在的层级加1 【没有左孩子】
 				curLevel++;
 			}
 			cur = cur.right;
 		}
+
+		// 遍历结束后，判断整棵树的最右节点的深度与之前的深度谁最小
 		int finalRight = 1;
 		cur = head;
 		while (cur.right != null) {
@@ -99,9 +106,9 @@ public class Code05_MinHeight {
 	}
 
 	public static void main(String[] args) {
-		int treeLevel = 7;
+		int treeLevel = 10;
 		int nodeMaxValue = 5;
-		int testTimes = 100000;
+		int testTimes = 10000000;
 		System.out.println("test begin");
 		for (int i = 0; i < testTimes; i++) {
 			Node head = generateRandomBST(treeLevel, nodeMaxValue);

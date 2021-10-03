@@ -38,6 +38,12 @@ public class Code01_FindMinKth {
 		return process2(arr, 0, arr.length - 1, k - 1);
 	}
 
+	// 利用bfprt算法，时间复杂度O(N)
+	public static int minKth3(int[] array, int k) {
+		int[] arr = copyArray(array);
+		return bfprt(arr, 0, arr.length - 1, k - 1);
+	}
+
 	public static int[] copyArray(int[] arr) {
 		int[] ans = new int[arr.length];
 		for (int i = 0; i != ans.length; i++) {
@@ -102,11 +108,7 @@ public class Code01_FindMinKth {
 		arr[i2] = tmp;
 	}
 
-	// 利用bfprt算法，时间复杂度O(N)
-	public static int minKth3(int[] array, int k) {
-		int[] arr = copyArray(array);
-		return bfprt(arr, 0, arr.length - 1, k - 1);
-	}
+
 
 	// arr[L..R]  如果排序的话，位于index位置的数，是什么，返回
 	public static int bfprt(int[] arr, int L, int R, int index) {
