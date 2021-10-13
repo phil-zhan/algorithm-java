@@ -7,26 +7,31 @@ public class Code01_CountofRangeSum {
 	public static int countRangeSum1(int[] nums, int lower, int upper) {
 		int n = nums.length;
 		long[] sums = new long[n + 1];
-		for (int i = 0; i < n; ++i)
+		for (int i = 0; i < n; ++i) {
 			sums[i + 1] = sums[i] + nums[i];
+		}
 		return countWhileMergeSort(sums, 0, n + 1, lower, upper);
 	}
 
 	private static int countWhileMergeSort(long[] sums, int start, int end, int lower, int upper) {
-		if (end - start <= 1)
+		if (end - start <= 1) {
 			return 0;
+		}
 		int mid = (start + end) / 2;
 		int count = countWhileMergeSort(sums, start, mid, lower, upper)
 				+ countWhileMergeSort(sums, mid, end, lower, upper);
 		int j = mid, k = mid, t = mid;
 		long[] cache = new long[end - start];
 		for (int i = start, r = 0; i < mid; ++i, ++r) {
-			while (k < end && sums[k] - sums[i] < lower)
+			while (k < end && sums[k] - sums[i] < lower) {
 				k++;
-			while (j < end && sums[j] - sums[i] <= upper)
+			}
+			while (j < end && sums[j] - sums[i] <= upper) {
 				j++;
-			while (t < end && sums[t] < sums[i])
+			}
+			while (t < end && sums[t] < sums[i]) {
 				cache[r++] = sums[t++];
+			}
 			cache[r] = sums[i];
 			count += j - k;
 		}
@@ -39,7 +44,7 @@ public class Code01_CountofRangeSum {
 		public SBTNode l;
 		public SBTNode r;
 		public long size; // 不同key的size
-		public long all; // 总的size
+		public long all; // 总的size。附加的数据项【当前树的前缀和个数。用来解决重复数据项问题】
 
 		public SBTNode(long k) {
 			key = k;
@@ -53,6 +58,8 @@ public class Code01_CountofRangeSum {
 		private HashSet<Long> set = new HashSet<>();
 
 		private SBTNode rightRotate(SBTNode cur) {
+
+			// 不要忘记维护附加数据项
 			long same = cur.all - (cur.l != null ? cur.l.all : 0) - (cur.r != null ? cur.r.all : 0);
 			SBTNode leftNode = cur.l;
 			cur.l = leftNode.r;
@@ -66,6 +73,8 @@ public class Code01_CountofRangeSum {
 		}
 
 		private SBTNode leftRotate(SBTNode cur) {
+
+			// 不要忘记维护附加数据项
 			long same = cur.all - (cur.l != null ? cur.l.all : 0) - (cur.r != null ? cur.r.all : 0);
 			SBTNode rightNode = cur.r;
 			cur.r = rightNode.l;
@@ -113,9 +122,12 @@ public class Code01_CountofRangeSum {
 		}
 
 		private SBTNode add(SBTNode cur, long key, boolean contains) {
+
 			if (cur == null) {
 				return new SBTNode(key);
 			} else {
+
+				// 不要忘记维护沿途附加数据项
 				cur.all++;
 				if (key == cur.key) {
 					return cur;
@@ -144,10 +156,15 @@ public class Code01_CountofRangeSum {
 			long ans = 0;
 			while (cur != null) {
 				if (key == cur.key) {
+
+					// 之前的答案 加上当前节点的左树
 					return ans + (cur.l != null ? cur.l.all : 0);
 				} else if (key < cur.key) {
+					// 左滑
 					cur = cur.l;
 				} else {
+
+					// 右滑
 					ans += cur.all - (cur.r != null ? cur.r.all : 0);
 					cur = cur.r;
 				}
@@ -164,20 +181,31 @@ public class Code01_CountofRangeSum {
 	}
 
 	public static int countRangeSum2(int[] nums, int lower, int upper) {
+
 		// 黑盒，加入数字（前缀和），不去重，可以接受重复数字
 		// < num , 有几个数？
+
 		SizeBalancedTreeSet treeSet = new SizeBalancedTreeSet();
 		long sum = 0;
 		int ans = 0;
-		treeSet.add(0);// 一个数都没有的时候，就已经有一个前缀和累加和为0，
+
+		// 一个数都没有的时候，就已经有一个前缀和累加和为0
+		// sum 一路上的累加和
+		treeSet.add(0);
 		for (int i = 0; i < nums.length; i++) {
 			sum += nums[i];
-			// [sum - upper, sum - lower]
-			// [10, 20] ?
-			// < 10 ?  < 21 ?   
+			// 原来要求 [lower ,upper]
+			// 转换目标 [sum - upper, sum - lower]
+			// 要求 [10, 20] 有多少个
+			// 先求出 < 10 的个数
+			// 在求出 < 21 的个数【也就把20包含进去】
+			// 然后相减就能得到想要的结果
+
 			long a = treeSet.lessKeySize(sum - lower + 1);
 			long b = treeSet.lessKeySize(sum - upper);
 			ans += a - b;
+
+
 			treeSet.add(sum);
 		}
 		return ans;
@@ -202,11 +230,11 @@ public class Code01_CountofRangeSum {
 
 	public static void main(String[] args) {
 		int len = 200;
-		int varible = 50;
+		int variable = 50;
 		for (int i = 0; i < 10000; i++) {
-			int[] test = generateArray(len, varible);
-			int lower = (int) (Math.random() * varible) - (int) (Math.random() * varible);
-			int upper = lower + (int) (Math.random() * varible);
+			int[] test = generateArray(len, variable);
+			int lower = (int) (Math.random() * variable) - (int) (Math.random() * variable);
+			int upper = lower + (int) (Math.random() * variable);
 			int ans1 = countRangeSum1(test, lower, upper);
 			int ans2 = countRangeSum2(test, lower, upper);
 			if (ans1 != ans2) {
