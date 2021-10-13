@@ -192,4 +192,43 @@ public class MainTest01 {
         return ans;
     }
 
+
+
+    // for test
+    public static void printArray(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+
+    // for test
+    public static int[] generateArray(int len, int varible) {
+        int[] arr = new int[len];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = (int) (Math.random() * varible);
+        }
+        return arr;
+    }
+
+    public static void main(String[] args) {
+        int len = 200;
+        int variable = 50;
+        for (int i = 0; i < 10000; i++) {
+            int[] test = generateArray(len, variable);
+            int lower = (int) (Math.random() * variable) - (int) (Math.random() * variable);
+            int upper = lower + (int) (Math.random() * variable);
+            int ans1 = Code01_CountofRangeSum.countRangeSum1(test, lower, upper);
+            int ans2 = countRangeSum2(test, lower, upper);
+            if (ans1 != ans2) {
+                printArray(test);
+                System.out.println(lower);
+                System.out.println(upper);
+                System.out.println(ans1);
+                System.out.println(ans2);
+            }
+        }
+
+    }
+
 }

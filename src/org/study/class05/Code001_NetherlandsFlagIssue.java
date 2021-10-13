@@ -1,7 +1,5 @@
 package org.study.class05;
 
-import org.study.Util;
-
 import java.util.Arrays;
 
 /**
@@ -33,11 +31,45 @@ import java.util.Arrays;
  * @date 2021/5/28 15:49
  */
 public class Code001_NetherlandsFlagIssue {
+    /**
+     * 交换数组中 i和 j的位置
+     * @date 2021-06-02 14:10:43
+     */
+    public static void swap(int[] arr,int i,int j){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    /**
+     * 生成一个随机数组
+     * @date 2021-05-31 17:51:16
+     */
+    public static int[] generateArr(int maxLength,int maxValue){
+        int length = (int) ((maxLength + 1)*Math.random());
+        int[] arr = new int[length];
+        for (int i = 0; i < length; i++) {
+            arr[i] = (int)  ((maxValue +1)*(Math.random())) - (int)((maxValue)*Math.random());
+        }
+        return arr;
+    }
+    /**
+     * 判断一个数组是否有序
+     * @date 2021-07-06 14:09:01
+     */
+    public static boolean isSorted(int[] arr){
+        for (int i = 0; i < arr.length-1; i++) {
+            if(arr[i] > arr[i+1]){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public static void main(String[] args) {
 
         // 版本1 ：<=x 的放在左边，>x的放在右边
-        int[] arr = Util.generateArr(30,20);
+        int[] arr = generateArr(30,20);
         System.out.println("版本1之前："+Arrays.toString(arr));
         int target = 10;
         int leftIndex = -1;
@@ -55,7 +87,7 @@ public class Code001_NetherlandsFlagIssue {
 
 
         // 以下是版本2
-        int[] arr2 = Util.generateArr(20, 10);
+        int[] arr2 = generateArr(20, 10);
         int[] ints = netherlandsFlagIssueVersion2(arr2, 0, arr2.length-1);
 
         System.out.println(Arrays.toString(ints));
@@ -75,12 +107,12 @@ public class Code001_NetherlandsFlagIssue {
         int index = left;
         while (index < right){
             if(arr[index] <= arr[right]){
-                Util.swap(arr,index,++less);
+                swap(arr,index,++less);
             }
             index ++;
         }
 
-        Util.swap(arr,++less,right);
+        swap(arr,++less,right);
 
         return less;
     }
@@ -106,12 +138,12 @@ public class Code001_NetherlandsFlagIssue {
             if(arr[index] == arr[right]){
                 index ++ ;
             }else if(arr[index] < arr[right]){
-                Util.swap(arr,++less,index++);
+                swap(arr,++less,index++);
             }else{
-                Util.swap(arr,index,--more);
+                swap(arr,index,--more);
             }
         }
-        Util.swap(arr,more,right);
+        swap(arr,more,right);
         //System.out.println(arr[more]);
         //System.out.println(Arrays.toString(arr));
         return new int[] {less+1,more};

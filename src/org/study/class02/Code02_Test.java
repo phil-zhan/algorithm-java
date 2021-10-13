@@ -1,7 +1,5 @@
 package org.study.class02;
 
-import org.study.PrintUtil;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -36,13 +34,15 @@ public class Code02_Test {
             int answer2 = Code02.getOnlyKTimesNum(arr,k,m);
 
             if(answer1 != answer2){
-                PrintUtil.printArr(arr);
+                // PrintUtil.printArr(arr);
                 break;
             }
         }
 
         System.out.println("测试结束");
     }
+
+
     /**
      * 经典统计词频
      * @date 2021-03-12 15:06:06
