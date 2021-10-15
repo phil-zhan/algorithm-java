@@ -173,8 +173,8 @@ public class MainTest01 {
         // 一个数都没有的时候，就已经有一个前缀和累加和为0
         // sum 一路上的累加和
         treeSet.add(0);
-        for (int i = 0; i < nums.length; i++) {
-            sum += nums[i];
+        for (int num : nums) {
+            sum += num;
             // 原来要求 [lower ,upper]
             // 转换目标 [sum - upper, sum - lower]
             // 要求 [10, 20] 有多少个
@@ -196,8 +196,8 @@ public class MainTest01 {
 
     // for test
     public static void printArray(int[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i] + " ");
+        for (int j : arr) {
+            System.out.print(j + " ");
         }
         System.out.println();
     }

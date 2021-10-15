@@ -14,13 +14,15 @@ public class Code04_MoneyProblem {
 			return 0;
 		}
 		if (ability < d[index]) {
+
+			// 能力不够，必须花钱
 			return p[index] + process1(d, p, ability + d[index], index + 1);
-		} else { // ability >= d[index] 可以贿赂，也可以不贿赂
+		} else {
+
+			// ability >= d[index] 可以贿赂，也可以不贿赂
 			return Math.min(
-
 					p[index] + process1(d, p, ability + d[index], index + 1),
-
-					0 + process1(d, p, ability, index + 1));
+					process1(d, p, ability, index + 1));
 		}
 	}
 
@@ -35,27 +37,32 @@ public class Code04_MoneyProblem {
 		if (index == -1) { // 一个怪兽也没遇到呢
 			return money == 0 ? 0 : -1;
 		}
+
 		// index >= 0
-		// 1) 不贿赂当前index号怪兽
+		// 1) 不贿赂当前index号怪兽 【之前能不能通过，能通过的情况下，达到的最大能力】
 		long preMaxAbility = process2(d, p, index - 1, money);
 		long p1 = -1;
 		if (preMaxAbility != -1 && preMaxAbility >= d[index]) {
 			p1 = preMaxAbility;
 		}
+
 		// 2) 贿赂当前的怪兽 当前的钱 p[index]
 		long preMaxAbility2 = process2(d, p, index - 1, money - p[index]);
 		long p2 = -1;
 		if (preMaxAbility2 != -1) {
 			p2 = d[index] + preMaxAbility2;
 		}
+
 		return Math.max(p1, p2);
 	}
 
 	public static int minMoney2(int[] d, int[] p) {
 		int allMoney = 0;
-		for (int i = 0; i < p.length; i++) {
-			allMoney += p[i];
+		for (int j : p) {
+			allMoney += j;
 		}
+
+		// 考虑花 0 ... N 元能不能过。能过，直接 return
 		int N = d.length;
 		for (int money = 0; money < allMoney; money++) {
 			if (process2(d, p, N - 1, money) != -1) {
