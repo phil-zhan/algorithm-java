@@ -38,47 +38,68 @@ public class Code02_SnacksWaysMain {
 		long ways = process(arr, 0, 0, mid, bag, lmap);
 		TreeMap<Long, Long> rmap = new TreeMap<>();
 		ways += process(arr, mid + 1, 0, arr.length - 1, bag, rmap);
+
+		// 此时的 ways 就是只来自左端或只来自右端的情况。
+
+		// 生成类似前缀和的表【见图片】
 		TreeMap<Long, Long> rpre = new TreeMap<>();
 		long pre = 0;
 		for (Entry<Long, Long> entry : rmap.entrySet()) {
 			pre += entry.getValue();
 			rpre.put(entry.getKey(), pre);
 		}
+
+
 		for (Entry<Long, Long> entry : lmap.entrySet()) {
+
 			long lweight = entry.getKey();
 			long lways = entry.getValue();
+
+			// floorKey:取出小于等于key，但是又非常靠近key的数
+			// rpre 中，key是累加和，value是方法数
+			// 【在这里就是取出累加和最接近（<=） bag - lweight 的累加和】
 			Long floor = rpre.floorKey(bag - lweight);
 			if (floor != null) {
 				long rways = rpre.get(floor);
 				ways += lways * rways;
 			}
 		}
+
+		// +1 是加上什么都没选的情况
 		return ways + 1;
 	}
 
 	
 	
 	
-	// arr 30
-	// func(arr, 0, 14, 0, bag, map)
-	
-	// func(arr, 15, 29, 0, bag, map)
-	
-	// 从index出发，到end结束
-	// 之前的选择，已经形成的累加和sum
-	// 零食[index....end]自由选择，出来的所有累加和，不能超过bag，每一种累加和对应的方法数，填在map里
-	// 最后不能什么货都没选
-	// [3,3,3,3] bag = 6
-	// 0 1 2 3
-	// - - - - 0 -> （0 : 1）
-	// - - - $ 3 -> （0 : 1）(3, 1)
-	// - - $ - 3 -> （0 : 1）(3, 2)
+	/**
+	 * // arr 30
+	 * 	// func(arr, 0, 14, 0, bag, map)
+	 * 	// func(arr, 15, 29, 0, bag, map)
+	 *
+	 *
+	 *
+	 * 	// 从index出发，到end结束
+	 * 	// 之前的选择，已经形成的累加和sum
+	 * 	// 零食[index....end]自由选择，出来的所有累加和，不能超过bag-sum，每一种累加和对应的方法数，填在map里。且返回总的方法数
+	 * 	// 最后不能什么货都没选
+	 * 	// [3,3,3,3] bag = 6
+	 * 	// 0 1 2 3
+	 * 	// - - - - 0 -> （0 : 1）				// - ：表示不要当前位置的数
+	 * 	// - - - - 0 -> （0 : 1）				// $：表示要当前位置的数
+	 * 	// - - - $ 3 -> （0 : 1）(3, 1)			// （0 : 1）：表示累加和为 0 有一种选择
+	 * 	// - - $ - 3 -> （0 : 1）(3, 2)
+	 *
+	 *
+	 * @date 2021-10-18 10:53:11
+	 */
 	public static long func(int[] arr, int index, int end, long sum, long bag, TreeMap<Long, Long> map) {
 		if(sum > bag) {
 			return 0;
 		}
 		// sum <= bag
-		if(index > end) { // 所有商品自由选择完了！
+		// 所有商品自由选择完了！
+		if(index > end) {
 			// sum
 			if(sum != 0) {
 				if (!map.containsKey(sum)) {
@@ -86,8 +107,12 @@ public class Code02_SnacksWaysMain {
 				} else {
 					map.put(sum, map.get(sum) + 1);
 				}
+
+				// 当前的选择是有效的
 				return 1;
 			} else {
+				// 体积为0的情况，不进表。单独算
+
 				return 0;
 			}			
 		}

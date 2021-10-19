@@ -1,5 +1,8 @@
 package org.study.class39;
 
+/**
+ * @author Dell
+ */
 public class Code02_SnacksWays {
 
 	public static int ways1(int[] arr, int w) {
@@ -7,18 +10,24 @@ public class Code02_SnacksWays {
 		return process(arr, 0, w);
 	}
 
-	// 从左往右的经典模型
-	// 还剩的容量是rest，arr[index...]自由选择，
-	// 返回选择方案
-	// index ： 0～N
-	// rest : 0~w
+	/**
+	 * // 从左往右的经典模型
+	 * 	// 还剩的容量是rest，arr[index...]自由选择，
+	 * 	// 返回选择方案
+	 * 	// index ： 0～N
+	 * 	// rest : 0~w
+	 * @date 2021-10-18 10:12:07
+	 */
 	public static int process(int[] arr, int index, int rest) {
-		if (rest < 0) { // 没有容量了
+
+		// 没有容量了
+		if (rest < 0) {
 			// -1 无方案的意思
 			return -1;
 		}
 		// rest>=0,
-		if (index == arr.length) { // 无零食可选
+		// 无零食可选
+		if (index == arr.length) {
 			return 1;
 		}
 		// rest >=0
@@ -27,8 +36,12 @@ public class Code02_SnacksWays {
 		// index, rest
 		// (index+1, rest)
 		// (index+1, rest-arr[i])
-		int next1 = process(arr, index + 1, rest); // 不要
-		int next2 = process(arr, index + 1, rest - arr[index]); // 要
+
+		// 不要
+		int next1 = process(arr, index + 1, rest);
+
+		// 要
+		int next2 = process(arr, index + 1, rest - arr[index]);
 		return next1 + (next2 == -1 ? 0 : next2);
 	}
 
