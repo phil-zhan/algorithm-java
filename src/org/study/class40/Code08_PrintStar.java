@@ -11,11 +11,17 @@ public class Code08_PrintStar {
 				m[i][j] = ' ';
 			}
 		}
+
+
+		//  leftUp <= rightDown 都是从行去考虑
 		while (leftUp <= rightDown) {
+
+			// set 方法负责搞定一圈
 			set(m, leftUp, rightDown);
 			leftUp += 2;
 			rightDown -= 2;
 		}
+
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
 				System.out.print(m[i][j] + " ");
@@ -40,7 +46,7 @@ public class Code08_PrintStar {
 	}
 
 	public static void main(String[] args) {
-		printStar(5);
+		printStar(20);
 	}
 
 }

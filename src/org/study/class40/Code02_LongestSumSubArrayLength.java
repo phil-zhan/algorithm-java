@@ -10,15 +10,21 @@ public class Code02_LongestSumSubArrayLength {
 		}
 		// key:前缀和
 		// value : 0~value这个前缀和是最早出现key这个值的
-		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
-		map.put(0, -1); // important
+		HashMap<Integer, Integer> map = new HashMap<>();
+
+		// important ！！！！！！！！
+		map.put(0, -1);
 		int len = 0;
 		int sum = 0;
 		for (int i = 0; i < arr.length; i++) {
 			sum += arr[i];
+
+			// 存在对应的前缀和，更新答案
 			if (map.containsKey(sum - k)) {
 				len = Math.max(i - map.get(sum - k), len);
 			}
+
+			// 不存在对应的前缀和。说明该前缀和是第一次出现，将其入表
 			if (!map.containsKey(sum)) {
 				map.put(sum, i);
 			}

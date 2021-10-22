@@ -2,6 +2,11 @@ package org.study.class40;
 
 public class Code07_ZigZagPrintMatrix {
 
+	/**
+	 * 用两个坐标表示一条线段，再用一个 boolean 表示方向
+	 * 全局控制：坐标同时向右下移动
+	 * @date 2021-10-22 10:52:55
+	 */
 	public static void printMatrixZigZag(int[][] matrix) {
 		int tR = 0;
 		int tC = 0;
@@ -34,7 +39,10 @@ public class Code07_ZigZagPrintMatrix {
 	}
 
 	public static void main(String[] args) {
-		int[][] matrix = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 } };
+		int[][] matrix = {
+				{ 1, 2, 3, 4 },
+				{ 5, 6, 7, 8 },
+				{ 9, 10, 11, 12 } };
 		printMatrixZigZag(matrix);
 
 	}
