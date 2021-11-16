@@ -16,6 +16,10 @@ public class Code04_SplitArrayLargestSum {
 		for (int i = 0; i < N; i++) {
 			sum[i + 1] = sum[i] + nums[i];
 		}
+
+
+		// 横向表示画家
+		// 纵向表示要画的画数量
 		int[][] dp = new int[N][K + 1];
 		for (int j = 1; j <= K; j++) {
 			dp[0][j] = nums[0];
@@ -45,23 +49,31 @@ public class Code04_SplitArrayLargestSum {
 	}
 
 	// 课上现场写的方法，用了枚举优化，O(N * K)
+	// nums[i] 表示完成第 i 幅画需要的时间
 	public static int splitArray2(int[] nums, int K) {
 		int N = nums.length;
 		int[] sum = new int[N + 1];
 		for (int i = 0; i < N; i++) {
 			sum[i + 1] = sum[i] + nums[i];
 		}
+
+
 		int[][] dp = new int[N][K + 1];
 		int[][] best = new int[N][K + 1];
+
+
+		// 第一行
 		for (int j = 1; j <= K; j++) {
 			dp[0][j] = nums[0];
 			best[0][j] = -1;
 		}
+
+		// 第一列
 		for (int i = 1; i < N; i++) {
 			dp[i][1] = sum(sum, 0, i);
 			best[i][1] = -1;
 		}
-		// 从第2列开始，从左往右
+		// 从第2列开始
 		// 每一列，从下往上
 		// 为什么这样的顺序？因为要去凑（左，下）优化位置对儿！
 		for (int j = 2; j <= K; j++) {

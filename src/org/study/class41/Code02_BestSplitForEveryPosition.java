@@ -69,13 +69,14 @@ public class Code02_BestSplitForEveryPosition {
 			sum[i + 1] = sum[i] + arr[i];
 		}
 		// 最优划分
-		// 0~range-1上，最优划分是左部分[0~best]  右部分[best+1~range-1]
+		// 0~range-1范围上，最优划分是左部分[0~best]  右部分[best+1~range-1]
 		int best = 0;
 		for (int range = 1; range < N; range++) {
+
 			while (best + 1 < range) {
 				int before = Math.min(sum(sum, 0, best), sum(sum, best + 1, range));
 				int after = Math.min(sum(sum, 0, best + 1), sum(sum, best + 2, range));
-				// 注意，一定要是>=，只是>会出错
+				// 注意，一定要是>=，只是>会出错【因为数组中存在 0】
 				// 课上会讲解
 				if (after >= before) {
 					best++;
