@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * @author phil
  */
-public class Code02_Test {
+public class MainTest03 {
 
     public static void main(String[] args) {
         int maxKinds = 3;
@@ -31,7 +31,7 @@ public class Code02_Test {
             int[] arr = generateRandomArray(maxKinds,range,k,m);
 
             int answer1 = test(arr,k,m);
-            int answer2 = Code02.getOnlyKTimesNum(arr,k,m);
+            int answer2 = Code03.getOnlyKTimesNum(arr,k,m);
 
             if(answer1 != answer2){
                 // PrintUtil.printArr(arr);
