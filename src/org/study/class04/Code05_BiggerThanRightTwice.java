@@ -29,7 +29,9 @@ public class Code05_BiggerThanRightTwice {
         // 目前囊括进来的数，是从[M+1, windowR)
         int windowR = m + 1;
         for (int i = L; i <= m; i++) {
-            while (windowR <= r && arr[i] > (arr[windowR] * 2)) {
+
+            // 这里转为long，防止15亿到32亿的数据乘以2后超出int的承受范围
+            while (windowR <= r && arr[i] > (arr[windowR] * 2L) ){
                 windowR++;
             }
             ans += windowR - m - 1;
@@ -136,6 +138,9 @@ public class Code05_BiggerThanRightTwice {
             }
         }
         System.out.println("测试结束");
+        int[] arr=new int[]{2147483647,2147483647,2147483647,2147483647,2147483647,2147483647};
+        int i = biggerTwice(arr);
+        System.out.println(i);
     }
 
 }

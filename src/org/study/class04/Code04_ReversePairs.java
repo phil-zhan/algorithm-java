@@ -23,7 +23,7 @@ package org.study.class04;
 public class Code04_ReversePairs {
 
     public static void main(String[] args) {
-        int pairs = new Code04_ReversePairs().reversePairs(new int[]{9, 9, 9, 9, 9, 9, 9});
+        int pairs = new Code04_ReversePairs().reversePairs(new int[]{1,3,2,3,1});
         System.out.println(pairs);
     }
 
