@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
+ * 求二叉树的最大宽度
  * @author phil
  * @date 2021/7/1 9:12
  */

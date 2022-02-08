@@ -30,9 +30,7 @@ public class Code01_IsCBT {
 			r = head.right;
 			if (
 			// 如果遇到了不双全的节点之后，又发现当前节点不是叶节点
-			(leaf && (l != null || r != null)) || (l == null && r != null)
-
-			) {
+			(leaf && (l != null || r != null)) || (l == null && r != null)) {
 				return false;
 			}
 			if (l != null) {

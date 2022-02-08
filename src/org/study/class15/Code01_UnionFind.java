@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Stack;
 
 /**
+ * https://leetcode.com/problems/largest-component-size-by-common-factor/
  * @author Phil
  */
 public class Code01_UnionFind {
