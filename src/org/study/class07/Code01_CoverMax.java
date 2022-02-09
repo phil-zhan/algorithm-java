@@ -55,12 +55,12 @@ public class Code01_CoverMax {
         // 小根堆（磨人的 ），每一条线段的结尾数值，使用默认的
         PriorityQueue<Integer> heap = new PriorityQueue<>();
         int max = 0;
-        for (int i = 0; i < lines.length; i++) {
+        for (Line line : lines) {
             // lines[i] -> cur  在黑盒中，把<=cur.start 东西都弹出
-            while (!heap.isEmpty() && heap.peek() <= lines[i].start) {
+            while (!heap.isEmpty() && heap.peek() <= line.start) {
                 heap.poll();
             }
-            heap.add(lines[i].end);
+            heap.add(line.end);
             max = Math.max(max, heap.size());
         }
         return max;

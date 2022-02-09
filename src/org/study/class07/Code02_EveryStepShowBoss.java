@@ -130,6 +130,7 @@ public class Code02_EveryStepShowBoss {
                     cands.add(c);
                 }
             }
+            // 可能是之前已经买了一件，当前是退货。所以要考虑清出去
             cleanZeroBuy(cands);
             cleanZeroBuy(daddy);
 
@@ -262,12 +263,14 @@ public class Code02_EveryStepShowBoss {
                     candHeap.push(c);
                 }
             } else if (candHeap.contains(c)) {
+                // 该用户已经在候选区
                 if (c.buy == 0) {
                     candHeap.remove(c);
                 } else {
                     candHeap.resign(c);
                 }
             } else {
+                // 该用户在得奖区
                 if (c.buy == 0) {
                     daddyHeap.remove(c);
                 } else {
