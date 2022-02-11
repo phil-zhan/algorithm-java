@@ -30,10 +30,10 @@ public class Code04_LongestCommonSubsequence {
                 return process1(str1, str2, i - 1, j);
             }
         } else { // i != 0 && j != 0
-            // 考虑该子序列以 i 结尾
+            // 考虑该子序列不以 i 结尾。可能以 j 结尾
             int p1 = process1(str1, str2, i - 1, j);
 
-            // 考虑该子序列以 j 结尾
+            // 考虑该子序列不以 j 结尾。 可能以 i 结尾
             int p2 = process1(str1, str2, i, j - 1);
 
             // 绝对以 i 也同时以 j 结尾

@@ -21,6 +21,8 @@ public class Code05_ReverseStackUsingRecursive {
 	// 栈底元素移除掉
 	// 上面的元素盖下来
 	// 返回移除掉的栈底元素
+	// result 是从上到下存起来
+	// last 是取到最后一个值后，从下到上传递，直到执行完成
 	public static int f(Stack<Integer> stack) {
 		int result = stack.pop();
 		if (stack.isEmpty()) {

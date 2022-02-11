@@ -39,6 +39,8 @@ public class Code05_Prim {
 			if (!nodeSet.contains(node)) {
 				nodeSet.add(node);
 				// 由一个点，解锁所有相连的边
+				// 这里可能会重复放边。但是也不会影响结果。因为在考虑的时候，其所指的节点都考虑过了，会直接跳过
+				// 也可以再做一个set集合，去重
 				for (Edge edge : node.edges) {
 					priorityQueue.add(edge);
 				}
