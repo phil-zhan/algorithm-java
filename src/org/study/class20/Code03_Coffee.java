@@ -100,6 +100,8 @@ public class Code03_Coffee {
 
     // drinks[index.....n]都变干净，最早的结束时间（返回）
     public static int bestTime(int[] drinks, int wash, int air, int index, int free) {
+
+        // 没有杯子需要变干净
         if (index == drinks.length) {
             return 0;
         }
