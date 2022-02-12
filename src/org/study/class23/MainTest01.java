@@ -6,58 +6,58 @@ package org.study.class23;
  */
 public class MainTest01 {
 
-    public static int right(int[] arr){
-        if (null == arr ||  arr.length < 2) {
+    public static int right(int[] arr) {
+        if (null == arr || arr.length < 2) {
             return 0;
         }
 
         int sum = 0;
 
-        for (int ele:arr) {
-            sum+=ele;
+        for (int ele : arr) {
+            sum += ele;
         }
 
-        return process(arr,0,sum >> 1);
+        return process(arr, 0, sum >> 1);
     }
 
 
-    public static int process(int[] arr,int index,int rest){
+    public static int process(int[] arr, int index, int rest) {
         if (index == arr.length) {
             return 0;
         }
 
-        int p1=process(arr,index+1,rest);
+        int p1 = process(arr, index + 1, rest);
         int p2 = Integer.MIN_VALUE;
 
-        if(arr[index] <= rest){
-            p2 = arr[index] + process(arr,index+1,rest-arr[index]);
+        if (arr[index] <= rest) {
+            p2 = arr[index] + process(arr, index + 1, rest - arr[index]);
         }
 
-        return Math.max(p1,p2);
+        return Math.max(p1, p2);
     }
 
 
-    public static int dp(int[] arr){
-        if (null == arr ||  arr.length < 2) {
+    public static int dp(int[] arr) {
+        if (null == arr || arr.length < 2) {
             return 0;
         }
         int length = arr.length;
         int sum = 0;
-        for (int ele:arr) {
-            sum+=ele;
+        for (int ele : arr) {
+            sum += ele;
         }
-        sum = sum>>1;
-        int[][] dp = new int[length + 1][sum+1];
-        for (int index = length-1; index >=0 ; index--) {
+        sum = sum >> 1;
+        int[][] dp = new int[length + 1][sum + 1];
+        for (int index = length - 1; index >= 0; index--) {
             for (int rest = 0; rest <= sum; rest++) {
-                int p1=dp[index+1][rest];
+                int p1 = dp[index + 1][rest];
                 int p2 = Integer.MIN_VALUE;
 
-                if(arr[index] <= rest){
-                    p2 = arr[index] + dp[index+1][rest-arr[index]];
+                if (arr[index] <= rest) {
+                    p2 = arr[index] + dp[index + 1][rest - arr[index]];
                 }
 
-                dp[index][rest] =  Math.max(p1,p2);
+                dp[index][rest] = Math.max(p1, p2);
             }
         }
         return dp[0][sum];
