@@ -49,9 +49,9 @@ public class Code01_Manacher {
 			// 到这里是 i 的最小回文半径。再考虑其左右是否还能扩
 			// 只要不越界，就继续向下对比
 			while (i + pArr[i] < str.length && i - pArr[i] > -1) {
-				if (str[i + pArr[i]] == str[i - pArr[i]])
+				if (str[i + pArr[i]] == str[i - pArr[i]]) {
 					pArr[i]++;
-				else {
+				} else {
 					break;
 				}
 			}
