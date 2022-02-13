@@ -13,6 +13,7 @@ public class Code02_SplitSumClosedSizeHalf {
 
         // 判断是奇数个还是偶数个
         if ((arr.length & 1) == 0) {
+            // 偶数
             return process(arr, 0, arr.length / 2, sum / 2);
         } else {
             return Math.max(process(arr, 0, arr.length / 2, sum / 2), process(arr, 0, arr.length / 2 + 1, sum / 2));

@@ -76,7 +76,7 @@ public class Code03_SplitNumber {
     }
 
     public static void main(String[] args) {
-        int test = 39;
+        int test = 2;
         System.out.println(ways(test));
         System.out.println(dp1(test));
         System.out.println(dp2(test));

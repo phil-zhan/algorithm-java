@@ -1,5 +1,9 @@
 package org.study.class23;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Code03_NQueens {
 
     public static int num1(int n) {
@@ -11,6 +15,52 @@ public class Code03_NQueens {
         int[] record = new int[n];
         return process1(0, record, n);
     }
+
+    /**
+     * leetCode
+     */
+    public List<List<String>> solveNQueens(int n) {
+        if (n < 1) {
+            return Collections.emptyList();
+        }
+
+        int[] record = new int[n];
+        List<List<String>> list = new ArrayList<>();
+        process3(0, record, n,list);
+        return list;
+    }
+
+    public void process3(int i, int[] record, int n,List<List<String>> list) {
+        // 来到了越界位置，说明之前的摆放都是有效的
+        if (i == n) {
+
+            list.add(collect(record,n));
+        }
+        // i行的皇后，放哪一列呢？j列，
+        // 在 i 行的每一列j 都去试一下，收集所有答案
+        for (int j = 0; j < n; j++) {
+            if (isValid(record, i, j)) {
+                record[i] = j;
+                process3(i + 1, record, n,list);
+            }
+        }
+    }
+    public List<String> collect(int[] record,int n){
+        List<String> ans = new ArrayList<>();
+        for (int j = 0; j < n; j++) {
+            StringBuilder builder = new StringBuilder();
+            for (int k = 0; k < n; k++) {
+                if (k!=record[j]){
+                    builder.append(".");
+                }else {
+                    builder.append("Q");
+                }
+            }
+            ans.add(builder.toString());
+        }
+        return ans;
+    }
+
 
     // 当前来到i行，一共是0~N-1行
     // 在i行上放皇后，所有列都尝试
@@ -24,6 +74,7 @@ public class Code03_NQueens {
         }
         int res = 0;
         // i行的皇后，放哪一列呢？j列，
+        // 在 i 行的每一列j 都去试一下，收集所有答案
         for (int j = 0; j < n; j++) {
             if (isValid(record, i, j)) {
                 record[i] = j;
@@ -101,7 +152,7 @@ public class Code03_NQueens {
     }
 
     public static void main(String[] args) {
-        int n = 16;
+        int n = 4;
 
         long start = System.currentTimeMillis();
         System.out.println(num2(n));
@@ -112,6 +163,13 @@ public class Code03_NQueens {
         System.out.println(num1(n));
         end = System.currentTimeMillis();
         System.out.println("cost time: " + (end - start) + "ms");
+
+
+        start = System.currentTimeMillis();
+        System.out.println(new Code03_NQueens().solveNQueens(n));
+        end = System.currentTimeMillis();
+        System.out.println("cost time: " + (end - start) + "ms");
+
 
     }
 }
