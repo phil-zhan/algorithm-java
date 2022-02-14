@@ -1,5 +1,6 @@
 package org.study.class24;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -63,6 +64,44 @@ public class MainTest01 {
         return res;
     }
 
+    /**
+     * https://leetcode-cn.com/problems/sliding-window-maximum/
+     * 给你一个整数数组 nums，有一个大小为k的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k个数字。滑动窗口每次只向右移动一位。
+     * <p>
+     * 返回 滑动窗口中的最大值 。
+     */
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if (null == nums || nums.length < k) {
+            return null;
+        }
+        int len = nums.length;
+        int[] ans = new int[len - k + 1];
+        int index = 0;
+
+        // 双端队列
+        LinkedList<Integer> maxQueue = new LinkedList<>();
+
+        for (int right = 0; right < nums.length; right++) {
+
+            while (!maxQueue.isEmpty() && nums[right] >= nums[maxQueue.peekLast()]) {
+                maxQueue.pollLast();
+            }
+            maxQueue.addLast(right);
+
+
+            if (!maxQueue.isEmpty() && maxQueue.peekFirst() == right - k) {
+                maxQueue.pollFirst();
+            }
+
+            if (right >= k - 1) {
+                ans[index++] = nums[maxQueue.peekFirst()];
+            }
+        }
+
+        return ans;
+
+    }
+
     // for test
     public static int[] generateRandomArray(int maxSize, int maxValue) {
         int[] arr = new int[(int) ((maxSize + 1) * Math.random())];
@@ -106,5 +145,9 @@ public class MainTest01 {
             }
         }
         System.out.println("test finish");
+
+
+        int[] ints = new MainTest01().maxSlidingWindow(new int[]{1, 3, -1, -3, 5, 3, 6, 7}, 3);
+        System.out.println(Arrays.toString(ints));
     }
 }

@@ -37,6 +37,8 @@ public class Code02_AllLessNumSubArray {
 		LinkedList<Integer> minWindow = new LinkedList<>();
 		int R = 0;
 		for (int L = 0; L < N; L++) {
+
+			// 以L位置为起点。 首次不达标【停】
 			while (R < N) {
 				while (!maxWindow.isEmpty() && arr[maxWindow.peekLast()] <= arr[R]) {
 					maxWindow.pollLast();
