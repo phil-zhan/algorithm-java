@@ -51,7 +51,7 @@ public class Code02_FriendCircles {
 				help[hi++] = i;
 				i = parent[i];
 			}
-			for (hi--; hi >= 0; hi--) {
+			for (; hi >= 0; hi--) {
 				parent[help[hi]] = i;
 			}
 			return i;
