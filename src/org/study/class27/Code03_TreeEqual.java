@@ -2,7 +2,7 @@ package org.study.class27;
 
 import java.util.ArrayList;
 
-public class Code02_TreeEqual {
+public class Code03_TreeEqual {
 
 	public static class Node {
 		public int value;

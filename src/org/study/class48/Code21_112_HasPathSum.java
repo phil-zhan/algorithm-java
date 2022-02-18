@@ -9,8 +9,7 @@ public class Code21_112_HasPathSum {
 
     public static void main(String[] args) {
         TreeNode root = new TreeNode(1);
-        TreeNode left1 = new TreeNode(1);
-        root.left = left1;
+        root.left = new TreeNode(1);
 
 
         boolean can = new Code21_112_HasPathSum().hasPathSum(root, 1);

@@ -1,5 +1,9 @@
 package org.study.class27;
 
+/**
+ *
+ * 字符串的查找（匹配）算法
+ */
 public class Code01_KMP {
 
 	public static int getIndexOf(String s1, String s2) {
@@ -23,7 +27,8 @@ public class Code01_KMP {
 			if (str1[x] == str2[y]) {
 				x++;
 				y++;
-			} else if (next[y] == -1) { // y == 0
+			} else if (next[y] == -1) {
+				// y == 0
 				// 子串在当前y位置 没有前缀信息【也就是字段已经左移到了最开头的 0 位置】
 				x++;
 			} else {
@@ -34,6 +39,13 @@ public class Code01_KMP {
 		return y == str2.length ? x - y : -1;
 	}
 
+	/**
+	 * 每个位置的信息，考虑的是当前位置的 前面 的字符串，前缀和后缀的最大匹配长度【前后缀都不能取到整体】
+	 * 这个信息数组也就是 next 数组
+	 * 人为规定  任何字符串，0位置的信息为 -1. 1位置的信息是 0 。
+	 *
+	 * next 数组是对 target 字符串求的
+	 */
 	public static int[] getNextArray(char[] str2) {
 		if (str2.length == 1) {
 			return new int[] { -1 };
@@ -44,10 +56,15 @@ public class Code01_KMP {
 		next[0] = -1;
 		next[1] = 0;
 
-		int i = 2; // 目前在哪个位置上求next数组的值
-		int cn = 0; // 当前是哪个位置的值 在和 i-1 位置的字符比较【相等：当前的next 就是 cn+1 .不相等：cn就跳到对应 next值的 下标位置】
+		// 目前在哪个位置上求next数组的值
+		int i = 2;
+
+		// 当前是哪个位置的值 在和 i-1 位置的字符比较【相等：当前的next 就是 cn+1 .不相等：cn就跳到对应 next值的 下标位置】
+		int cn = 0;
 		while (i < next.length) {
-			if (str2[i - 1] == str2[cn]) { // 配成功的时候
+
+			// 配成功的时候
+			if (str2[i - 1] == str2[cn]) {
 				// 即设置了next数组的值，也修改了 cn 的值
 				next[i++] = ++cn;
 			} else if (cn > 0) {

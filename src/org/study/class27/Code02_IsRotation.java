@@ -1,6 +1,11 @@
 package org.study.class27;
 
-public class Code03_IsRotation {
+/**
+ * 旋转字符串
+ * 将整个字符串想象成首尾相连的圆环，从任意位置切开得到的字符串，称之为旋转后的字符串
+ * @since 2022-02-18 08:43:23
+ */
+public class Code02_IsRotation {
 
 	public static boolean isRotation(String a, String b) {
 		if (a == null || b == null || a.length() != b.length()) {
