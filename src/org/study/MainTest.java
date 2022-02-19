@@ -1,6 +1,7 @@
 package org.study;
 
 import org.study.class05.Code003_QuickSort_2;
+import org.study.class30.Code01_MorrisTraversal;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,105 +15,162 @@ public class MainTest {
 
 
     public static void main(String[] args) {
-        String ans = new MainTest().longestPalindrome("aacabdkacaa");
-        String ans2 = new MainTest().longestPalindrome2("aacabdkacaa");
-        System.out.println(ans);
-        System.out.println(ans2);
+        Node head = new Node(4);
+        head.left = new Node(2);
+        head.right = new Node(6);
+        head.left.left = new Node(1);
+        head.left.right = new Node(3);
+        head.right.left = new Node(5);
+        head.right.right = new Node(7);
+
+        new MainTest().morrisPre(head);
+        new MainTest().morrisMid(head);
+        new MainTest().morrisPos(head);
+
     }
 
 
-    public String longestPalindrome2(String s) {
+    public void morrisPre(Node head){
 
-
-        char[] str = s.toCharArray();
-        int maxLen = 1;
-        int begin = 0;
-        Map<String,Integer> map = new HashMap<>();
-        map.put("maxLen",1);
-        map.put("begin",0);
-        boolean ans = process(str, 0, s.length() - 1,map);
-        return s.substring(begin,begin+maxLen);
-    }
-
-    public boolean process(char[] str, int index, int len, Map<String,Integer> map) {
-        if (len==1){
-            return true;
+        System.out.println("下面是先序");
+        if (head == null){
+            return;
         }
 
+        Node cur = head;
+        Node mostRight;
 
-        int right = index + len - 1;
-        if (right >= str.length) {
-            return false;
-        }
-
-        if (len==2){
-            if (map.get("maxLen") < 2){
-                map.put("maxLen",len);
-                map.put("begin",index);
-            }
-            return str[index] == str[right];
-        }
-
-
-        if (str[index] == str[right] && process(str,index+1,len-2,map)){
-            if (map.get("maxLen") < len){
-                map.put("maxLen",len);
-                map.put("begin",index);
-            }
-            return true;
-        }
-
-        return false;
-    }
-
-
-    public String longestPalindrome(String s) {
-        int len = s.length();
-        if (len < 2) {
-            return s;
-        }
-
-        int maxLen = 1;
-        int begin = 0;
-        // dp[i][j] 表示 s[i..j] 是否是回文串
-        boolean[][] dp = new boolean[len][len];
-        // 初始化：所有长度为 1 的子串都是回文串
-        for (int i = 0; i < len; i++) {
-            dp[i][i] = true;
-        }
-
-        char[] charArray = s.toCharArray();
-        // 递推开始
-        // 先枚举子串长度
-        for (int L = 2; L <= len; L++) {
-            // 枚举左边界，左边界的上限设置可以宽松一些
-            for (int i = 0; i < len; i++) {
-                // 由 L 和 i 可以确定右边界，即 j - i + 1 = L 得
-                int j = L + i - 1;
-                // 如果右边界越界，就可以退出当前循环
-                if (j >= len) {
-                    break;
+        while (cur != null){
+            if (cur.left != null){
+                mostRight = cur.left;
+                while (mostRight.right != null && mostRight.right != cur){
+                    mostRight = mostRight.right;
                 }
 
-                if (charArray[i] != charArray[j]) {
-                    dp[i][j] = false;
-                } else {
-                    if (j - i < 3) {
-                        dp[i][j] = true;
-                    } else {
-                        dp[i][j] = dp[i + 1][j - 1];
-                    }
+                if (mostRight.right == null){
+                    mostRight.right = cur;
+                    System.out.println(cur.value);
+                    cur = cur.left;
+                    continue;
                 }
-
-                // 只要 dp[i][L] == true 成立，就表示子串 s[i..L] 是回文，此时记录回文长度和起始位置
-                if (dp[i][j] && j - i + 1 > maxLen) {
-                    maxLen = j - i + 1;
-                    begin = i;
-                }
+                mostRight.right = null;
+            }else{
+                System.out.println(cur.value);
             }
+            cur = cur.right;
         }
-        return s.substring(begin, begin + maxLen);
+
     }
 
+
+    public void morrisMid(Node head){
+
+        System.out.println("下面是中序\n");
+        if (head == null){
+            return;
+        }
+
+        Node cur = head;
+        Node mostRight;
+
+        while (cur != null){
+            if (cur.left != null){
+                mostRight = cur.left;
+                while (mostRight.right!= null && mostRight.right != cur){
+                    mostRight = mostRight.right;
+                }
+                if (mostRight.right == null){
+                    mostRight.right = cur;
+                    cur = cur.left;
+                    continue;
+                }
+                mostRight.right = null;
+            }
+
+            System.out.println(cur.value);
+            cur = cur.right;
+        }
+    }
+
+
+    public void morrisPos(Node head){
+
+        System.out.println("下面是后序");
+        if (head == null){
+            return;
+        }
+
+        Node cur = head;
+        Node mostRight;
+
+        while (cur != null){
+            if (cur.left != null){
+                mostRight = cur.left;
+                while (mostRight.right != null && mostRight.right != cur){
+                    mostRight = mostRight.right;
+                }
+
+                if (mostRight.right == null){
+                    mostRight.right = cur;
+                    cur = cur.left;
+                }else{
+                    mostRight.right = null;
+                    printRightEdge(cur.left);
+                    cur = cur.right;
+                }
+            }else{
+                cur= cur.right;
+            }
+        }
+
+        printRightEdge(head);
+    }
+    
+    
+
+    public void printRightEdge(Node head){
+
+        if (head == null){
+            return;
+        }
+
+
+        // 链表反转
+        Node tail = reverseEdge(head);
+        Node cur = tail;
+
+        // 打印
+        while (cur != null) {
+            System.out.print(cur.value + " ");
+            cur = cur.right;
+        }
+
+        // 打印完成后，再反转回去
+        reverseEdge(tail);
+
+    }
+
+    public static Node reverseEdge(Node from) {
+        Node pre = null;
+        Node next;
+        while (from != null) {
+            next = from.right;
+            from.right = pre;
+            pre = from;
+            from = next;
+        }
+        return pre;
+    }
+
+
+    public static class Node {
+        public int value;
+        Node left;
+        Node right;
+
+        public Node(int data) {
+            this.value = data;
+        }
+    }
 
 }
