@@ -73,6 +73,8 @@ public class Code03_ReservoirSampling {
 				count[num]++;
 			}
 		}
+
+
 		for (int i = 0; i <= ballNum; i++) {
 			System.out.println(count[i]);
 		}
@@ -80,7 +82,7 @@ public class Code03_ReservoirSampling {
 		System.out.println("hello");
 		int all = 100;
 		int choose = 10;
-		int testTimes = 50000;
+		int testTimes = 5000000;
 		int[] counts = new int[all + 1];
 		for (int i = 0; i < testTimes; i++) {
 			RandomBox box = new RandomBox(choose);
