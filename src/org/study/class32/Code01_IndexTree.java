@@ -22,6 +22,8 @@ public class Code01_IndexTree {
 			int ret = 0;
 			while (index > 0) {
 				ret += tree[index];
+
+				// 前一个管不到的位置
 				index -= index & -index;
 			}
 			return ret;
@@ -43,6 +45,7 @@ public class Code01_IndexTree {
 				// 从 index 开始。前缀和数组的受到牵连的数组都要调整
 				// 原本的数，再将其最右侧的 1 再加一遍，就是受到牵连的数
 				// 【原来的前缀和数组所管的范围的开始位置是 抹掉最后一个 1 的下一个位置。也就是一个前开后闭的区间】
+				// 后一个会管到自己的位置
 				index += index & -index;
 			}
 		}

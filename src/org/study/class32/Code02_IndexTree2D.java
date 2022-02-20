@@ -25,6 +25,10 @@ public class Code02_IndexTree2D {
 	}
 
 	private int sum(int row, int col) {
+
+
+		// 这里从 row + 1 开始。是因为我们维护的从0开始的
+		// indexTree 要求的是从 1 开始。只能从逻辑上处理
 		int sum = 0;
 		for (int i = row + 1; i > 0; i -= i & (-i)) {
 			for (int j = col + 1; j > 0; j -= j & (-j)) {

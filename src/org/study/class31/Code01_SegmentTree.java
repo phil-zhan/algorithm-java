@@ -83,6 +83,7 @@ public class Code01_SegmentTree {
 		// 在初始化阶段，先把sum数组，填好
 		// 在arr[l~r]范围上，去build，1~N，
 		// rt : 这个范围在sum中的下标
+		// build的时候，先去填好左右节点的值【rt就是当前的树的跟节点。也就是堆顶】
 		public void build(int l, int r, int rt) {
 
 			// 该节点是叶节点
@@ -137,6 +138,10 @@ public class Code01_SegmentTree {
 		// rt，l~r【rt格子，rt格子所管理的范围是 l-r】
 		public void add(int L, int R, int C, int l, int r, int rt) {
 			// 任务如果把此时的范围全包了！【下发任务的区间覆盖了当前格子负责的区间】
+
+			// 能到叶节点的都是能全包的。否则也不会调到这
+			// 如果 L-R 没有和当前rt负责的区域有染，就不会调入这个方法
+			// 看图 img.png 理解
 			if (L <= l && r <= R) {
 				sum[rt] += C * (r - l + 1);
 

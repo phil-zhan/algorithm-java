@@ -113,6 +113,8 @@ public class Code04_AC2 {
 		}
 
 		// 大文章：content
+		// 把大文章想象成一个长的链条，以每个字符开始去拧着这个链条，敏感字符以此往上靠，能匹配的都收集，避免重复收集，做一定的标识
+		// 当前字符开头的收集完，大文章调整为下一个字符开始
 		public List<String> containWords(String content) {
 			char[] str = content.toCharArray();
 			Node cur = root;
@@ -162,6 +164,7 @@ public class Code04_AC2 {
 		ac.insert("abcdheks");
 		ac.insert("sabcdhe");
 		ac.insert("asldk");
+		ac.insert("zxdfg");
 		// 设置fail指针
 		ac.build();
 

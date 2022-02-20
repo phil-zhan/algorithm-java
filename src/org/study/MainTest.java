@@ -3,9 +3,7 @@ package org.study;
 import org.study.class05.Code003_QuickSort_2;
 import org.study.class30.Code01_MorrisTraversal;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author phil
@@ -15,17 +13,20 @@ public class MainTest {
 
 
     public static void main(String[] args) {
-        Node head = new Node(4);
-        head.left = new Node(2);
-        head.right = new Node(6);
-        head.left.left = new Node(1);
-        head.left.right = new Node(3);
-        head.right.left = new Node(5);
-        head.right.right = new Node(7);
+        Node head = new Node(2);
+        head.right = new Node(3);
+        head.right.right = new Node(1);
+//        head.left.left = new Node(1);
+//        head.left.right = new Node(3);
+//        head.right.left = new Node(5);
+//        head.right.right = new Node(7);
 
-        new MainTest().morrisPre(head);
-        new MainTest().morrisMid(head);
+//        new MainTest().morrisPre(head);
+//        new MainTest().morrisMid(head);
         new MainTest().morrisPos(head);
+
+        List<Integer> integers = new MainTest().postorderTraversal(head);
+        System.out.println(integers);
 
     }
 
@@ -171,6 +172,75 @@ public class MainTest {
         public Node(int data) {
             this.value = data;
         }
+    }
+
+
+    public List<Integer> postorderTraversal(Node root) {
+        // morris
+        List<Integer> ans = new ArrayList<>();
+        if(root == null){
+            return ans;
+        }
+
+        Node cur = root;
+        Node mostRight;
+
+        while(cur != null){
+            if(cur.left != null){
+                mostRight = cur.left;
+                while(mostRight.right != null && mostRight.right != cur){
+                    mostRight = mostRight.right;
+                }
+                if(mostRight.right == null){
+                    mostRight.right = cur;
+                    cur = cur.left;
+
+                    continue;
+                }else{
+                    mostRight.right = null;
+                    collectLeft(cur.left,ans);
+                }
+            }
+
+            cur = cur.right;
+        }
+
+        collectLeft(root,ans);
+
+        return ans;
+    }
+
+    public void collectLeft(Node head,List<Integer> list){
+        if(head == null){
+            return;
+        }
+        Node tail = reverse(head);
+
+        Node cur = tail;
+        while(cur != null){
+            list.add(cur.value);
+            cur = cur.right;
+        }
+
+        reverse(tail);
+    }
+
+    public Node reverse(Node head){
+        if(head == null || head.right == null){
+            return head;
+        }
+        Node pre = null;
+        Node cur = head;
+        Node post;
+
+        while(cur != null){
+            post = cur.right;
+            cur.right = pre;
+            pre = cur;
+            cur = post;
+        }
+
+        return pre;
     }
 
 }

@@ -95,9 +95,13 @@ public class Code03_AC1 {
 
 	public static void main(String[] args) {
 		ACAutomation ac = new ACAutomation();
+
+		// 构建前缀树
 		ac.insert("dhe");
 		ac.insert("he");
 		ac.insert("c");
+
+		// 构建fail指针
 		ac.build();
 		System.out.println(ac.containNum("cdhe"));
 	}
