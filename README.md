@@ -16,7 +16,7 @@
 
 
 ### 课程题目 & 知识点总结
-[课堂笔记](https://github.com/algorithmzuo/class-notes/tree/main/%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0)
+[课堂笔记](https://github.com/algorithmzuo/class-notes)
 
 [算法班题目汇总](https://mubu.com/app/edit/home/6MT77RkfIWo)
 

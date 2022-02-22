@@ -11,236 +11,85 @@ import java.util.*;
  */
 public class MainTest {
 
+    // ["Trie","insert","insert","insert","insert","insert","insert","search","search","search","search","search","search","search","search","search","startsWith","startsWith","startsWith","startsWith","startsWith","startsWith","startsWith","startsWith","startsWith"]
+    //[[],["app"],["apple"],["beer"],["add"],["jam"],["rental"],["apps"],["app"],["ad"],["applepie"],["rest"],["jan"],["rent"],["beer"],["jam"],["apps"],["app"],["ad"],["applepie"],["rest"],["jan"],["rent"],["beer"],["jam"]]
 
     public static void main(String[] args) {
-        Node head = new Node(2);
-        head.right = new Node(3);
-        head.right.right = new Node(1);
-//        head.left.left = new Node(1);
-//        head.left.right = new Node(3);
-//        head.right.left = new Node(5);
-//        head.right.right = new Node(7);
+        MainTest mainTest = new MainTest();
+        mainTest.insert("app");
+        mainTest.insert("apple");
+        mainTest.insert("beer");
+        mainTest.insert("add");
+        mainTest.insert("jam");
+        mainTest.insert("rental");
 
-//        new MainTest().morrisPre(head);
-//        new MainTest().morrisMid(head);
-        new MainTest().morrisPos(head);
-
-        List<Integer> integers = new MainTest().postorderTraversal(head);
-        System.out.println(integers);
-
+        boolean apps = mainTest.search("apps");
+        System.out.println(apps);
     }
 
+    public Node root;
 
-    public void morrisPre(Node head){
+    public class Node{
+        public Node[] nexts;
+        public boolean isEnd;
+        public Node(){
+            this.nexts = new Node[26];
+        }
+    }
 
-        System.out.println("下面是先序");
-        if (head == null){
+    public MainTest() {
+        this.root = new Node();
+    }
+
+    public void insert(String word) {
+        if(word == null || word.length() == 0){
             return;
         }
 
-        Node cur = head;
-        Node mostRight;
-
-        while (cur != null){
-            if (cur.left != null){
-                mostRight = cur.left;
-                while (mostRight.right != null && mostRight.right != cur){
-                    mostRight = mostRight.right;
-                }
-
-                if (mostRight.right == null){
-                    mostRight.right = cur;
-                    System.out.println(cur.value);
-                    cur = cur.left;
-                    continue;
-                }
-                mostRight.right = null;
-            }else{
-                System.out.println(cur.value);
-            }
-            cur = cur.right;
-        }
-
-    }
-
-
-    public void morrisMid(Node head){
-
-        System.out.println("下面是中序\n");
-        if (head == null){
-            return;
-        }
-
-        Node cur = head;
-        Node mostRight;
-
-        while (cur != null){
-            if (cur.left != null){
-                mostRight = cur.left;
-                while (mostRight.right!= null && mostRight.right != cur){
-                    mostRight = mostRight.right;
-                }
-                if (mostRight.right == null){
-                    mostRight.right = cur;
-                    cur = cur.left;
-                    continue;
-                }
-                mostRight.right = null;
-            }
-
-            System.out.println(cur.value);
-            cur = cur.right;
-        }
-    }
-
-
-    public void morrisPos(Node head){
-
-        System.out.println("下面是后序");
-        if (head == null){
-            return;
-        }
-
-        Node cur = head;
-        Node mostRight;
-
-        while (cur != null){
-            if (cur.left != null){
-                mostRight = cur.left;
-                while (mostRight.right != null && mostRight.right != cur){
-                    mostRight = mostRight.right;
-                }
-
-                if (mostRight.right == null){
-                    mostRight.right = cur;
-                    cur = cur.left;
-                }else{
-                    mostRight.right = null;
-                    printRightEdge(cur.left);
-                    cur = cur.right;
-                }
-            }else{
-                cur= cur.right;
-            }
-        }
-
-        printRightEdge(head);
-    }
-    
-    
-
-    public void printRightEdge(Node head){
-
-        if (head == null){
-            return;
-        }
-
-
-        // 链表反转
-        Node tail = reverseEdge(head);
-        Node cur = tail;
-
-        // 打印
-        while (cur != null) {
-            System.out.print(cur.value + " ");
-            cur = cur.right;
-        }
-
-        // 打印完成后，再反转回去
-        reverseEdge(tail);
-
-    }
-
-    public static Node reverseEdge(Node from) {
-        Node pre = null;
-        Node next;
-        while (from != null) {
-            next = from.right;
-            from.right = pre;
-            pre = from;
-            from = next;
-        }
-        return pre;
-    }
-
-
-    public static class Node {
-        public int value;
-        Node left;
-        Node right;
-
-        public Node(int data) {
-            this.value = data;
-        }
-    }
-
-
-    public List<Integer> postorderTraversal(Node root) {
-        // morris
-        List<Integer> ans = new ArrayList<>();
-        if(root == null){
-            return ans;
-        }
-
+        char[] str = word.toCharArray();
         Node cur = root;
-        Node mostRight;
-
-        while(cur != null){
-            if(cur.left != null){
-                mostRight = cur.left;
-                while(mostRight.right != null && mostRight.right != cur){
-                    mostRight = mostRight.right;
-                }
-                if(mostRight.right == null){
-                    mostRight.right = cur;
-                    cur = cur.left;
-
-                    continue;
-                }else{
-                    mostRight.right = null;
-                    collectLeft(cur.left,ans);
-                }
+        for(int i=0;i<str.length;i++){
+            if(cur.nexts[str[i]-'a'] == null){
+                cur.nexts[str[i]-'a'] = new Node();
             }
 
-            cur = cur.right;
+            cur = cur.nexts[str[i]-'a'];
         }
-
-        collectLeft(root,ans);
-
-        return ans;
+        cur.isEnd = true;
     }
 
-    public void collectLeft(Node head,List<Integer> list){
-        if(head == null){
-            return;
+    public boolean search(String word) {
+        if(word == null || word.length() == 0){
+            return false;
         }
-        Node tail = reverse(head);
-
-        Node cur = tail;
-        while(cur != null){
-            list.add(cur.value);
-            cur = cur.right;
+        char[] str = word.toCharArray();
+        Node cur = root;
+        for(int i=0;i<str.length;i++){
+            if(cur.nexts[str[i]-'a'] == null){
+                return false;
+            }
+            cur = cur.nexts[str[i]-'a'];
         }
-
-        reverse(tail);
+        return cur.isEnd;
     }
 
-    public Node reverse(Node head){
-        if(head == null || head.right == null){
-            return head;
-        }
-        Node pre = null;
-        Node cur = head;
-        Node post;
-
-        while(cur != null){
-            post = cur.right;
-            cur.right = pre;
-            pre = cur;
-            cur = post;
+    public boolean startsWith(String prefix) {
+        if(prefix == null || prefix.length() == 0){
+            return false;
         }
 
-        return pre;
+        char[] str = prefix.toCharArray();
+        Node cur = root;
+        for(int i=0;i<str.length;i++){
+            if(cur.nexts[str[i]-'a'] == null){
+                return false;
+            }
+
+            cur = cur.nexts[str[i]-'a'];
+        }
+
+        return true;
     }
+
 
 }
