@@ -58,15 +58,28 @@ public class MainTest02 {
             int rightRightSize = head.right != null && head.right.right != null ? head.right.right.size : 0;
 
             if(leftLeftSize > rightSize){
-
+                head = rightRotate(head);
+                head.right = maintain(head.right);
+                head = maintain(head);
             }
             if(leftRightSize > rightSize){
-
+                head.left = leftRotate(head.left);
+                head = rightRotate(head);
+                head.left = maintain(head.left);
+                head.right = maintain(head.right);
+                head = maintain(head);
             }
             if(rightLeftSize > leftSize){
-
+                head.right = rightRotate(head.right);
+                head = leftRotate(head);
+                head.left = maintain(head.left);
+                head.right = maintain(head.right);
+                head = maintain(head);
             }
             if(rightRightSize > leftSize){
+                head = leftRotate(head);
+                head.left = maintain(head.left);
+                head = maintain(head);
 
             }
 
