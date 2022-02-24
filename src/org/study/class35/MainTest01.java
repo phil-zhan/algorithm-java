@@ -262,7 +262,6 @@ public class MainTest01 {
             // 调整高度
             root.height = Math.max(root.left != null ? root.left.height : 0, root.right != null ? root.right.height : 0) + 1;
             right.height = Math.max(right.left.height, right.right != null ? right.right.height : 0) + 1;
-            ;
 
             return right;
         }

@@ -47,6 +47,9 @@ public class Code01_SizeBalancedTreeMap {
 			int rightSize = cur.r != null ? cur.r.size : 0;
 			int rightLeftSize = cur.r != null && cur.r.l != null ? cur.r.l.size : 0;
 			int rightRightSize = cur.r != null && cur.r.r != null ? cur.r.r.size : 0;
+
+			// 违反规则时，就去做相应的旋转。
+			// 旋转后，需要递归检查那些子节点被改变的树的平衡性【maintain】
 			if (leftLeftSize > rightSize) {
 				cur = rightRotate(cur);
 				cur.r = maintain(cur.r);
