@@ -1,5 +1,7 @@
 package org.study.class37;
 
+import java.util.Arrays;
+
 /**
  * @author phil
  * @date 2021/10/13 14:32
@@ -54,38 +56,38 @@ public class MainTest02 {
                 return null;
             }
 
+
             int leftSize = head.left != null ? head.left.size : 0;
             int leftLeftSize = head.left != null && head.left.left != null ? head.left.left.size : 0;
             int leftRightSize = head.left != null && head.left.right != null ? head.left.right.size : 0;
-
             int rightSize = head.right != null ? head.right.size : 0;
             int rightLeftSize = head.right != null && head.right.left != null ? head.right.left.size : 0;
             int rightRightSize = head.right != null && head.right.right != null ? head.right.right.size : 0;
 
+            // 这里要用 else if
+            // 以防同时出现 LL 和 LR 的情况。此时应该按照 LL 来调整
+            // 以防同时出现 RR 和 RL 的情况。此时应该按照 RR 来调整
             if (leftLeftSize > rightSize) {
                 head = rightRotate(head);
                 head.right = maintain(head.right);
                 head = maintain(head);
-            }
-            if (leftRightSize > rightSize) {
+            }else if (leftRightSize > rightSize) {
                 head.left = leftRotate(head.left);
                 head = rightRotate(head);
                 head.left = maintain(head.left);
                 head.right = maintain(head.right);
                 head = maintain(head);
-            }
-            if (rightLeftSize > leftSize) {
+            }else if (rightRightSize > leftSize) {
+                head = leftRotate(head);
+                head.left = maintain(head.left);
+                head = maintain(head);
+
+            }else if (rightLeftSize > leftSize) {
                 head.right = rightRotate(head.right);
                 head = leftRotate(head);
                 head.left = maintain(head.left);
                 head.right = maintain(head.right);
                 head = maintain(head);
-            }
-            if (rightRightSize > leftSize) {
-                head = leftRotate(head);
-                head.left = maintain(head.left);
-                head = maintain(head);
-
             }
 
             return head;
@@ -112,6 +114,8 @@ public class MainTest02 {
         }
 
         public SizeNode<K> delete(SizeNode<K> head, K key) {
+            head.size--;
+
             if (key.compareTo(head.key) > 0) {
                 head.right = delete(head.right, key);
             } else if (key.compareTo(head.key) < 0) {
@@ -126,9 +130,11 @@ public class MainTest02 {
                 } else {
                     SizeNode<K> pre = null;
                     SizeNode<K> des = head.right;
+                    des.size--;
                     while (des.left != null) {
                         pre = des;
                         des = des.left;
+                        des.size--;
                     }
                     if (pre != null) {
                         pre.left = des.right;
@@ -239,5 +245,13 @@ public class MainTest02 {
             tree.remove(new Node(i - k + 1, nums[i - k + 1]));
         }
         return ans;
+    }
+
+    public static void main(String[] args) {
+        // [6,5,9,5,4,9,1,7,5,5]
+        //4
+        double[] doubles = medianSlidingWindow(new int[]{6,5,9,5,4,9,1,7,5,5}, 4);
+        //double[] doubles = medianSlidingWindow(new int[]{6,9,5,4,1,7}, 4);
+        System.out.println(Arrays.toString(doubles));
     }
 }
