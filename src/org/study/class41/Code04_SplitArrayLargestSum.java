@@ -59,6 +59,8 @@ public class Code04_SplitArrayLargestSum {
 
 
 		int[][] dp = new int[N][K + 1];
+
+		// best[i][j]表示有 j 个画家,需要处理 arr[0...i] 副画的时候，前面 `j-1` 个画家需要负责的范围的右边界
 		int[][] best = new int[N][K + 1];
 
 
@@ -68,7 +70,7 @@ public class Code04_SplitArrayLargestSum {
 			best[0][j] = -1;
 		}
 
-		// 第一列
+		// 第一列【第0列不用管。表示的是没有画家。怎么都完不成】
 		for (int i = 1; i < N; i++) {
 			dp[i][1] = sum(sum, 0, i);
 			best[i][1] = -1;
@@ -84,7 +86,11 @@ public class Code04_SplitArrayLargestSum {
 				int ans = Integer.MAX_VALUE;
 				int bestChoose = -1;
 				for (int leftEnd = down; leftEnd <= up; leftEnd++) {
+
+					// 左边是 j-1 个画家
 					int leftCost = leftEnd == -1 ? 0 : dp[leftEnd][j - 1];
+
+					// 右边是一个画家
 					int rightCost = leftEnd == i ? 0 : sum(sum, leftEnd + 1, i);
 					int cur = Math.max(leftCost, rightCost);
 					// 注意下面的if一定是 < 课上的错误就是此处！当时写的 <= ！
@@ -124,8 +130,8 @@ public class Code04_SplitArrayLargestSum {
 
 	public static int splitArray3(int[] nums, int M) {
 		long sum = 0;
-		for (int i = 0; i < nums.length; i++) {
-			sum += nums[i];
+		for (int num : nums) {
+			sum += num;
 		}
 		long l = 0;
 		long r = sum;
@@ -144,8 +150,8 @@ public class Code04_SplitArrayLargestSum {
 	}
 
 	public static int getNeedParts(int[] arr, long aim) {
-		for (int i = 0; i < arr.length; i++) {
-			if (arr[i] > aim) {
+		for (int j : arr) {
+			if (j > aim) {
 				return Integer.MAX_VALUE;
 			}
 		}
@@ -171,8 +177,8 @@ public class Code04_SplitArrayLargestSum {
 	}
 
 	public static void printArray(int[] arr) {
-		for (int i = 0; i < arr.length; i++) {
-			System.out.print(arr[i] + " ");
+		for (int j : arr) {
+			System.out.print(j + " ");
 		}
 		System.out.println();
 	}
