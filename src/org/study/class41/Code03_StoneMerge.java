@@ -83,6 +83,8 @@ public class Code03_StoneMerge {
 		int[][] best = new int[N][N];
 
 
+		// 处理第二条对角线
+		// 第二条对角线表示的范围上只有两个数，最好的合并就是这两个数的和。也就是将刀切在两个数的中间
 		for (int i = 0; i < N - 1; i++) {
 			best[i][i + 1] = i;
 
@@ -91,6 +93,9 @@ public class Code03_StoneMerge {
 		}
 
 
+		// 从下到上，每行从左往右去填dp
+		//
+		// 只考虑 除去第一条对角线和第二条对角线 的上三角部分
 		for (int L = N - 3; L >= 0; L--) {
 			for (int R = L + 2; R < N; R++) {
 				int next = Integer.MAX_VALUE;
@@ -100,7 +105,7 @@ public class Code03_StoneMerge {
 				// 左边位置 [L...R-1]
 				// 下边位置 [L+1...R]
 
-				// 只考虑左边最优解的最佳切分点 到 下边最优解的最佳切分点 之间
+				// 只考虑左边最优解的最佳切分点 到 下边最优解的最佳切分点 之间的范围
 				for (int leftEnd = best[L][R - 1]; leftEnd <= best[L + 1][R]; leftEnd++) {
 					int cur = dp[L][leftEnd] + dp[leftEnd + 1][R];
 					if (cur <= next) {
@@ -110,6 +115,7 @@ public class Code03_StoneMerge {
 				}
 
 
+				// 将当前范围上的最佳划分点也缓存一下，方便其他格子使用
 				best[L][R] = choose;
 
 				// w() 求L...R范围上的累加和
