@@ -11,44 +11,47 @@ import java.util.TreeSet;
 public class MainTest01 {
 
     public static int max1(int[] arr, int m) {
-        HashSet<Integer> set = new HashSet<>();
-        process(arr, 0, 0, set);
+
+        HashSet<Long> set = new HashSet<>();
+        process1(arr,0,0,set);
         int max = 0;
-        for (Integer sum : set) {
-            max = Math.max(max, sum % m);
+
+        for (Long sum:set) {
+            max = (int) Math.max(max,sum % m);
         }
         return max;
     }
 
-
-    public static void process(int[] arr, int index, int sum, Set<Integer> set) {
-        if (index == arr.length) {
+    public static void process1(int[] arr,int index,long sum,HashSet<Long> set){
+        if (index == arr.length){
             set.add(sum);
-        } else {
-            process(arr, index + 1, sum, set);
-            process(arr, index + 1, sum + arr[index], set);
+            return;
         }
+        process1(arr,index+1,sum,set);
+        process1(arr,index+1,sum+arr[index],set);
     }
 
+
     public static int max2(int[] arr, int m) {
-        int length = arr.length;
+        int len = arr.length;
+
         int sum = 0;
-        for (int k : arr) {
-            sum += k;
+        for (int j : arr) {
+            sum += j;
         }
 
-
-        boolean[][] dp = new boolean[length][sum + 1];
-        for (int i = 0; i < length; i++) {
+        // dp[i][j] : 0到i的范围上随意选择，能否组装成 j 的累加和
+        boolean[][] dp = new boolean[len][sum+1];
+        for (int i = 0; i < len; i++) {
             dp[i][0] = true;
         }
 
         dp[0][arr[0]] = true;
-        for (int i = 1; i < length; i++) {
+        for (int i = 1; i < len; i++) {
             for (int j = 1; j <= sum; j++) {
-                dp[i][j] = dp[i - 1][j];
-                if (j - arr[i] >= 0) {
-                    dp[i][j] |= dp[i - 1][j - arr[i]];
+                dp[i][j] = dp[i-1][j];
+                if (j-arr[i] >= 0){
+                    dp[i][j] |= dp[i-1][j-arr[i]];
                 }
             }
         }
@@ -56,8 +59,8 @@ public class MainTest01 {
 
         int ans = 0;
         for (int i = 0; i <= sum; i++) {
-            if (dp[length - 1][i]) {
-                ans = Math.max(ans, i % m);
+            if (dp[len-1][i]){
+                ans = Math.max(ans,i % m);
             }
         }
 

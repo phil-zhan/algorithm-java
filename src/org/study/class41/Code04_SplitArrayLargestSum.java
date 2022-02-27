@@ -71,6 +71,7 @@ public class Code04_SplitArrayLargestSum {
 		}
 
 		// 第一列【第0列不用管。表示的是没有画家。怎么都完不成】
+		// best[i][1] = -1  表示当前的画家只有一位，不需要拆分。
 		for (int i = 1; i < N; i++) {
 			dp[i][1] = sum(sum, 0, i);
 			best[i][1] = -1;
@@ -88,6 +89,7 @@ public class Code04_SplitArrayLargestSum {
 				for (int leftEnd = down; leftEnd <= up; leftEnd++) {
 
 					// 左边是 j-1 个画家
+					// leftEnd == -1 左边没有画家。其代价是0
 					int leftCost = leftEnd == -1 ? 0 : dp[leftEnd][j - 1];
 
 					// 右边是一个画家
