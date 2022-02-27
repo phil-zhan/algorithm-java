@@ -2,56 +2,25 @@ package org.study.class03;
 
 /**
  * @author phil
- * @date 2021/3/13 11:20
- * 链表操作
+ * @date 2021/3/13 14:57
+ * 面试题
+ *
+ * 实现一个特殊的栈，在基本功能的基础上，再实现返回栈中最小元素的功能
+ * pop、push、getMin操作的时间复杂度都是 O(1)
+ * 设计的栈类型可以使用现成的栈结构
+ *
+ * 实现思路：
+ * 准备两个栈。一个数据栈，一个最小数栈
+ * 插入的时候，直接入数据栈。
+ * 如果最小站没有数，也是直接插入。
+ * 如果数据栈有数，就将当前数和最小栈中的数做比较。
+ *      如果当前数比最小栈的栈顶小，就把当前数直接压入最小栈。如果当前数比最小栈的栈顶大，就将最小栈的栈顶重复压入最小栈
+ * pop的时候，出栈的时候，两个栈同步弹出，将数据栈的数据返回给用户
+ * getMin的时候，将最小栈的栈顶元素给用户，但是不出栈
+ *
+ * 注：两个栈是对应的，也就是最小栈的每一层都记录了 数据栈的栈底到当前层为止的最小数
+ *
+ *
  */
 public class Code03 {
-
-    /**
-     * 反转单链表
-     * @date 2021-03-13 11:25:35
-     */
-    public static Node<Integer> reverseLinkedList(Node<Integer> head){
-
-        Node<Integer> pre = null;
-
-        Node<Integer> next = null;
-
-        while (head.next != null){
-            next = head.next;
-            head.next = pre;
-            pre = head;
-            head = next;
-        }
-
-        return pre;
-    }
-
-    /**
-     * 删除单链表中指定的节点
-     * @date 2021-03-13 13:51:02
-     */
-    public static Node<Integer> delNode(Node<Integer> head,Integer num){
-
-        while (null != head){
-            if(head.value.equals(num)){
-                head = head.next;
-            }else{
-                break;
-            }
-        }
-
-        Node<Integer> pre = head;
-        Node<Integer> cur = head;
-
-        while (cur != null){
-            if(cur.value.equals(num)){
-                pre.next = cur.next;
-            }else{
-                cur = cur.next;
-            }
-        }
-
-        return head;
-    }
 }

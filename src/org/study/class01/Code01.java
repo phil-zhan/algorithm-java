@@ -1,18 +1,16 @@
 package org.study.class01;
 
-import  org.study.class01.InsertSort;
-import  org.study.class01.MySort;
 
 import java.util.Arrays;
 
 /**
  * @author phil
  */
-public class ArithmeticClass001 {
+public class Code01 {
 
     public static void main(String[] args) {
 
-        MySort mySort = new InsertSort();
+        InsertSort mySort = new InsertSort();
 
         // 测试次数
         int testTimes = 5000000;
