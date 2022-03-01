@@ -5,6 +5,7 @@ import java.util.Stack;
 
 public class Code02_CountFiles {
 
+	// 考虑利用队列，宽度优先遍历【栈或递归也行】
 	// 注意这个函数也会统计隐藏文件
 	public static int getFileNumber(String folderPath) {
 		File root = new File(folderPath);
@@ -33,7 +34,7 @@ public class Code02_CountFiles {
 
 	public static void main(String[] args) {
 		// 你可以自己更改目录
-		String path = "/Users/zuochengyun/Desktop/";
+		String path = "C:";
 		System.out.println(getFileNumber(path));
 	}
 

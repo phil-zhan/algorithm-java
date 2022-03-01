@@ -49,13 +49,17 @@ public class Code07_TargetSum {
 	// 因为你能在每个数前面用+或者-号
 	// 所以[3,-4,2]其实和[3,4,2]达成一样的效果
 	// 那么我们就全把arr变成非负数，不会影响结果的
+
 	// 优化点二 :
 	// 如果arr都是非负数，并且所有数的累加和是sum
 	// 那么如果target<sum，很明显没有任何方法可以达到target，可以直接返回0
+
 	// 优化点三 :
 	// arr内部的数组，不管怎么+和-，最终的结果都一定不会改变奇偶性
 	// 所以，如果所有数的累加和是sum，
 	// 并且与target的奇偶性不一样，没有任何方法可以达到target，可以直接返回0
+
+
 	// 优化点四 :
 	// 比如说给定一个数组, arr = [1, 2, 3, 4, 5] 并且 target = 3
 	// 其中一个方案是 : +1 -2 +3 -4 +5 = 3
@@ -77,6 +81,8 @@ public class Code07_TargetSum {
 		for (int n : arr) {
 			sum += n;
 		}
+
+		//  ((target & 1) ^ (sum & 1)) != 0 奇偶性不一样
 		return sum < target || ((target & 1) ^ (sum & 1)) != 0 ? 0 : subset2(arr, (target + sum) >> 1);
 	}
 
@@ -103,7 +109,7 @@ public class Code07_TargetSum {
 		return dp[n][s];
 	}
 
-	// 求非负数组nums有多少个子集，累加和是s
+	// 求非负数组nums有多少个子集，累加和是s 【经典背包动态规划】
 	// 二维动态规划
 	// 用空间压缩:
 	// 核心就是for循环里面的：for (int i = s; i >= n; i--) {

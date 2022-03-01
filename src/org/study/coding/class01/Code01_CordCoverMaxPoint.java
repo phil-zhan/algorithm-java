@@ -4,6 +4,11 @@ import java.util.Arrays;
 
 public class Code01_CordCoverMaxPoint {
 
+	/**
+	 * 解法1：
+	 * 考虑以每个位置为绳子的终点，其前面能覆盖多少数
+	 * @since 2022-02-28 10:01:56
+	 */
 	public static int maxPoint1(int[] arr, int L) {
 		int res = 1;
 		for (int i = 0; i < arr.length; i++) {
@@ -13,6 +18,10 @@ public class Code01_CordCoverMaxPoint {
 		return res;
 	}
 
+	/**
+	 * 利用二分法去处理。找到【0...R】范围上。找到当前线段能覆盖的最左 的下标
+	 * @since 2022-02-28 10:02:49
+	 */
 	public static int nearestIndex(int[] arr, int R, int value) {
 		int L = 0;
 		int index = R;
@@ -28,12 +37,19 @@ public class Code01_CordCoverMaxPoint {
 		return index;
 	}
 
+	/**
+	 * 解法2：
+	 * 利用固定绳子长度的窗口去滑动处理。窗口不会退。O(N)
+	 * @since 2022-02-28 10:04:56
+	 */
 	public static int maxPoint2(int[] arr, int L) {
+
+		// 下标指针
 		int left = 0;
 		int right = 0;
 		int N = arr.length;
 		int max = 0;
-		while (left < N) {
+		while (left <= right) {
 			while (right < N && arr[right] - arr[left] <= L) {
 				right++;
 			}
@@ -81,7 +97,7 @@ public class Code01_CordCoverMaxPoint {
 				break;
 			}
 		}
-
+		System.out.println("测试结束");
 	}
 
 }
