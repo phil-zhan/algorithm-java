@@ -2,6 +2,7 @@ package org.study.coding.class02;
 
 import java.util.HashMap;
 
+
 public class Code05_SetAll {
 
 	public static class MyValue<V> {
