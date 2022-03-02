@@ -3,11 +3,30 @@ package org.study.coding.class03;
 // 本题测试链接 : https://leetcode.com/problems/largest-1-bordered-square/
 public class Code03_Largest1BorderedSquare {
 
-	public static int largest1BorderedSquare(int[][] m) {
-		int[][] right = new int[m.length][m[0].length];
-		int[][] down = new int[m.length][m[0].length];
-		setBorderMap(m, right, down);
-		for (int size = Math.min(m.length, m[0].length); size != 0; size--) {
+	/**
+	 * 枚举所有的正方形【任意的一个点加一个边长，就能组成一个正方形】
+	 * 矩形范围内，枚举所有的点是 O(N^2)
+	 * 枚举所有的边长是 O(N)
+	 * 所有枚举所有的正方形是 O(N^3)
+	 * 对应每一个正方形，考察其边长上是否都是1
+	 * 做出一个辅助结构
+	 * 先算出从每个位置`i` 开始，
+	 * 往右延长（包含自己），最多能有多少个 1，
+	 * 往下延长（包含自己），最多能有多少个 1
+	 *
+	 * 当枚举到某个正方形时，考察以其左上角点（往有、往下），左下角（往右），右上角（往下），对应的点，在对应的方向上，最多能延展的1是否够边长的长度
+	 * 若够，该正方形成立，反之则不成立
+	 *
+	 * 注意，枚举边时，其往右和往下的最大延伸长度只能取二者的最小值。【因为是正方形】
+	 *
+	 *
+	 * @since 2022-03-02 08:47:37
+	 */
+	public static int largest1BorderedSquare(int[][] grid) {
+		int[][] right = new int[grid.length][grid[0].length];
+		int[][] down = new int[grid.length][grid[0].length];
+		setBorderMap(grid, right, down);
+		for (int size = Math.min(grid.length, grid[0].length); size != 0; size--) {
 			if (hasSizeOfBorder(size, right, down)) {
 				return size * size;
 			}

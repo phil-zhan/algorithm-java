@@ -6,6 +6,17 @@ import java.util.HashMap;
 // 本题测试链接 : https://leetcode.com/problems/freedom-trail/
 public class Code07_FreedomTrail {
 
+	/**
+	 * 生成一张表
+	 * Map<String,List<String>>
+	 * a:存在的位置有哪些
+	 * b:存在的位置有哪些
+	 * c:存在的位置有哪些
+	 * ...
+	 *
+	 * 遍历目标串，来到某个字符，找到该字符存在的位置，让所有位置都去转一下，最后抓一个最优的
+	 * @since 2022-03-03 07:21:30
+	 */
 	public static int findRotateSteps(String r, String k) {
 		char[] ring = r.toCharArray();
 		int N = ring.length;
@@ -29,13 +40,19 @@ public class Code07_FreedomTrail {
 		return process(0, 0, str, map, N, dp);
 	}
 
-	// 电话里：指针指着的上一个按键preButton
-	// 目标里：此时要搞定哪个字符？keyIndex
-	// map : key 一种字符 value: 哪些位置拥有这个字符
-	// N: 电话大小
-	// f(0, 0, aim, map, N)
-	public static int process(int preButton, int index, char[] str, HashMap<Character, ArrayList<Integer>> map, int N,
-			int[][] dp) {
+	/**
+	 *  电话里：指针指着的上一个按键preButton
+	 * 	目标里：此时要搞定哪个字符？keyIndex
+	 * 	map : key 一种字符 value: 哪些位置拥有这个字符
+	 * 	N: 电话大小
+	 * 	f(0, 0, aim, map, N)
+	 * 	返回最少的代价
+	 * 	每一次的代价是指针移动到当前位置的代价加一下确认的代价
+	 * @since 2022-03-03 07:33:18
+	 */
+	public static int process(int preButton, int index, char[] str, HashMap<Character, ArrayList<Integer>> map, int N,int[][] dp) {
+
+		// 傻缓存
 		if (dp[preButton][index] != -1) {
 			return dp[preButton][index];
 		}
@@ -47,6 +64,8 @@ public class Code07_FreedomTrail {
 			char cur = str[index];
 			ArrayList<Integer> nextPositions = map.get(cur);
 			for (int next : nextPositions) {
+
+				// next 就是当前的可选位置
 				int cost = dial(preButton, next, N) + 1 + process(next, index + 1, str, map, N, dp);
 				ans = Math.min(ans, cost);
 			}

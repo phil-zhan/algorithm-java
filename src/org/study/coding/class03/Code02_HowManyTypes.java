@@ -30,13 +30,19 @@ public class Code02_HowManyTypes {
 		return types.size();
 	}
 
+	/**
+	 * 考虑用 int 类型的数来表示一个分类【每个位表示该位置对应的字母是否出现过】
+	 * 同样的字母组合，弄出来的数肯定是一样的，再将所有的数都放贷set集合里面取
+	 * 最后统计set集合的数量
+	 * @since 2022-03-02 08:45:02
+	 */
 	public static int types2(String[] arr) {
 		HashSet<Integer> types = new HashSet<>();
 		for (String str : arr) {
 			char[] chs = str.toCharArray();
 			int key = 0;
-			for(int i = 0 ; i < chs.length;i++) {
-				key |= (1 << (chs[i] - 'a'));
+			for (char ch : chs) {
+				key |= (1 << (ch - 'a'));
 			}
 			types.add(key);
 		}
