@@ -144,7 +144,7 @@ public class Code02_Cola {
 			zhang[i] += (oneTimeRest / qian[i]) * times;
 
 			// %=
-			oneTimeRest %= qian[i];
+			oneTimeRest += oneTimeRest % qian[i];
 		}
 	}
 
@@ -153,7 +153,6 @@ public class Code02_Cola {
 		int zhangMax = 10;
 		int colaMax = 10;
 		int priceMax = 20;
-		System.out.println("如果错误会打印错误数据，否则就是正确");
 		System.out.println("test begin");
 		for (int i = 0; i < testTime; i++) {
 			int m = (int) (Math.random() * colaMax);
