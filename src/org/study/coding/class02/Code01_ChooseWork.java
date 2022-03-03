@@ -18,7 +18,9 @@ public class Code01_ChooseWork {
 
 	/**
 	 * 先根据难度排序
-	 * 难度一样的情况下，根据报酬排序【难度升序。报酬降序】
+	 * 难度一样的情况下，根据报酬排序
+	 * 【难度升序。报酬降序】
+	 * 在每一组里面，第一份工作肯定是最好的，难度最低，钱最多
 	 * @since 2022-03-01 09:50:14
 	 */
 	public static class JobComparator implements Comparator<Job> {
