@@ -2,6 +2,17 @@ package org.study.coding.class04;
 
 public class Code04_SubArrayMaxSumFollowUp {
 
+	/**
+	 * 考虑 [0...i]范围上，不能相邻的情况下，最大累加和
+	 *
+	 * 1）不要当前位置的数，直接去前一个位置的答案
+	 * 2）要当前位置的数，往前推两位去取答案【也就是不要去前一位的答案】
+	 * 3）要当前位置的数，且只要当前位置的数
+	 *
+	 * 空间压缩，有限个变量向后滚
+	 *
+	 * @since 2022-03-03 10:51:06
+	 */
 	public static int subSqeMaxSumNoNext(int[] arr) {
 		if (arr == null || arr.length == 0) {
 			return 0;
@@ -50,6 +61,8 @@ public class Code04_SubArrayMaxSumFollowUp {
 		dp[0] = arr[0];
 		dp[1] = Math.max(arr[0], arr[1]);
 		for (int i = 2; i < N; i++) {
+
+			// 三种可能性，抓最大值
 			dp[i] = Math.max(Math.max(dp[i - 1], arr[i]), arr[i] + dp[i - 2]);
 		}
 		return dp[N - 1];

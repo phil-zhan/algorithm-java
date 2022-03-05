@@ -2,6 +2,18 @@ package org.study.coding.class04;
 
 public class Code03_SubMatrixMaxSum {
 
+	/**
+	 * 每次都考虑 i行到j行的最大值
+	 * i行到i行
+	 * i行到i+1行
+	 * i行到i+2行
+	 * i行到i+3行
+	 * 。。。。
+	 * 只有一行时，直接按照单个数组球最大累加和方法来求
+	 * 多行时，求用从上到下累加的方式弄出一个一维数组。再按照一维数组求最大累加和的方式来做
+	 *
+	 * @since 2022-03-03 10:24:53
+	 */
 	public static int maxSum(int[][] m) {
 		if (m == null || m.length == 0 || m[0].length == 0) {
 			return 0;
@@ -13,7 +25,9 @@ public class Code03_SubMatrixMaxSum {
 		for (int i = 0; i < N; i++) {
 			// i~j
 			int[] s = new int[M];
+
 			for (int j = i; j < N; j++) {
+
 				for (int k = 0; k < M; k++) {
 					s[k] += m[j][k];
 				}

@@ -26,6 +26,8 @@ public class Code03_Largest1BorderedSquare {
 		int[][] right = new int[grid.length][grid[0].length];
 		int[][] down = new int[grid.length][grid[0].length];
 		setBorderMap(grid, right, down);
+
+		// 边长从大往小枚举
 		for (int size = Math.min(grid.length, grid[0].length); size != 0; size--) {
 			if (hasSizeOfBorder(size, right, down)) {
 				return size * size;
@@ -41,18 +43,24 @@ public class Code03_Largest1BorderedSquare {
 			right[r - 1][c - 1] = 1;
 			down[r - 1][c - 1] = 1;
 		}
+
+		// 最后一列
 		for (int i = r - 2; i != -1; i--) {
 			if (m[i][c - 1] == 1) {
 				right[i][c - 1] = 1;
 				down[i][c - 1] = down[i + 1][c - 1] + 1;
 			}
 		}
+
+		// 最后一行
 		for (int i = c - 2; i != -1; i--) {
 			if (m[r - 1][i] == 1) {
 				right[r - 1][i] = right[r - 1][i + 1] + 1;
 				down[r - 1][i] = 1;
 			}
 		}
+
+		// common
 		for (int i = r - 2; i != -1; i--) {
 			for (int j = c - 2; j != -1; j--) {
 				if (m[i][j] == 1) {

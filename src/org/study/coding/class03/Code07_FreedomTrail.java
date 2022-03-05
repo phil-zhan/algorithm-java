@@ -29,6 +29,9 @@ public class Code07_FreedomTrail {
 		}
 		char[] str = k.toCharArray();
 		int M = str.length;
+
+		// 行代表轮盘的字符
+		// 列代表目标字符
 		int[][] dp = new int[N][M + 1];
 		// hashmap
 		// dp[][] == -1 : 表示没算过！
@@ -48,6 +51,9 @@ public class Code07_FreedomTrail {
 	 * 	f(0, 0, aim, map, N)
 	 * 	返回最少的代价
 	 * 	每一次的代价是指针移动到当前位置的代价加一下确认的代价
+	 *
+	 *
+	 * 	从index开始，到搞定完所有的字符的最小代价
 	 * @since 2022-03-03 07:33:18
 	 */
 	public static int process(int preButton, int index, char[] str, HashMap<Character, ArrayList<Integer>> map, int N,int[][] dp) {

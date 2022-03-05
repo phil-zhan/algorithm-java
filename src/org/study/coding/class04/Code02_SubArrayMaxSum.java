@@ -3,16 +3,24 @@ package org.study.coding.class04;
 // 本题测试链接 : https://leetcode.com/problems/maximum-subarray/
 public class Code02_SubArrayMaxSum {
 
+	/**
+	 * 考虑以 index 位置结尾，最多能往左推多远
+	 * index位置，有两种选择
+	 * 要么往左推	（当前位置的数，加上 前面一个数结尾的子数组的最大累加和）
+	 * 要么不往左推
+	 * 两种情况抓一个最大值
+	 * @since 2022-03-03 10:27:29
+	 */
 	public static int maxSubArray(int[] arr) {
 		if (arr == null || arr.length == 0) {
 			return 0;
 		}
 		int max = Integer.MIN_VALUE;
 		int cur = 0;
-		for (int i = 0; i < arr.length; i++) {
-			cur += arr[i];
+		for (int j : arr) {
+			cur += j;
 			max = Math.max(max, cur);
-			cur = cur < 0 ? 0 : cur;
+			cur = Math.max(cur, 0);
 		}
 		return max;
 	}
