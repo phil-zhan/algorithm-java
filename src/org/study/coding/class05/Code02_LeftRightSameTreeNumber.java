@@ -1,7 +1,16 @@
 package org.study.coding.class05;
 
-// 如果一个节点X，它左树结构和右树结构完全一样，那么我们说以X为头的子树是相等子树
-// 给定一棵二叉树的头节点head，返回head整棵树上有多少棵相等子树
+/**
+ * 阿里笔试原题
+ *
+ * 如果一个节点X，它左树结构和右树结构完全一样，那么我们说以X为头的子树是相等子树
+ * 给定一棵二叉树的头节点head，返回head整棵树上有多少棵相等子树
+ *
+ * sameNumber1(head) :以head为头的树，有多少个相等树
+ *
+ * same(head1,head2): 返回两个树是否是相等树
+ * @since 2022-03-05 04:36:03
+ */
 public class Code02_LeftRightSameTreeNumber {
 
 	public static class Node {
@@ -24,9 +33,10 @@ public class Code02_LeftRightSameTreeNumber {
 
 	public static boolean same(Node h1, Node h2) {
 		if (h1 == null ^ h2 == null) {
+			// 一个是null，另外一个不是 null
 			return false;
 		}
-		if (h1 == null && h2 == null) {
+		if (h1 == null) {
 			return true;
 		}
 		// 两个都不为空
@@ -50,6 +60,18 @@ public class Code02_LeftRightSameTreeNumber {
 		}
 	}
 
+	/**
+	 * 设计一个hash，得和左、右树及当前的值 都相关
+	 * 因为比较两个树是不是相等，要比较每个几点的值和结构
+	 * 这里采用先序序列化来实现【注意，空树也要有对应字符】
+	 * 先序来表示一个树的结构，没有任何歧义。
+	 * 将其取hash值
+	 * hash，相同的输入，必定导致相同的输出
+	 * 任何长度的输入，其输出的长度必定一样
+	 * 每次都比较相同长度的字符串。就能实现 O(1)
+	 *
+	 * @since 2022-03-05 05:23:17
+	 */
 	public static Info process(Node head, Hash hash) {
 		if (head == null) {
 			return new Info(0, hash.hashCode("#,"));
@@ -57,7 +79,7 @@ public class Code02_LeftRightSameTreeNumber {
 		Info l = process(head.left, hash);
 		Info r = process(head.right, hash);
 		int ans = (l.str.equals(r.str) ? 1 : 0) + l.ans + r.ans;
-		String str = hash.hashCode(String.valueOf(head.value) + "," + l.str + r.str);
+		String str = hash.hashCode(head.value + "," + l.str + r.str);
 		return new Info(ans, str);
 	}
 
