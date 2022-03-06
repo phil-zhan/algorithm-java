@@ -32,6 +32,7 @@ public class Code07_FreedomTrail {
 
 		// 行代表轮盘的字符
 		// 列代表目标字符
+		// dp[i][j] 表示轮盘指针上一步在 i 位置，要拨出 目标的 j 位置的字符 。最小的代价是什么
 		int[][] dp = new int[N][M + 1];
 		// hashmap
 		// dp[][] == -1 : 表示没算过！

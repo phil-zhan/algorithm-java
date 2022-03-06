@@ -20,11 +20,19 @@ public class Code08_DistanceKNodes {
 		}
 	}
 
+	/**
+	 * 准备一个parentMap，让所有节点都能找到其父节点
+	 * 从 target 开始，宽度优先遍历【遍历其父、左、右】。第K层的节点就是要找的节点
+	 * 在遍历时。一层遍历完成，再处理下一层
+	 * 注意去掉已经访问过的节点
+	 * @since 2022-03-06 08:23:10
+	 */
 	public static List<Node> distanceKNodes(Node root, Node target, int K) {
 		HashMap<Node, Node> parents = new HashMap<>();
 		parents.put(root, null);
 		createParentMap(root, parents);
 		Queue<Node> queue = new LinkedList<>();
+
 		HashSet<Node> visited = new HashSet<>();
 		queue.offer(target);
 		visited.add(target);
