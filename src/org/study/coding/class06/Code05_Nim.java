@@ -1,18 +1,37 @@
 package org.study.coding.class06;
 
+/**
+ * Nim博弈，给定一个正数数组arr，先手和后手每次可以选择在一个位置拿走若干值，(数组的任意位置)
+ * 这个值要大于0，但是要小于该处的剩余，谁最先拿空arr谁赢，根据arr返回谁赢。也就是谁最先没数拿，谁就输了
+ * @since 2022-03-06 04:42:25
+ */
 public class Code05_Nim {
 
-	// 保证arr是正数数组
-	public static void printWinner(int[] arr) {
-		int eor = 0;
-		for (int num : arr) {
-			eor ^= num;
-		}
-		if (eor == 0) {
-			System.out.println("后手赢");
-		} else {
-			System.out.println("先手赢");
-		}
-	}
+    /**
+     * 保证arr是正数数组
+     * 两个数的时候，先手挑大的数拿，保证拿走后，两个数一样。之后，不管后手拿多少，都将其拿成两个数一样。最终先手赢
+     * 多个数的时候。数组所有数异或起来。如果结果不为0，先手赢。否则后手赢
+     *
+     * 思路是：
+     * 要让多少最先面对都是 0 的状况
+     * 转化为 先手保证自己拿完后，剩下的异或和为0. 之后不管后手拿多少，自己都保证剩下的数异或和为0.最后一个异或和，肯定是两个相等的数，
+     * 不管后手怎么拿，最后一个数肯定是先手的
+     *
+     * 当然，如果整体异或和就是0，后手也会按照这种思路去KO先手
+     *
+     * @since 2022-03-06 04:47:31
+     */
+
+    public static void printWinner(int[] arr) {
+        int eor = 0;
+        for (int num : arr) {
+            eor ^= num;
+        }
+        if (eor == 0) {
+            System.out.println("后手赢");
+        } else {
+            System.out.println("先手赢");
+        }
+    }
 
 }
