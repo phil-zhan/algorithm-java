@@ -22,6 +22,7 @@ public class Code05_LongestIncreasingPath {
 	public static int process1(int[][] m, int i, int j) {
 
 		// 对应的方向，可以走就去尝试，不能走就是0
+		// 递增，不要求连续
 		int up = i > 0 && m[i][j] < m[i - 1][j] ? process1(m, i - 1, j) : 0;
 		int down = i < (m.length - 1) && m[i][j] < m[i + 1][j] ? process1(m, i + 1, j) : 0;
 		int left = j > 0 && m[i][j] < m[i][j - 1] ? process1(m, i, j - 1) : 0;

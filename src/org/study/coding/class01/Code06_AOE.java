@@ -74,6 +74,8 @@ public class Code06_AOE {
 					triggerPost++;
 				}
 				ans += hp[i];
+
+				// range是伤害半径
 				aoe(x, hp, i, triggerPost - 1, range);
 			}
 		}
