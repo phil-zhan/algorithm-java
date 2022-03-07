@@ -22,6 +22,8 @@ public class Code03_SubMatrixMaxSum {
 		int N = m.length;
 		int M = m[0].length;
 		int max = Integer.MIN_VALUE;
+
+		//  i~j : 从i行到i行
 		for (int i = 0; i < N; i++) {
 			// i~j
 			int[] s = new int[M];
@@ -52,9 +54,9 @@ public class Code03_SubMatrixMaxSum {
 	}
 
 	// 本题测试链接 : https://leetcode-cn.com/problems/max-submatrix-lcci/
-	public static int[] getMaxMatrix(int[][] m) {
-		int N = m.length;
-		int M = m[0].length;
+	public static int[] getMaxMatrix(int[][] matrix) {
+		int N = matrix.length;
+		int M = matrix[0].length;
 		int max = Integer.MIN_VALUE;
 		int cur = 0;
 		int a = 0;
@@ -67,7 +69,7 @@ public class Code03_SubMatrixMaxSum {
 				cur = 0;
 				int begin = 0;
 				for (int k = 0; k < M; k++) {
-					s[k] += m[j][k];
+					s[k] += matrix[j][k];
 					cur += s[k];
 					if (max < cur) {
 						max = cur;
