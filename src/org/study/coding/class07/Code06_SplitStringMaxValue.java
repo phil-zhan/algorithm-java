@@ -112,8 +112,8 @@ public class Code06_SplitStringMaxValue {
 		for (int i = 0; i < parts.length; i++) {
 			char[] str = parts[i].toCharArray();
 			TrieNode cur = root;
-			for (int j = 0; j < str.length; j++) {
-				int path = str[j] - 'a';
+			for (char c : str) {
+				int path = c - 'a';
 				if (cur.nexts[path] == null) {
 					cur.nexts[path] = new TrieNode();
 				}
