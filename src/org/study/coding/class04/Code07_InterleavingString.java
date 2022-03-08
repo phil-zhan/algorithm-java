@@ -27,6 +27,8 @@ public class Code07_InterleavingString {
         if (str3.length != str1.length + str2.length) {
             return false;
         }
+
+        // 需要多准备一位。第0位表示不用s1或s2
         boolean[][] dp = new boolean[str1.length + 1][str2.length + 1];
         dp[0][0] = true;
 
