@@ -36,7 +36,7 @@ public class Code02_LeftRightSameTreeNumber {
 			// 一个是null，另外一个不是 null
 			return false;
 		}
-		if (h1 == null) {
+		if (h2 == null) {
 			return true;
 		}
 		// 两个都不为空
