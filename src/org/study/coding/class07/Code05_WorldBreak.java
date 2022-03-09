@@ -1,5 +1,6 @@
 package org.study.coding.class07;
 
+import java.util.Collections;
 import java.util.HashSet;
 
 public class Code05_WorldBreak {
@@ -9,12 +10,9 @@ public class Code05_WorldBreak {
 	 * 使用arr中的单词有多少种拼接str的方式. 返回方法数.
 	 * 
 	 */
-
 	public static int ways(String str, String[] arr) {
 		HashSet<String> set = new HashSet<>();
-		for (String candidate : arr) {
-			set.add(candidate);
-		}
+		Collections.addAll(set, arr);
 		return process(str, 0, set);
 	}
 
@@ -100,8 +98,8 @@ public class Code05_WorldBreak {
 			char[] chs = s.toCharArray();
 			Node node = root;
 			int index = 0;
-			for (int i = 0; i < chs.length; i++) {
-				index = chs[i] - 'a';
+			for (char ch : chs) {
+				index = ch - 'a';
 				if (node.nexts[index] == null) {
 					node.nexts[index] = new Node();
 				}
@@ -113,7 +111,6 @@ public class Code05_WorldBreak {
 	}
 
 	// str[i...] 被分解的方法数，返回
-
 	public static int g(char[] str, Node root, int i) {
 		if (i == str.length) {
 			return 1;
@@ -123,6 +120,7 @@ public class Code05_WorldBreak {
 		// i...end
 		for (int end = i; end < str.length; end++) {
 			int path = str[end] - 'a';
+
 			if (cur.nexts[path] == null) {
 				break;
 			}

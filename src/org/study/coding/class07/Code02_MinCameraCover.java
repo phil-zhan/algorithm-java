@@ -38,6 +38,7 @@ public class Code02_MinCameraCover {
 
         // base case
         if (X == null) {
+            // 对于null来说。认为是被覆盖了，且没有相机
             return new Info(Integer.MAX_VALUE, 0, Integer.MAX_VALUE);
         }
 
@@ -79,13 +80,27 @@ public class Code02_MinCameraCover {
         return data.cameras + (data.status == Status.UNCOVERED ? 1 : 0);
     }
 
-    // 以x为头，x下方的节点都是被covered，x自己的状况，分三种
+    /**
+     * 以x为头，x下方的节点都是被covered，x自己的状况，分三种
+     * @since 2022-03-08 07:00:08
+     */
     public static enum Status {
+        /**
+         * 
+         * @since 2022-03-08 07:03:24
+         */
         UNCOVERED, COVERED_NO_CAMERA, COVERED_HAS_CAMERA
     }
 
-    // 以x为头，x下方的节点都是被covered，得到的最优解中：
-    // x是什么状态，在这种状态下，需要至少几个相机
+
+    /**
+     * 以x为头，x下方的节点都是被covered，得到的最优解中：
+     * x是什么状态，在这种状态下，需要至少几个相机
+     *
+     * 贪心的解法
+     *
+     * @since 2022-03-08 07:03:06
+     */
     public static class Data {
         public Status status;
         public int cameras;
