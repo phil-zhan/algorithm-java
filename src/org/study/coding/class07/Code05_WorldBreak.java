@@ -5,10 +5,8 @@ import java.util.HashSet;
 
 public class Code05_WorldBreak {
 	/*
-	 * 
 	 * 假设所有字符都是小写字母. 大字符串是str. arr是去重的单词表, 每个单词都不是空字符串且可以使用任意次.
 	 * 使用arr中的单词有多少种拼接str的方式. 返回方法数.
-	 * 
 	 */
 	public static int ways(String str, String[] arr) {
 		HashSet<String> set = new HashSet<>();
@@ -17,7 +15,7 @@ public class Code05_WorldBreak {
 	}
 
 	// 所有的可分解字符串，都已经放在了set中
-	// str[i....] 能够被set中的贴纸分解的话，返回分解的方法数
+	// str[i...N] 能够被set中的贴纸分解的话，返回分解的方法数
 	public static int process(String str, int i, HashSet<String> set) {
 		if (i == str.length()) { // 没字符串需要分解了！
 			return 1;
