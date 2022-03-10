@@ -1,269 +1,314 @@
 package org.study.coding.class09;
 
-/*
+/**
+ * 头条面试题
+ * <p>
  * 给定一个数组arr，长度为N，arr中的值不是0就是1
  * arr[i]表示第i栈灯的状态，0代表灭灯，1代表亮灯
- * 每一栈灯都有开关，但是按下i号灯的开关，会同时改变i-1、i、i+2栈灯的状态
+ * 每一栈灯都有开关，但是按下i号灯的开关，会同时改变i-1、i、i+1栈灯的状态
  * 问题一：
  * 如果N栈灯排成一条直线,请问最少按下多少次开关,能让灯都亮起来
  * 排成一条直线说明：
  * i为中间位置时，i号灯的开关能影响i-1、i和i+1
  * 0号灯的开关只能影响0和1位置的灯
  * N-1号灯的开关只能影响N-2和N-1位置的灯
- * 
+ * <p>
+ * 解法：
+ * 从左往右的尝试模型
+ * index 。表示现在来到位置的下一个位置【也就是当前来到的是 index-1 位置】
+ * preState . index-2位置的状态。也就是当前来到位置的前一个位置的状态
+ * curStatus 。 index-1 位置的状态
+ * <p>
+ * 在当前位置（index-1位置）决定按开关。会影响 index-2 、index-1、index 【三个位置的状态】
+ * process1(int[] arr, int nextIndex, int preStatus, int curStatus)
+ * 返回当前位置（index- 1）怎么做决定，能让左右的灯全亮，返回这个全亮时的最少开关数
+ * <p>
+ * <p>
+ * <p>
  * 问题二：
  * 如果N栈灯排成一个圈,请问最少按下多少次开关,能让灯都亮起来
  * 排成一个圈说明：
  * i为中间位置时，i号灯的开关能影响i-1、i和i+1
  * 0号灯的开关能影响N-1、0和1位置的灯
  * N-1号灯的开关能影响N-2、N-1和0位置的灯
- * 
- * */
+ */
 public class Code01_LightProblem {
 
-	// 无环改灯问题的暴力版本
-	public static int noLoopRight(int[] arr) {
-		if (arr == null || arr.length == 0) {
-			return 0;
-		}
-		if (arr.length == 1) {
-			return arr[0] == 1 ? 0 : 1;
-		}
-		if (arr.length == 2) {
-			return arr[0] != arr[1] ? Integer.MAX_VALUE : (arr[0] ^ 1);
-		}
-		return f1(arr, 0);
-	}
+    // 无环关灯问题的递归版本
+    public static int noLoopMinStep1(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        if (arr.length == 1) {
+            return arr[0] ^ 1;
+        }
+        if (arr.length == 2) {
+            return arr[0] != arr[1] ? Integer.MAX_VALUE : (arr[0] ^ 1);
+        }
+        // 不变0位置的状态
+        int p1 = process1(arr, 2, arr[0], arr[1]);
+        // 改变0位置的状态
+        int p2 = process1(arr, 2, arr[0] ^ 1, arr[1] ^ 1);
+        if (p2 != Integer.MAX_VALUE) {
+            // 要加上当前按的这一次
+            p2++;
+        }
+        return Math.min(p1, p2);
+    }
 
-	public static int f1(int[] arr, int i) {
-		if (i == arr.length) {
-			return valid(arr) ? 0 : Integer.MAX_VALUE;
-		}
-		int p1 = f1(arr, i + 1);
-		change1(arr, i);
-		int p2 = f1(arr, i + 1);
-		change1(arr, i);
-		p2 = (p2 == Integer.MAX_VALUE) ? p2 : (p2 + 1);
-		return Math.min(p1, p2);
-	}
+    // 当前在哪个位置上，做选择，nextIndex - 1 = cur ，当前！
+    // cur - 1 preStatus
+    // cur  curStatus
+    // 0....cur-2  前面的灯全亮！【隐含台词】
+    public static int process1(int[] arr, int nextIndex, int preStatus, int curStatus) {
+        if (nextIndex == arr.length) {
+            // 当前来到最后一个开关的位置
+            // 如果倒数第二个和最后一个的状态不一样，就不可能搞定了。返回系统最大
+            // 如果都是0，返回 1
+            // 如果都是1，返回 0
+            return preStatus != curStatus ? (Integer.MAX_VALUE) : (curStatus ^ 1);
+        }
 
-	public static void change1(int[] arr, int i) {
-		if (i == 0) {
-			arr[0] ^= 1;
-			arr[1] ^= 1;
-		} else if (i == arr.length - 1) {
-			arr[i - 1] ^= 1;
-			arr[i] ^= 1;
-		} else {
-			arr[i - 1] ^= 1;
-			arr[i] ^= 1;
-			arr[i + 1] ^= 1;
-		}
-	}
+        // 没到最后一个按钮呢！
+        // i < arr.length
+        if (preStatus == 0) {
+            // 一定要改变
 
-	public static boolean valid(int[] arr) {
-		for (int i = 0; i < arr.length; i++) {
-			if (arr[i] == 0) {
-				return false;
-			}
-		}
-		return true;
-	}
+            curStatus ^= 1;
+            // 影响下一个位置的状态
+            int cur = arr[nextIndex] ^ 1;
 
-	// 无环改灯问题的递归版本
-	public static int noLoopMinStep1(int[] arr) {
-		if (arr == null || arr.length == 0) {
-			return 0;
-		}
-		if (arr.length == 1) {
-			return arr[0] ^ 1;
-		}
-		if (arr.length == 2) {
-			return arr[0] != arr[1] ? Integer.MAX_VALUE : (arr[0] ^ 1);
-		}
-		// 不变0位置的状态
-		int p1 = process1(arr, 2, arr[0], arr[1]);
-		// 改变0位置的状态
-		int p2 = process1(arr, 2, arr[0] ^ 1, arr[1] ^ 1);
-		if (p2 != Integer.MAX_VALUE) {
-			p2++;
-		}
-		return Math.min(p1, p2);
-	}
+            int next = process1(arr, nextIndex + 1, curStatus, cur);
+            return next == Integer.MAX_VALUE ? next : (next + 1);
+        } else {
+            // 一定不能改变
+            return process1(arr, nextIndex + 1, curStatus, arr[nextIndex]);
+        }
+    }
 
-	// 当前在哪个位置上，做选择，nextIndex - 1 = cur ，当前！
-	// cur - 1 preStatus
-	// cur  curStatus
-	// 0....cur-2  全亮的！
-	public static int process1(int[] arr, int nextIndex, int preStatus, int curStatus) {
-		if (nextIndex == arr.length) { // 当前来到最后一个开关的位置
-			return preStatus != curStatus ? (Integer.MAX_VALUE) : (curStatus ^ 1);
-		}
-		// 没到最后一个按钮呢！
-		// i < arr.length
-		if (preStatus == 0) { // 一定要改变
-			curStatus ^= 1;
-			int cur = arr[nextIndex] ^ 1;
-			int next = process1(arr, nextIndex + 1, curStatus, cur);
-			return next == Integer.MAX_VALUE ? next : (next + 1);
-		} else { // 一定不能改变
-			return process1(arr, nextIndex + 1, curStatus, arr[nextIndex]);
-		}
-	}
 
-	// 无环改灯问题的迭代版本
-	public static int noLoopMinStep2(int[] arr) {
-		if (arr == null || arr.length == 0) {
-			return 0;
-		}
-		if (arr.length == 1) {
-			return arr[0] == 1 ? 0 : 1;
-		}
-		if (arr.length == 2) {
-			return arr[0] != arr[1] ? Integer.MAX_VALUE : (arr[0] ^ 1);
-		}
-		int p1 = traceNoLoop(arr, arr[0], arr[1]);
-		int p2 = traceNoLoop(arr, arr[0] ^ 1, arr[1] ^ 1);
-		p2 = (p2 == Integer.MAX_VALUE) ? p2 : (p2 + 1);
-		return Math.min(p1, p2);
-	}
+    // 无环改灯问题的迭代版本
+    public static int noLoopMinStep2(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        if (arr.length == 1) {
+            return arr[0] == 1 ? 0 : 1;
+        }
+        if (arr.length == 2) {
+            return arr[0] != arr[1] ? Integer.MAX_VALUE : (arr[0] ^ 1);
+        }
+        int p1 = traceNoLoop(arr, arr[0], arr[1]);
+        int p2 = traceNoLoop(arr, arr[0] ^ 1, arr[1] ^ 1);
+        p2 = (p2 == Integer.MAX_VALUE) ? p2 : (p2 + 1);
+        return Math.min(p1, p2);
+    }
 
-	public static int traceNoLoop(int[] arr, int preStatus, int curStatus) {
-		int i = 2;
-		int op = 0;
-		while (i != arr.length) {
-			if (preStatus == 0) {
-				op++;
-				preStatus = curStatus ^ 1;
-				curStatus = arr[i++] ^ 1;
-			} else {
-				preStatus = curStatus;
-				curStatus = arr[i++];
-			}
-		}
-		return (preStatus != curStatus) ? Integer.MAX_VALUE : (op + (curStatus ^ 1));
-	}
+    public static int traceNoLoop(int[] arr, int preStatus, int curStatus) {
+        int i = 2;
+        int op = 0;
+        while (i != arr.length) {
+            if (preStatus == 0) {
+                op++;
+                preStatus = curStatus ^ 1;
+                curStatus = arr[i++] ^ 1;
+            } else {
+                preStatus = curStatus;
+                curStatus = arr[i++];
+            }
+        }
+        return (preStatus != curStatus) ? Integer.MAX_VALUE : (op + (curStatus ^ 1));
+    }
 
-	// 有环改灯问题的暴力版本
-	public static int loopRight(int[] arr) {
-		if (arr == null || arr.length == 0) {
-			return 0;
-		}
-		if (arr.length == 1) {
-			return arr[0] == 1 ? 0 : 1;
-		}
-		if (arr.length == 2) {
-			return arr[0] != arr[1] ? Integer.MAX_VALUE : (arr[0] ^ 1);
-		}
-		return f2(arr, 0);
-	}
 
-	public static int f2(int[] arr, int i) {
-		if (i == arr.length) {
-			return valid(arr) ? 0 : Integer.MAX_VALUE;
-		}
-		int p1 = f2(arr, i + 1);
-		change2(arr, i);
-		int p2 = f2(arr, i + 1);
-		change2(arr, i);
-		p2 = (p2 == Integer.MAX_VALUE) ? p2 : (p2 + 1);
-		return Math.min(p1, p2);
-	}
+    // 无环改灯问题的暴力版本
+    public static int noLoopRight(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        if (arr.length == 1) {
+            return arr[0] == 1 ? 0 : 1;
+        }
+        if (arr.length == 2) {
+            return arr[0] != arr[1] ? Integer.MAX_VALUE : (arr[0] ^ 1);
+        }
+        return f1(arr, 0);
+    }
 
-	public static void change2(int[] arr, int i) {
-		arr[lastIndex(i, arr.length)] ^= 1;
-		arr[i] ^= 1;
-		arr[nextIndex(i, arr.length)] ^= 1;
-	}
+    public static int f1(int[] arr, int i) {
+        if (i == arr.length) {
+            return valid(arr) ? 0 : Integer.MAX_VALUE;
+        }
+        int p1 = f1(arr, i + 1);
+        change1(arr, i);
+        int p2 = f1(arr, i + 1);
+        change1(arr, i);
+        p2 = (p2 == Integer.MAX_VALUE) ? p2 : (p2 + 1);
+        return Math.min(p1, p2);
+    }
 
-	public static int lastIndex(int i, int N) {
-		return i == 0 ? (N - 1) : (i - 1);
-	}
+    public static void change1(int[] arr, int i) {
+        if (i == 0) {
+            arr[0] ^= 1;
+            arr[1] ^= 1;
+        } else if (i == arr.length - 1) {
+            arr[i - 1] ^= 1;
+            arr[i] ^= 1;
+        } else {
+            arr[i - 1] ^= 1;
+            arr[i] ^= 1;
+            arr[i + 1] ^= 1;
+        }
+    }
 
-	public static int nextIndex(int i, int N) {
-		return i == N - 1 ? 0 : (i + 1);
-	}
+    public static boolean valid(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	// 有环改灯问题的递归版本
-	public static int loopMinStep1(int[] arr) {
-		if (arr == null || arr.length == 0) {
-			return 0;
-		}
-		if (arr.length == 1) {
-			return arr[0] == 1 ? 0 : 1;
-		}
-		if (arr.length == 2) {
-			return arr[0] != arr[1] ? Integer.MAX_VALUE : (arr[0] ^ 1);
-		}
-		if (arr.length == 3) {
-			return (arr[0] != arr[1] || arr[0] != arr[2]) ? Integer.MAX_VALUE : (arr[0] ^ 1);
-		}
-		// 0不变，1不变
-		int p1 = process2(arr, 3, arr[1], arr[2], arr[arr.length - 1], arr[0]);
-		// 0改变，1不变
-		int p2 = process2(arr, 3, arr[1] ^ 1, arr[2], arr[arr.length - 1] ^ 1, arr[0] ^ 1);
-		// 0不变，1改变
-		int p3 = process2(arr, 3, arr[1] ^ 1, arr[2] ^ 1, arr[arr.length - 1], arr[0] ^ 1);
-		// 0改变，1改变
-		int p4 = process2(arr, 3, arr[1], arr[2] ^ 1, arr[arr.length - 1] ^ 1, arr[0]);
-		p2 = p2 != Integer.MAX_VALUE ? (p2 + 1) : p2;
-		p3 = p3 != Integer.MAX_VALUE ? (p3 + 1) : p3;
-		p4 = p4 != Integer.MAX_VALUE ? (p4 + 2) : p4;
-		return Math.min(Math.min(p1, p2), Math.min(p3, p4));
-	}
 
-	
-	// 下一个位置是，nextIndex
-	// 当前位置是，nextIndex - 1 -> curIndex
-	// 上一个位置是, nextIndex - 2 -> preIndex   preStatus
-	// 当前位置是，nextIndex - 1, curStatus
-	// endStatus, N-1位置的状态
-	// firstStatus, 0位置的状态
-	// 返回，让所有灯都亮，至少按下几次按钮
-	
-	// 当前来到的位置(nextIndex - 1)，一定不能是1！至少从2开始
-	// nextIndex >= 3
-	public static int process2(int[] arr, 
-			int nextIndex, int preStatus, int curStatus, 
-			int endStatus, int firstStatus) {
-		
-		if (nextIndex == arr.length) { // 最后一按钮！
-			return (endStatus != firstStatus || endStatus != preStatus) ? Integer.MAX_VALUE : (endStatus ^ 1);
-		}
-		// 当前位置，nextIndex - 1
-		// 当前的状态，叫curStatus
-		// 如果不按下按钮，下一步的preStatus, curStatus
-		// 如果按下按钮，下一步的preStatus, curStatus ^ 1
-		// 如果不按下按钮，下一步的curStatus, arr[nextIndex]
-		// 如果按下按钮，下一步的curStatus, arr[nextIndex] ^ 1
-		int noNextPreStatus = 0;
-		int yesNextPreStatus = 0;
-		int noNextCurStatus =0;
-		int yesNextCurStatus = 0;
-		int noEndStatus = 0;
-		int yesEndStatus = 0;
-		if(nextIndex < arr.length - 1) {// 当前没来到N-2位置
-			 noNextPreStatus = curStatus;
-			 yesNextPreStatus = curStatus ^ 1;
-			 noNextCurStatus = arr[nextIndex];
-			 yesNextCurStatus = arr[nextIndex] ^ 1;
-		} else if(nextIndex == arr.length - 1) {// 当前来到的就是N-2位置
-			noNextPreStatus = curStatus;
-			yesNextPreStatus = curStatus ^ 1;
-			noNextCurStatus = endStatus;
-			yesNextCurStatus = endStatus ^ 1;
-			noEndStatus = endStatus;
-			yesEndStatus = endStatus ^ 1;
-		}
-		if(preStatus == 0) {
-			int next = process2(arr, nextIndex + 1, yesNextPreStatus, yesNextCurStatus,
-					nextIndex == arr.length - 1 ? yesEndStatus : endStatus, firstStatus);
-			return next == Integer.MAX_VALUE ? next : (next + 1);
-		}else {
-			return process2(arr, nextIndex + 1, noNextPreStatus, noNextCurStatus, 
-					nextIndex == arr.length - 1 ? noEndStatus : endStatus, firstStatus);
-					
-		}
+    // 有环改灯问题的暴力版本
+    public static int loopRight(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        if (arr.length == 1) {
+            return arr[0] == 1 ? 0 : 1;
+        }
+        if (arr.length == 2) {
+            return arr[0] != arr[1] ? Integer.MAX_VALUE : (arr[0] ^ 1);
+        }
+        return f2(arr, 0);
+    }
+
+    public static int f2(int[] arr, int i) {
+        if (i == arr.length) {
+            return valid(arr) ? 0 : Integer.MAX_VALUE;
+        }
+        int p1 = f2(arr, i + 1);
+        change2(arr, i);
+        int p2 = f2(arr, i + 1);
+        change2(arr, i);
+        p2 = (p2 == Integer.MAX_VALUE) ? p2 : (p2 + 1);
+        return Math.min(p1, p2);
+    }
+
+    public static void change2(int[] arr, int i) {
+        arr[lastIndex(i, arr.length)] ^= 1;
+        arr[i] ^= 1;
+        arr[nextIndex(i, arr.length)] ^= 1;
+    }
+
+    public static int lastIndex(int i, int N) {
+        return i == 0 ? (N - 1) : (i - 1);
+    }
+
+    public static int nextIndex(int i, int N) {
+        return i == N - 1 ? 0 : (i + 1);
+    }
+
+
+    // 有环改灯问题的递归版本
+    public static int loopMinStep1(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        if (arr.length == 1) {
+            return arr[0] == 1 ? 0 : 1;
+        }
+        if (arr.length == 2) {
+            return arr[0] != arr[1] ? Integer.MAX_VALUE : (arr[0] ^ 1);
+        }
+        if (arr.length == 3) {
+            return (arr[0] != arr[1] || arr[0] != arr[2]) ? Integer.MAX_VALUE : (arr[0] ^ 1);
+        }
+
+        // next从3开始。也就是cur从2开始
+        // 枚举0和1位置的所有组合。因为0位置是放到和最后一个位置一起考虑的
+
+        // 0不变，1不变
+        int p1 = process2(arr, 3, arr[1], arr[2], arr[arr.length - 1], arr[0]);
+        // 0改变，1不变
+        int p2 = process2(arr, 3, arr[1] ^ 1, arr[2], arr[arr.length - 1] ^ 1, arr[0] ^ 1);
+        // 0不变，1改变
+        int p3 = process2(arr, 3, arr[1] ^ 1, arr[2] ^ 1, arr[arr.length - 1], arr[0] ^ 1);
+        // 0改变，1改变
+        int p4 = process2(arr, 3, arr[1], arr[2] ^ 1, arr[arr.length - 1] ^ 1, arr[0]);
+
+
+        p2 = p2 != Integer.MAX_VALUE ? (p2 + 1) : p2;
+        p3 = p3 != Integer.MAX_VALUE ? (p3 + 1) : p3;
+        p4 = p4 != Integer.MAX_VALUE ? (p4 + 2) : p4;
+        return Math.min(Math.min(p1, p2), Math.min(p3, p4));
+    }
+
+    // 下一个位置是，nextIndex
+    // 当前位置是，nextIndex - 1 -> curIndex
+    // 上一个位置是, nextIndex - 2 -> preIndex   preStatus
+    // 当前位置是，nextIndex - 1, curStatus
+    // endStatus, N-1位置的状态
+    // firstStatus, 0位置的状态
+    // 返回，让所有灯都亮，至少按下几次按钮
+
+    // 当前来到的位置(nextIndex - 1)，一定不能是1！至少从2开始【保证前面还有一个数】
+    // pre cur next
+    // 1   2   3
+    // 0 位置可以用最后一个位置补救回来。0位置就算当前把它怼亮了，也还会收到最后一个位置的影响。直接放到和最后一个位置一起决定
+    // cur从2位置开始。pre从1位置开始。在cur位置，保证把pre位置怼亮。如果pre位置不亮，当前就按.如果pre位置亮，当前就不按
+    // nextIndex >= 3
+    public static int process2(int[] arr,
+                               int nextIndex, int preStatus, int curStatus,
+                               int endStatus, int firstStatus) {
+
+        if (nextIndex == arr.length) {
+            // 最后一按钮！
+            // 最后两个位置和0位置，如果三个位置的状态不一样，怎么都搞不定
+            return (endStatus != firstStatus || endStatus != preStatus) ? Integer.MAX_VALUE : (endStatus ^ 1);
+        }
+
+        // 当前位置，nextIndex - 1
+        // 当前的状态，叫curStatus
+        // 如果不按下按钮，下一步的preStatus, curStatus
+        // 如果按下按钮，下一步的preStatus, curStatus ^ 1
+        // 如果不按下按钮，下一步的curStatus, arr[nextIndex]
+        // 如果按下按钮，下一步的curStatus, arr[nextIndex] ^ 1
+        // 0....cur-2  前面的灯全亮！【隐含台词】
+        int noNextPreStatus = 0;
+        int yesNextPreStatus = 0;
+        int noNextCurStatus = 0;
+        int yesNextCurStatus = 0;
+        int noEndStatus = 0;
+        int yesEndStatus = 0;
+        if (nextIndex < arr.length - 1) {
+            // 当前没来到N-2位置
+            noNextPreStatus = curStatus;
+            yesNextPreStatus = curStatus ^ 1;
+            noNextCurStatus = arr[nextIndex];
+            yesNextCurStatus = arr[nextIndex] ^ 1;
+        } else if (nextIndex == arr.length - 1) {
+            // 当前来到的就是N-2位置
+            noNextPreStatus = curStatus;
+            yesNextPreStatus = curStatus ^ 1;
+            noNextCurStatus = endStatus;
+            yesNextCurStatus = endStatus ^ 1;
+
+            // 这里只能用 endStatus 。而不能在数组里面取值。数组里面的值可能会被修改【当然，这里并没有改数组，取数组值也OK】
+            noEndStatus = endStatus;
+            yesEndStatus = endStatus ^ 1;
+        }
+        if (preStatus == 0) {
+            int next = process2(arr, nextIndex + 1, yesNextPreStatus, yesNextCurStatus,
+                    nextIndex == arr.length - 1 ? yesEndStatus : endStatus, firstStatus);
+            return next == Integer.MAX_VALUE ? next : (next + 1);
+        } else {
+            return process2(arr, nextIndex + 1, noNextPreStatus, noNextCurStatus,
+                    nextIndex == arr.length - 1 ? noEndStatus : endStatus, firstStatus);
+
+        }
 //		int curStay = (nextIndex == arr.length - 1) ? endStatus : arr[nextIndex];
 //		int curChange = (nextIndex == arr.length - 1) ? (endStatus ^ 1) : (arr[nextIndex] ^ 1);
 //		int endChange = (nextIndex == arr.length - 1) ? curChange : endStatus;
@@ -273,112 +318,114 @@ public class Code01_LightProblem {
 //		} else {
 //			return process2(arr, nextIndex + 1, curStatus, curStay, endStatus, firstStatus);
 //		}
-	}
+    }
 
-	// 有环改灯问题的迭代版本
-	public static int loopMinStep2(int[] arr) {
-		if (arr == null || arr.length == 0) {
-			return 0;
-		}
-		if (arr.length == 1) {
-			return arr[0] == 1 ? 0 : 1;
-		}
-		if (arr.length == 2) {
-			return arr[0] != arr[1] ? Integer.MAX_VALUE : (arr[0] ^ 1);
-		}
-		if (arr.length == 3) {
-			return (arr[0] != arr[1] || arr[0] != arr[2]) ? Integer.MAX_VALUE : (arr[0] ^ 1);
-		}
-		// 0不变，1不变
-		int p1 = traceLoop(arr, arr[1], arr[2], arr[arr.length - 1], arr[0]);
-		// 0改变，1不变
-		int p2 = traceLoop(arr, arr[1] ^ 1, arr[2], arr[arr.length - 1] ^ 1, arr[0] ^ 1);
-		// 0不变，1改变
-		int p3 = traceLoop(arr, arr[1] ^ 1, arr[2] ^ 1, arr[arr.length - 1], arr[0] ^ 1);
-		// 0改变，1改变
-		int p4 = traceLoop(arr, arr[1], arr[2] ^ 1, arr[arr.length - 1] ^ 1, arr[0]);
-		p2 = p2 != Integer.MAX_VALUE ? (p2 + 1) : p2;
-		p3 = p3 != Integer.MAX_VALUE ? (p3 + 1) : p3;
-		p4 = p4 != Integer.MAX_VALUE ? (p4 + 2) : p4;
-		return Math.min(Math.min(p1, p2), Math.min(p3, p4));
-	}
 
-	public static int traceLoop(int[] arr, int preStatus, int curStatus, int endStatus, int firstStatus) {
-		int i = 3;
-		int op = 0;
-		while (i < arr.length - 1) {
-			if (preStatus == 0) {
-				op++;
-				preStatus = curStatus ^ 1;
-				curStatus = (arr[i++] ^ 1);
-			} else {
-				preStatus = curStatus;
-				curStatus = arr[i++];
-			}
-		}
-		if (preStatus == 0) {
-			op++;
-			preStatus = curStatus ^ 1;
-			endStatus ^= 1;
-			curStatus = endStatus;
-		} else {
-			preStatus = curStatus;
-			curStatus = endStatus;
-		}
-		return (endStatus != firstStatus || endStatus != preStatus) ? Integer.MAX_VALUE : (op + (endStatus ^ 1));
-	}
+    // 有环改灯问题的迭代版本
+    public static int loopMinStep2(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        if (arr.length == 1) {
+            return arr[0] == 1 ? 0 : 1;
+        }
+        if (arr.length == 2) {
+            return arr[0] != arr[1] ? Integer.MAX_VALUE : (arr[0] ^ 1);
+        }
+        if (arr.length == 3) {
+            return (arr[0] != arr[1] || arr[0] != arr[2]) ? Integer.MAX_VALUE : (arr[0] ^ 1);
+        }
+        // 0不变，1不变
+        int p1 = traceLoop(arr, arr[1], arr[2], arr[arr.length - 1], arr[0]);
+        // 0改变，1不变
+        int p2 = traceLoop(arr, arr[1] ^ 1, arr[2], arr[arr.length - 1] ^ 1, arr[0] ^ 1);
+        // 0不变，1改变
+        int p3 = traceLoop(arr, arr[1] ^ 1, arr[2] ^ 1, arr[arr.length - 1], arr[0] ^ 1);
+        // 0改变，1改变
+        int p4 = traceLoop(arr, arr[1], arr[2] ^ 1, arr[arr.length - 1] ^ 1, arr[0]);
+        p2 = p2 != Integer.MAX_VALUE ? (p2 + 1) : p2;
+        p3 = p3 != Integer.MAX_VALUE ? (p3 + 1) : p3;
+        p4 = p4 != Integer.MAX_VALUE ? (p4 + 2) : p4;
+        return Math.min(Math.min(p1, p2), Math.min(p3, p4));
+    }
 
-	// 生成长度为len的随机数组，值只有0和1两种值
-	public static int[] randomArray(int len) {
-		int[] arr = new int[len];
-		for (int i = 0; i < arr.length; i++) {
-			arr[i] = (int) (Math.random() * 2);
-		}
-		return arr;
-	}
+    public static int traceLoop(int[] arr, int preStatus, int curStatus, int endStatus, int firstStatus) {
+        int i = 3;
+        int op = 0;
+        while (i < arr.length - 1) {
+            if (preStatus == 0) {
+                op++;
+                preStatus = curStatus ^ 1;
+                curStatus = (arr[i++] ^ 1);
+            } else {
+                preStatus = curStatus;
+                curStatus = arr[i++];
+            }
+        }
+        if (preStatus == 0) {
+            op++;
+            preStatus = curStatus ^ 1;
+            endStatus ^= 1;
+            curStatus = endStatus;
+        } else {
+            preStatus = curStatus;
+            curStatus = endStatus;
+        }
+        return (endStatus != firstStatus || endStatus != preStatus) ? Integer.MAX_VALUE : (op + (endStatus ^ 1));
+    }
 
-	public static void main(String[] args) {
-		System.out.println("如果没有任何Oops打印，说明所有方法都正确");
-		System.out.println("test begin");
-		int testTime = 20000;
-		int lenMax = 12;
-		for (int i = 0; i < testTime; i++) {
-			int len = (int) (Math.random() * lenMax);
-			int[] arr = randomArray(len);
-			int ans1 = noLoopRight(arr);
-			int ans2 = noLoopMinStep1(arr);
-			int ans3 = noLoopMinStep2(arr);
-			if (ans1 != ans2 || ans1 != ans3) {
-				System.out.println("1 Oops!");
-			}
-		}
-		for (int i = 0; i < testTime; i++) {
-			int len = (int) (Math.random() * lenMax);
-			int[] arr = randomArray(len);
-			int ans1 = loopRight(arr);
-			int ans2 = loopMinStep1(arr);
-			int ans3 = loopMinStep2(arr);
-			if (ans1 != ans2 || ans1 != ans3) {
-				System.out.println("2 Oops!");
-			}
-		}
-		System.out.println("test end");
 
-		int len = 100000000;
-		System.out.println("性能测试");
-		System.out.println("数组大小：" + len);
-		int[] arr = randomArray(len);
-		long start = 0;
-		long end = 0;
-		start = System.currentTimeMillis();
-		noLoopMinStep2(arr);
-		end = System.currentTimeMillis();
-		System.out.println("noLoopMinStep2 run time: " + (end - start) + "(ms)");
+    // 生成长度为len的随机数组，值只有0和1两种值
+    public static int[] randomArray(int len) {
+        int[] arr = new int[len];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = (int) (Math.random() * 2);
+        }
+        return arr;
+    }
 
-		start = System.currentTimeMillis();
-		loopMinStep2(arr);
-		end = System.currentTimeMillis();
-		System.out.println("loopMinStep2 run time: " + (end - start) + "(ms)");
-	}
+    public static void main(String[] args) {
+        System.out.println("如果没有任何Oops打印，说明所有方法都正确");
+        System.out.println("test begin");
+        int testTime = 20000;
+        int lenMax = 12;
+        for (int i = 0; i < testTime; i++) {
+            int len = (int) (Math.random() * lenMax);
+            int[] arr = randomArray(len);
+            int ans1 = noLoopRight(arr);
+            int ans2 = noLoopMinStep1(arr);
+            int ans3 = noLoopMinStep2(arr);
+            if (ans1 != ans2 || ans1 != ans3) {
+                System.out.println("1 Oops!");
+            }
+        }
+        for (int i = 0; i < testTime; i++) {
+            int len = (int) (Math.random() * lenMax);
+            int[] arr = randomArray(len);
+            int ans1 = loopRight(arr);
+            int ans2 = loopMinStep1(arr);
+            int ans3 = loopMinStep2(arr);
+            if (ans1 != ans2 || ans1 != ans3) {
+                System.out.println("2 Oops!");
+            }
+        }
+        System.out.println("test end");
+
+        int len = 100000000;
+        System.out.println("性能测试");
+        System.out.println("数组大小：" + len);
+        int[] arr = randomArray(len);
+        long start = 0;
+        long end = 0;
+        start = System.currentTimeMillis();
+        noLoopMinStep2(arr);
+        end = System.currentTimeMillis();
+        System.out.println("noLoopMinStep2 run time: " + (end - start) + "(ms)");
+
+        start = System.currentTimeMillis();
+        loopMinStep2(arr);
+        end = System.currentTimeMillis();
+        System.out.println("loopMinStep2 run time: " + (end - start) + "(ms)");
+    }
 
 }
