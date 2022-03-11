@@ -2,6 +2,24 @@ package org.study.coding.class08;
 
 import java.util.Arrays;
 
+/**
+ * 给定一个矩阵matrix，值有正、负、0。蛇可以空降到最左列的任何一个位置，
+ * 初始增长值是0。蛇每一步可以选择 右上、右、右下 三个方向的任何一个前进
+ * 沿途的数字累加起来，作为增长值；但是蛇一旦增长值为负数，就会死去。
+ * 蛇有一种能力，可以使用一次：把某个格子里的数变成相反数
+ * 蛇可以走到任何格子的时候停止，返回蛇能获得的最大增长值
+ *
+ * 解法：
+ * 考察蛇从一个最优的最左侧的位置开始，到达（i,j）位置停，
+ * 返回没有使用能力获得的最大增长值是多少和使用一次能力获得的最好结果
+ *
+ * 所有的可能抓一个最大值，就是答案
+ * 从假想的最优左侧到达(i,j)的旅程中
+ * 0) 在没有使用过能力的情况下，返回路径最大和，  没有可能到达的话，返回负
+ * 1) 在使用过能力的情况下，返回路径最大和，     没有可能到达的话，返回负
+ *
+ * @since 2022-03-09 07:40:00
+ */
 public class Code04_SnakeGame {
 
 	public static int walk1(int[][] matrix) {
@@ -42,48 +60,83 @@ public class Code04_SnakeGame {
 		}
 	}
 
-	// 蛇从某一个最左列，且最优的空降点降落
-	// 沿途走到(i,j)必须停！
-	// 返回，一次能力也不用，获得的最大成长值
-	// 返回，用了一次能力，获得的最大成长值
-	// 如果蛇从某一个最左列，且最优的空降点降落，不用能力，怎么都到不了(i,j)，那么no = -1
-	// 如果蛇从某一个最左列，且最优的空降点降落，用了一次能力，怎么都到不了(i,j)，那么yes = -1
+	/**
+	 * 蛇从某一个最左列，且最优的空降点降落
+	 * 沿途走到(i,j)必须停！
+	 * 返回，一次能力也不用，获得的最大成长值
+	 * 返回，用了一次能力，获得的最大成长值
+	 * 如果蛇从某一个最左列，且最优的空降点降落，不用能力，怎么都到不了(i,j)，那么no = -1
+	 * 如果蛇从某一个最左列，且最优的空降点降落，用了一次能力，怎么都到不了(i,j)，那么yes = -1
+	 *
+	 * Info： 封装当前的成长值
+	 *
+	 * @since 2022-03-09 07:49:06
+	 */
 	public static Info f(int[][] matrix, int i, int j) {
-		if (j == 0) { // 最左列
+		if (j == 0) {
+
+			// 最左列
 			int no = Math.max(matrix[i][0], -1);
 			int yes = Math.max(-matrix[i][0], -1);
 			return new Info(no, yes);
 		}
 		// j > 0 不在最左列
+
+		// 来到 （i,j） 位置之前的最好情况
 		int preNo = -1;
 		int preYes = -1;
+
+		// 从左过来
 		Info pre = f(matrix, i, j - 1);
 		preNo = Math.max(pre.no, preNo);
 		preYes = Math.max(pre.yes, preYes);
+
 		if (i > 0) {
+
+			// 从左上来
 			pre = f(matrix, i - 1, j - 1);
 			preNo = Math.max(pre.no, preNo);
 			preYes = Math.max(pre.yes, preYes);
 		}
 		if (i < matrix.length - 1) {
+
+			// // 从左下来
 			pre = f(matrix, i + 1, j - 1);
 			preNo = Math.max(pre.no, preNo);
 			preYes = Math.max(pre.yes, preYes);
 		}
+
+
+		// -1 表示到不了之前的位置
 		int no = preNo == -1 ? -1 : (Math.max(-1, preNo + matrix[i][j]));
+
+
 		// 能力只有一次，是之前用的！
 		int p1 = preYes == -1 ? -1 : (Math.max(-1, preYes + matrix[i][j]));
 		// 能力只有一次，就当前用！
 		int p2 = preNo == -1 ? -1 : (Math.max(-1, preNo - matrix[i][j]));
 		int yes = Math.max(Math.max(p1, p2), -1);
+
+
 		return new Info(no, yes);
 	}
 
-	// 从假想的最优左侧到达(i,j)的旅程中
-	// 0) 在没有使用过能力的情况下，返回路径最大和，没有可能到达的话，返回负
-	// 1) 在使用过能力的情况下，返回路径最大和，没有可能到达的话，返回负
+
+
+	/**
+	 * 考察蛇从一个最优的最左侧的位置开始，到达（i,j）位置停，
+	 * 返回没有使用能力获得的最大增长值是多少和使用一次能力获得的最好结果
+	 *
+	 * 所有的可能( 2*N*M 个可能)。抓一个最大值，就是答案
+	 * 从假想的最优左侧到达(i,j)的旅程中
+	 * 0) 在没有使用过能力的情况下，返回路径最大和，  没有可能到达的话，返回负
+	 * 1) 在使用过能力的情况下，返回路径最大和，     没有可能到达的话，返回负
+	 *
+	 * @since 2022-03-09 07:48:27
+	 */
 	public static int[] process(int[][] m, int i, int j) {
-		if (j == 0) { // (i,j)就是最左侧的位置
+		if (j == 0) {
+			// (i,j)就是最左侧的位置
 			return new int[] { m[i][j], -m[i][j] };
 		}
 		int[] preAns = process(m, i, j - 1);
@@ -103,8 +156,11 @@ public class Code04_SnakeGame {
 		}
 		// preUnuse 之前旅程，没用过能力
 		// preUse 之前旅程，已经使用过能力了
-		int no = -1; // 之前没使用过能力，当前位置也不使用能力，的最优解
-		int yes = -1; // 不管是之前使用能力，还是当前使用了能力，请保证能力只使用一次，最优解
+		// 之前没使用过能力，当前位置也不使用能力，的最优解
+		int no = -1;
+
+		// 不管是之前使用能力，还是当前使用了能力，请保证能力只使用一次，最优解
+		int yes = -1;
 		if (preUnuse >= 0) {
 			no = m[i][j] + preUnuse;
 			yes = -m[i][j] + preUnuse;
@@ -114,6 +170,8 @@ public class Code04_SnakeGame {
 		}
 		return new int[] { no, yes };
 	}
+
+
 
 	public static int walk2(int[][] matrix) {
 		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
