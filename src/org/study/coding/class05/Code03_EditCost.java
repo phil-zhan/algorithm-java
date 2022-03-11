@@ -7,7 +7,7 @@ public class Code03_EditCost {
 	 * 本题是 LeetCode的加强版
 	 * LeetCode认为所有的代价都是1.
 	 *
-	 * 要从 s1 变换成 s2
+	 * 要从 字符串s1 变换成 字符串s2
 	 * 增加一个字符的成本是 ic
 	 * 删除一个字符的成本是 dc
 	 * 替换一个字符的成本是 rc

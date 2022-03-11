@@ -28,7 +28,8 @@ public class Code04_DeleteMinCost {
         process(s2.toCharArray(), 0, "", s2Subs);
         s2Subs.sort(new LenComp());
         for (String str : s2Subs) {
-            if (s1.indexOf(str) != -1) { // indexOf底层和KMP算法代价几乎一样，也可以用KMP代替
+            if (s1.indexOf(str) != -1) {
+                // indexOf底层和KMP算法代价几乎一样，也可以用KMP代替
                 return s2.length() - str.length();
             }
         }
