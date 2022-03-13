@@ -42,8 +42,8 @@ public class Code03_MaximumXorWithAnElementFromArray {
         NumTrie trie = new NumTrie();
 
         // 先将所有元素都加入前缀树
-        for (int i = 0; i < N; i++) {
-            trie.add(nums[i]);
+        for (int num : nums) {
+            trie.add(num);
         }
 
         // collect answer
