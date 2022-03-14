@@ -51,7 +51,8 @@ public class Code01_MaxXOR {
         }
         int max = Integer.MIN_VALUE;
         for (int j = 0; j < arr.length; j++) {
-            for (int i = 0; i <= j; i++) { // 依次尝试arr[0..j]、arr[1..j]..arr[i..j]..arr[j..j]
+            for (int i = 0; i <= j; i++) {
+                // 依次尝试arr[0..j]、arr[1..j]..arr[i..j]..arr[j..j]
                 max = Math.max(max, i == 0 ? eor[j] : eor[j] ^ eor[i - 1]);
             }
         }
