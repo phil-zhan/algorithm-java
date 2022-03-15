@@ -44,6 +44,9 @@ public class Code01_NCardsABWin {
 		if (N < 1 || a >= b || a < 0 || b < 0) {
 			return 0.0;
 		}
+
+		// 是在 [1...N] 的范围上抽
+		// 每次最多获得N分。如果获胜的范围大于等于N。那么肯定会有一次掉在获胜的区间。也就是必定赢
 		if (b - a >= N) {
 			return 1.0;
 		}
@@ -62,9 +65,12 @@ public class Code01_NCardsABWin {
 			return 0.0;
 		}
 		double w = 0.0;
+
+		// 抽到每张牌获胜的概率累加起来
 		for (int i = 1; i <= N; i++) {
 			w += p2(cur + i, N, a, b);
 		}
+		// 每张牌被抽中的概率是 1/N
 		return w / N;
 	}
 
@@ -90,6 +96,9 @@ public class Code01_NCardsABWin {
 		if (cur == a - 1) {
 			return 1.0 * (b - a) / N;
 		}
+		// 斜率优化  f(i) = ( f(i+1) + f(i+1) * N - f(i+N+1) ) / N
+		// 位置观察
+
 		double w = p3(cur + 1, N, a, b) + p3(cur + 1, N, a, b) * N;
 		if (cur + 1 + N < b) {
 			w -= p3(cur + 1 + N, N, a, b);

@@ -20,7 +20,7 @@ import java.util.Arrays;
  * 利用master公式知道
  * 归并排序的时间复杂度为 O(N*logN)
  */
-public class Code01 {
+public class Code01_MergeSort {
 
 
     public static void main(String[] args) {
