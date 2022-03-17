@@ -1,5 +1,21 @@
 package org.study.coding.class14;
 
+/**
+ * https://leetcode.com/problems/longest-valid-parentheses/
+ *
+ * 给定一个只由左括号和右括号的字符串，返回最长的有效括号子串的长度
+ *
+ * 解法：
+ * 考察必须以 i 位置的字符结尾。往左延伸多长能有效【从左往右考察】
+ * 1）如果 i 位置是左括号。无法延伸。最大长度是0
+ * 2）如果 i 位置是右括号。就看看左边需要延伸多长，能找到和自己配对的左括号。找到之后，
+ * 与 i 配对的左括号的再左一个位置的最大延伸长度，也需要加到当前的最大长度里面来。
+ * 不需要多步跳。因为在算那个 再左 位置的时候。就已经把前面的有效括号的最大长度累加起来了
+ *
+ * 往左延伸时、左括号数量不等于右括号数量。就无效
+ *
+ * @since 2022-03-16 07:43:34
+ */
 public class Code01_Parentheses {
 
 	public static boolean valid(String s) {
@@ -21,7 +37,8 @@ public class Code01_Parentheses {
 		for (int i = 0; i < str.length; i++) {
 			if (str[i] == '(') {
 				count++;
-			} else { // 遇到的是')'
+			} else {
+				// 遇到的是')'
 				if (count == 0) {
 					need++;
 				} else {
@@ -70,7 +87,6 @@ public class Code01_Parentheses {
 
 	// s只由(和)组成
 	// 求最长有效括号子串长度
-	// 本题测试链接 : https://leetcode.com/problems/longest-valid-parentheses/
     public static int longestValidParentheses(String s) {
 		if (s == null || s.length() < 2) {
 			return 0;
@@ -84,7 +100,8 @@ public class Code01_Parentheses {
 		for (int i = 1; i < str.length; i++) {
 			if (str[i] == ')') {
 				// 当前谁和i位置的)，去配！
-				pre = i - dp[i - 1] - 1; // 与str[i]配对的左括号的位置 pre
+				pre = i - dp[i - 1] - 1;
+				// 与str[i]配对的左括号的位置 pre
 				if (pre >= 0 && str[pre] == '(') {
 					dp[i] = dp[i - 1] + 2 + (pre > 0 ? dp[pre - 1] : 0);
 				}

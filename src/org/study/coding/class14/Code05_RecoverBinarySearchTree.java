@@ -2,7 +2,23 @@ package org.study.coding.class14;
 
 import java.util.Stack;
 
-// 本题测试链接 : https://leetcode.com/problems/recover-binary-search-tree/
+/**
+ * 给定一个棵搜索二叉树的头节点head，其中有两个节点错了，交换过来就能让整棵树重新变成搜索二叉树，怎么找到并调整正确？
+ * Leetcode题目：https://leetcode.com/problems/recover-binary-search-tree/
+ *
+ *
+ * 解法：
+ * 正常情况下，搜索二叉树的中序遍历时从左到右升序的。如果在某个位置出现降序，那么该位置的两个数就是出错的数
+ * 当然，可能出现两个、甚至多个降序
+ * 我们需要找到的是。
+ * 第一次降序的第一个节点 和最后一次降序的第二个节点
+ * 这两个节点就是出错的节点
+ *
+ * 在找到这两个节点之后，可以将这两个错误节点交换值。也可以从结构上，彻底调对
+ * 【将对应节点的指针断连。在将另外一个节点的指针连上当前节点的左右树。当前节点去连另外一个节点的左右树】【这玩意战略性放弃吧。它有14种情况。太烦人】
+ *
+ * @since 2022-03-16 10:59:31
+ */
 public class Code05_RecoverBinarySearchTree {
 
 	// 不要提交这个类
@@ -63,8 +79,11 @@ public class Code05_RecoverBinarySearchTree {
 		return ans;
 	}
 
-	// 以下的方法，提交leetcode是通过不了的，但那是因为leetcode的验证方式有问题
-	// 但其实！以下的方法，才是正路！在结构上彻底交换两个节点，而不是值交换
+	/**
+	 * 以下的方法，提交leetcode是通过不了的，但那是因为leetcode的验证方式有问题
+	 * 但其实！以下的方法，才是正路！在结构上彻底交换两个节点，而不是值交换
+	 * @since 2022-03-16 11:11:59
+	 */
 	public static TreeNode recoverTree2(TreeNode head) {
 		TreeNode[] errs = getTwoErrNodes(head);
 		TreeNode[] parents = getTwoErrParents(head, errs[0], errs[1]);
