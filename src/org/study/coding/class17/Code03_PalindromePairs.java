@@ -64,6 +64,9 @@ public class Code03_PalindromePairs {
 
         // 查前缀
         for (int i = 1; i < mid; i++) {
+
+            // 位置等于回文半径减1
+            // 也就是当前
             if (i - rs[i] == -1) {
                 rest = words.get(reverse.substring(0, mid - i));
                 if (rest != null && rest != index) {
