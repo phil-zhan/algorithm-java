@@ -1,5 +1,18 @@
 package org.study.coding.class18;
 
+
+/**
+ * 1. 给定一个数组arr，长度为N，arr中的值只有1，2，3三种
+ *    arr[i] == 1，代表汉诺塔问题中，从上往下第i个圆盘目前在左
+ *    arr[i] == 2，代表汉诺塔问题中，从上往下第i个圆盘目前在中
+ *    arr[i] == 3，代表汉诺塔问题中，从上往下第i个圆盘目前在右
+ *    那么arr整体就代表汉诺塔游戏过程中的一个状况，如果这个状况不是汉诺塔最优解运动过程中的状况，返回-1
+ *    如果这个状况是汉诺塔最优解运动过程中的状态，返回它是第几个状态
+ *
+ *
+ *
+ * @since 2022-03-19 09:12:00
+ */
 public class Code01_HanoiProblem {
 
 	public static int step1(int[] arr) {
@@ -9,9 +22,12 @@ public class Code01_HanoiProblem {
 		return process(arr, arr.length - 1, 1, 2, 3);
 	}
 
-	// 目标是: 把0~i的圆盘，从from全部挪到to上
-	// 返回，根据arr中的状态arr[0..i]，它是最优解的第几步？
-	// f(i, 3 , 2, 1) f(i, 1, 3, 2) f(i, 3, 1, 2)
+	/**
+	 * 目标是: 把0~i的圆盘，从from全部挪到to上
+	 * 返回，根据arr中的状态arr[0..i]，它是最优解的第几步？
+	 * f(i, 3 , 2, 1) f(i, 1, 3, 2) f(i, 3, 1, 2)
+	 * @since 2022-03-19 09:08:24
+	 */
 	public static int process(int[] arr, int i, int from, int other, int to) {
 		if (i == -1) {
 			return 0;
@@ -19,11 +35,14 @@ public class Code01_HanoiProblem {
 		if (arr[i] != from && arr[i] != to) {
 			return -1;
 		}
-		if (arr[i] == from) { // 第一大步没走完
+		if (arr[i] == from) {
+			// 第一大步没走完
 			return process(arr, i - 1, from, to, other);
-		} else { // arr[i] == to
+		} else {
+			// arr[i] == to
 			// 已经走完1，2两步了，
-			int rest = process(arr, i - 1, other, from, to); // 第三大步完成的程度
+			// 第三大步完成的程度
+			int rest = process(arr, i - 1, other, from, to);
 			if (rest == -1) {
 				return -1;
 			}
@@ -64,9 +83,12 @@ public class Code01_HanoiProblem {
 		return step(arr, N - 1, 1, 3, 2);
 	}
 
-	// 0...index这些圆盘，arr[0..index] index+1层塔
-	// 在哪？from 去哪？to 另一个是啥？other
-	// arr[0..index]这些状态，是index+1层汉诺塔问题的，最优解第几步
+	/**
+	 * 0...index这些圆盘，arr[0..index] index+1层塔
+	 * 在哪？from 去哪？to 另一个是啥？other
+	 * arr[0..index]这些状态，是index+1层汉诺塔问题的，最优解第几步
+	 * @since 2022-03-19 09:08:43
+	 */
 	public static int step(int[] arr, int index, int from, int to, int other) {
 		if (index == -1) {
 			return 0;
