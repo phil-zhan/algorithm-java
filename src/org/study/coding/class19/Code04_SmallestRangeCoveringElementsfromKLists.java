@@ -4,55 +4,64 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 
-// 本题测试链接 : https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/
+/**
+ * 你有k个非递减排列的整数列表。找到一个最小区间，使得k个列表中的每个列表至少有一个数包含在其中
+ * 我们定义如果b-a < d-c或者在b-a == d-c时a < c，则区间 [a,b] 比 [c,d] 小。
+ * Leetcode题目：https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/
+ *
+ *
+ *
+ *
+ * @since 2022-03-20 03:12:34
+ */
 public class Code04_SmallestRangeCoveringElementsfromKLists {
 
-	public static class Node {
-		public int value;
-		public int arrid;
-		public int index;
+    public static class Node {
+        public int value;
+        public int arrid;
+        public int index;
 
-		public Node(int v, int ai, int i) {
-			value = v;
-			arrid = ai;
-			index = i;
-		}
-	}
+        public Node(int v, int ai, int i) {
+            value = v;
+            arrid = ai;
+            index = i;
+        }
+    }
 
-	public static class NodeComparator implements Comparator<Node> {
+    public static class NodeComparator implements Comparator<Node> {
 
-		@Override
-		public int compare(Node o1, Node o2) {
-			return o1.value != o2.value ? o1.value - o2.value : o1.arrid - o2.arrid;
-		}
+        @Override
+        public int compare(Node o1, Node o2) {
+            return o1.value != o2.value ? o1.value - o2.value : o1.arrid - o2.arrid;
+        }
 
-	}
+    }
 
-	public static int[] smallestRange(List<List<Integer>> nums) {
-		int N = nums.size();
-		TreeSet<Node> orderSet = new TreeSet<>(new NodeComparator());
-		for (int i = 0; i < N; i++) {
-			orderSet.add(new Node(nums.get(i).get(0), i, 0));
-		}
-		boolean set = false;
-		int a = 0;
-		int b = 0;
-		while (orderSet.size() == N) {
-			Node min = orderSet.first();
-			Node max = orderSet.last();
-			if (!set || (max.value - min.value < b - a)) {
-				set = true;
-				a = min.value;
-				b = max.value;
-			}
-			min = orderSet.pollFirst();
-			int arrid = min.arrid;
-			int index = min.index + 1;
-			if (index != nums.get(arrid).size()) {
-				orderSet.add(new Node(nums.get(arrid).get(index), arrid, index));
-			}
-		}
-		return new int[] { a, b };
-	}
+    public static int[] smallestRange(List<List<Integer>> nums) {
+        int N = nums.size();
+        TreeSet<Node> orderSet = new TreeSet<>(new NodeComparator());
+        for (int i = 0; i < N; i++) {
+            orderSet.add(new Node(nums.get(i).get(0), i, 0));
+        }
+        boolean set = false;
+        int a = 0;
+        int b = 0;
+        while (orderSet.size() == N) {
+            Node min = orderSet.first();
+            Node max = orderSet.last();
+            if (!set || (max.value - min.value < b - a)) {
+                set = true;
+                a = min.value;
+                b = max.value;
+            }
+            min = orderSet.pollFirst();
+            int arrid = min.arrid;
+            int index = min.index + 1;
+            if (index != nums.get(arrid).size()) {
+                orderSet.add(new Node(nums.get(arrid).get(index), arrid, index));
+            }
+        }
+        return new int[]{a, b};
+    }
 
 }
