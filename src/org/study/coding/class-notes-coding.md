@@ -470,24 +470,24 @@ Leetcode题目：https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-
 
 
 
-20 大厂高频算法和数据结构面试题20
+### 20-大厂高频算法和数据结构面试题20
 
 题目：
 
-如果只给定一个二叉树前序遍历数组pre和中序遍历数组in，能否不重建树，而直接生成这个二叉树的后序数组并返回，已知二叉树中没有重复值
+1. 如果只给定一个二叉树前序遍历数组pre和中序遍历数组in，能否不重建树，而直接生成这个二叉树的后序数组并返回，已知二叉树中没有重复值   
 
-给定一个由不同正整数的组成的非空数组 A，考虑下面的图：有A.length个节点，按从A[0]到A[A.length - 1]标记；
-只有当 A[i] 和 A[j] 共用一个大于 1 的公因数时，A[i]和 A[j] 之间才有一条边。返回图中最大连通集合的大小
-Leetcode题目：https://leetcode.com/problems/largest-component-size-by-common-factor/
+2. 给定一个由不同正整数的组成的非空数组 A，考虑下面的图：有A.length个节点，按从A[0]到A[A.length - 1]标记；   
+   只有当 A[i] 和 A[j] 共用一个大于 1 的公因数时，A[i]和 A[j] 之间才有一条边。返回图中最大连通集合的大小   
+   Leetcode题目：https://leetcode.com/problems/largest-component-size-by-common-factor/   
 
-完美洗牌问题
-给定一个长度为偶数的数组arr，假设长度为N*2
-左部分：arr[L1...Ln] 右部分： arr[R1...Rn]
-请把arr调整成arr[L1,R1,L2,R2,L3,R3,...,Ln,Rn]
-要求时间复杂度O(N)，额外空间复杂度O(1)
+3. 完美洗牌问题   
+   给定一个长度为偶数的数组arr，假设长度为N*2   
+   左部分：arr[L1...Ln] 右部分： arr[R1...Rn]   
+   请把arr调整成arr[L1,R1,L2,R2,L3,R3,...,Ln,Rn]   
+   要求时间复杂度O(N)，额外空间复杂度O(1)   
 
-给定一个字符串str，当然可以生成很多子序列，返回有多少个子序列是回文子序列，空序列不算回文
-比如，str = “aba”，回文子序列：{a}、{a}、 {a,a}、 {b}、{a,b,a}，返回5
+4. 给定一个字符串str，当然可以生成很多子序列，返回有多少个子序列是回文子序列，空序列不算回文   
+   比如，str = “aba”，回文子序列：{a}、{a}、 {a,a}、 {b}、{a,b,a}，返回5   
 
 
 
