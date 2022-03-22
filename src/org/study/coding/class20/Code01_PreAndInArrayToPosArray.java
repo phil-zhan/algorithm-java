@@ -4,6 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * 1. 如果只给定一个二叉树前序遍历数组pre和中序遍历数组in，能否不重建树，而直接生成这个二叉树的后序数组并返回，已知二叉树中没有重复值
+ *
+ * 解法：
+ * 考虑 L...R 范围的先序和中序。变成后续的结果
+ *
+ * 先序的头，对应中序，就能将中序分为左右两个部分。左边就是左树，右边就是右树
+ * 左右两边跑递归
+ *
+ *
+ * @since 2022-03-21 08:11:24
+ */
 public class Code01_PreAndInArrayToPosArray {
 
     public static int[] zuo(int[] pre, int[] in) {
@@ -11,6 +23,8 @@ public class Code01_PreAndInArrayToPosArray {
             return null;
         }
         int N = pre.length;
+
+        // 统计中序数组中，每个节点的位置。方便后面好算左右两部分
         HashMap<Integer, Integer> inMap = new HashMap<>();
         for (int i = 0; i < N; i++) {
             inMap.put(in[i], i);
@@ -20,8 +34,14 @@ public class Code01_PreAndInArrayToPosArray {
         return pos;
     }
 
+    /**
+     * 注意用实际的例子推一下边界
+     * @since 2022-03-21 08:27:34
+     */
     public static void func(int[] pre, int L1, int R1, int[] in, int L2, int R2, int[] pos, int L3, int R3,
                             HashMap<Integer, Integer> inMap) {
+
+        // 可能会出现某个头节点的左边或右边没有节点的情况。【用这个条件直接过滤】
         if (L1 > R1) {
             return;
         }
