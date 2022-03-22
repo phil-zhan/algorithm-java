@@ -47,7 +47,7 @@ public class Code03_EditCost {
 		}
 
 		// 普遍位置
-		// 1) str1的当前 i 位置是多余的，让str1的前面去搞定str2。删除str1的i字符
+		// 1) str1的当第 i 位置是多余的，让str1的前面去搞定str2。删除str1的i字符
 		// 2) str1的当前 整体先变成str2的前面除j位置的所有字符，然后再在str2上增加一个 j 字符
 		// 3) 如果str1[i] == str2[j] 那么str1的前面i-1个字符去搞定str2的j-1个字符就行
 		// 4) 如果str1[i] != str2[j] 那么str1的前面i-1个字符去搞定str2的j-1个字符就行,最后一个字符替换

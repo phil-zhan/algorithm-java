@@ -87,6 +87,7 @@ public class Code04_DeleteMinCost {
         // 只考虑左下半区
         // xlen，ylen表示长度
         for (int xlen = 1; xlen <= N; xlen++) {
+            //  Math.min(M, xlen)  避免出现长方形的情况
             for (int ylen = 1; ylen <= Math.min(M, xlen); ylen++) {
 
                 // x 的前一个字符[0...xlen-1] 可以搞定y的 [0...ylen]
