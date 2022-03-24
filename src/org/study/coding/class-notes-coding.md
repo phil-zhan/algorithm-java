@@ -113,6 +113,7 @@ Leetcode题目：https://leetcode.com/problems/the-skyline-problem/
 
 
 ### 05-大厂高频算法和数据结构面试题5
+<font color="red" size="5px">**题目：**</font>
 
 1. 已知一棵搜索二叉树上没有重复值的节点，现在有一个数组arr，是这棵搜索二叉树先序遍历的结果，请根据arr生成整棵树并返回头节点
 
@@ -125,6 +126,7 @@ Leetcode题目：https://leetcode.com/problems/the-skyline-problem/
 
 
 ### 06-大厂高频算法和数据结构面试题6
+<font color="red" size="5px">**题目：**</font>
 
 1. 数组中所有数都异或起来的结果，叫做异或和。给定一个数组arr，返回arr的最大子数组异或和
 
@@ -144,6 +146,7 @@ Leetcode题目：https://leetcode.com/problems/maximum-xor-with-an-element-from-
 
 
 ### 07-大厂高频算法和数据结构面试题7
+<font color="red" size="5px">**题目：**</font>
 
 1. 给定一个非负数组成的数组，长度一定大于1，想知道数组中哪两个数&的结果最大，返回这个最大结果。要求时间复杂度O(N)，额外空间复杂度O(1)
 
@@ -162,6 +165,7 @@ Parts和records的长度一样长，str一定要分割成k个部分，分割出�
 
 
 ### 08-大厂高频算法和数据结构面试题8
+<font color="red" size="5px">**题目：**</font>
 
 1. 给定一个字符串str，str表示一个公式，公式里可能有整数、加减乘除符号和左右括号。返回公式的计算结果
 难点在于括号可能嵌套很多层，str="48*((70-65)-43)+8*1"，返回-1816。str="3+1*4"，返回7。str="3+(1*4)"，返回7。
@@ -190,6 +194,7 @@ char[][] m = { { 'a', 'b', 'z' },
 
 
 ### 09-大厂高频算法和数据结构面试题9
+<font color="red" size="5px">**题目：**</font>
 
 1. 给定一个数组arr，长度为N，arr中的值不是0就是1。arr[i]表示第i栈灯的状态，0代表灭灯，1代表亮灯  
 每一栈灯都有开关，但是按下i号灯的开关，会同时改变i-1、i、i+1栈灯的状态  
@@ -217,6 +222,7 @@ Leetcode题目：https://leetcode.com/problems/longest-increasing-subsequence
 
 
 ### 10-大厂高频算法和数据结构面试题10
+<font color="red" size="5px">**题目：**</font>
 
 1. 给你一个非负整数数组nums ，你最初位于数组的第一个位置。数组中的每个元素代表你在该位置可以跳跃的最大长度。  
    你的目标是使用最少的跳跃次数到达数组的最后一个位置。假设你总是可以到达数组的最后一个位置。  
@@ -241,6 +247,7 @@ Leetcode题目：https://leetcode.com/problems/longest-increasing-subsequence
 
 
 ### 11-大厂高频算法和数据结构面试题11
+<font color="red" size="5px">**题目：**</font>
 
 1. 问题一：一个字符串至少需要添加多少个字符能整体变成回文串
 2. 问题二：返回问题一的其中一种添加结果
@@ -253,6 +260,7 @@ Leetcode题目：https://leetcode.com/problems/longest-increasing-subsequence
 
 
 ### 12-大厂高频算法和数据结构面试题12
+<font color="red" size="5px">**题目：**</font>
 
 1. 给定长度为m的字符串aim，以及一个长度为n的字符串str，问能否在str中找到一个长度为m的连续子串，  
    使得这个子串刚好由aim的m个字符组成，顺序无所谓，返回任意满足条件的一个子串的起始位置，未找到返回-1  
@@ -273,6 +281,7 @@ Leetcode题目：https://leetcode.com/problems/longest-increasing-subsequence
 
 
 ### 13-大厂高频算法和数据结构面试题13
+<font color="red" size="5px">**题目：**</font>
 
 
 1. 谷歌面试题扩展版，面值为1~N的牌组成一组，每次你从组里等概率的抽出1~N中的一张，下次抽会换一个新的组，有无限组  
@@ -306,7 +315,7 @@ Leetcode题目：https://leetcode.com/problems/bricks-falling-when-hit/
 
 
 ### 14-大厂高频算法和数据结构面试题14
-
+<font color="red" size="5px">**题目：**</font>
 
 1. 给定一个只由左括号和右括号的字符串，返回最长的有效括号子串的长度
 
@@ -325,6 +334,7 @@ Leetcode题目：https://leetcode.com/problems/recover-binary-search-tree/
 
 
 ### 15-大厂高频算法和数据结构面试题15
+<font color="red" size="5px">**题目：**</font>
 
 题目：股票系列问题
 
@@ -343,6 +353,7 @@ Leetcode题目：https://leetcode.com/problems/recover-binary-search-tree/
 
 
 ### 16-大厂高频算法和数据结构面试题16
+<font color="red" size="5px">**题目：**</font>
 
 1. 给定一个有正、有负、有0的数组arr，   
 给定一个整数k，   
@@ -384,6 +395,7 @@ Leetcode题目：https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-
 
 
 ### 17-大厂高频算法和数据结构面试题17
+<font color="red" size="5px">**题目：**</font>
 
 
 1. 给定一个每一行有序、每一列也有序，整体可能无序的二维数组，再给定一个数num，返回二维数组中有没有num这个数
@@ -402,6 +414,7 @@ Leetcode题目：https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-
 
 
 ### 18-大厂高频算法和数据结构面试题18
+<font color="red" size="5px">**题目：**</font>
 
 1. 给定一个数组arr，长度为N，arr中的值只有1，2，3三种
    arr[i] == 1，代表汉诺塔问题中，从上往下第i个圆盘目前在左
@@ -440,6 +453,7 @@ Leetcode题目：https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-
 
 
 ### 19-大厂高频算法和数据结构面试题19
+<font color="red" size="5px">**题目：**</font>
 
 1. LRU内存/缓存替换算法   
    Leetcode题目：https://leetcode.com/problems/lru-cache/   
@@ -471,8 +485,7 @@ Leetcode题目：https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-
 
 
 ### 20-大厂高频算法和数据结构面试题20
-
-题目：
+<font color="red" size="5px">**题目：**</font>
 
 1. 如果只给定一个二叉树前序遍历数组pre和中序遍历数组in，能否不重建树，而直接生成这个二叉树的后序数组并返回，已知二叉树中没有重复值   
 
@@ -491,81 +504,80 @@ Leetcode题目：https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-
 
 
 
-21 大厂高频算法和数据结构面试题21
-
-题目：
-
-树链剖分专题
-给定数组father，大小为N，表示一共有N个节点
-father[i] = j 表示点i的父亲是点j， father表示的树一定是一棵树而不是森林
-给定数组values，大小为N，values[i]=v表示节点i的权值是v
-实现如下4个方法，保证4个方法都很快！
-1)让某个子树所有节点值加上v，入参：int head, int v
-2)查询某个子树所有节点值的累加和，入参：int head
-3)在树上从a到b的整条链上所有加上v，入参：int a, int b, int v
-4)查询在树上从a到b的整条链上所有节点值的累加和，入参：int a, int b
+### 21-大厂高频算法和数据结构面试题21
+<font color="red" size="5px">**题目：**</font>
 
 
-
-22 大厂高频算法和数据结构面试题22
-
-题目：
-
-给定数组nums由正整数组成，找到三个互不重叠的子数组的最大和。每个子数组的长度为k，我们要使这3*k个项的和最大化。返回每个区间起始索引的列表（索引从 0 开始）。如果有多个结果，返回字典序最小的一个。
-Leetcode题目：https://leetcode.com/problems/maximum-sum-of-3-non-overlapping-subarrays/
-
-给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水
-Leetcode题目：https://leetcode.com/problems/trapping-rain-water/
-
-给你一个 m x n 的矩阵，其中的值均为非负整数，代表二维高度图每个单元的高度，请计算图中形状最多能接多少体积的雨水。
-Leetcode题目：https://leetcode.com/problems/trapping-rain-water-ii/
-
-一个不含有负数的数组可以代表一圈环形山，每个位置的值代表山的高度
-比如， {3,1,2,4,5}、{4,5,3,1,2}或{1,2,4,5,3}都代表同样结构的环形山
-山峰A和山峰B能够相互看见的条件为:
-1.如果A和B是同一座山，认为不能相互看见
-2.如果A和B是不同的山，并且在环中相邻，认为可以相互看见
-3.如果A和B是不同的山，并且在环中不相邻，假设两座山高度的最小值为min
-1)如果A通过顺时针方向到B的途中没有高度比min大的山峰，认为A和B可以相互看见
-2)如果A通过逆时针方向到B的途中没有高度比min大的山峰，认为A和B可以相互看见
-两个方向只要有一个能看见，就算A和B可以相互看见
-给定一个不含有负数且没有重复值的数组 arr，请返回有多少对山峰能够相互看见
-进阶，给定一个不含有负数但可能含有重复值的数组arr，返回有多少对山峰能够相互看见
-
-你正在安装一个广告牌，并希望它高度最大。这块广告牌将有两个钢制支架，两边各一个。每个钢支架的高度必须相等。
-你有一堆可以焊接在一起的钢筋 rods。举个例子，如果钢筋的长度为 1、2 和 3，则可以将它们焊接在一起形成长度为 6 的支架。
-返回广告牌的最大可能安装高度。如果没法安装广告牌，请返回 0。
-Leetcode题目：https://leetcode.com/problems/tallest-billboard/
+1. 树链剖分专题   
+   给定数组father，大小为N，表示一共有N个节点   
+   father[i] = j 表示点i的父亲是点j， father表示的树一定是一棵树而不是森林   
+   给定数组values，大小为N，values[i]=v表示节点i的权值是v   
+   实现如下4个方法，保证4个方法都很快！   
+   1) 让某个子树所有节点值加上v，入参：int head, int v   
+   2) 查询某个子树所有节点值的累加和，入参：int head   
+   3) 在树上从a到b的整条链上所有加上v，入参：int a, int b, int v   
+   4) 查询在树上从a到b的整条链上所有节点值的累加和，入参：int a, int b   
 
 
 
-23 大厂高频算法和数据结构面试题23
+### 22-大厂高频算法和数据结构面试题22
+<font color="red" size="5px">**题目：**</font>
 
-题目：
+1. 给定数组nums由正整数组成，找到三个互不重叠的子数组的最大和。每个子数组的长度为k，我们要使这3*k个项的和最大化。返回每个区间起始索引的列表（索引从 0 开始）。   
+   如果有多个结果，返回字典序最小的一个。   
+   Leetcode题目：https://leetcode.com/problems/maximum-sum-of-3-non-overlapping-subarrays/   
 
-给定数组father大小为N，表示一共有N个节点
-father[i] = j 表示点i的父亲是点j， father表示的树一定是一棵树而不是森林
-queries是二维数组，大小为M*2，每一个长度为2的数组都表示一条查询
-[4,9], 表示想查询4和9之间的最低公共祖先…
-[3,7], 表示想查询3和7之间的最低公共祖先…
-tree和queries里面的所有值，都一定在0~N-1之间
-返回一个数组ans，大小为M，ans[i]表示第i条查询的答案
+2. 给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水   
+   Leetcode题目：https://leetcode.com/problems/trapping-rain-water/   
 
-给定一个数组arr，长度为N > 1，从中间切一刀，保证左部分和右部分都有数字，一共有N-1种切法
-如此多的切法中，每一种都有:绝对值(左部分最大值 – 右部分最大值)，返回最大的绝对值是多少
+3. 给你一个 m x n 的矩阵，其中的值均为非负整数，代表二维高度图每个单元的高度，请计算图中形状最多能接多少体积的雨水。   
+   Leetcode题目：https://leetcode.com/problems/trapping-rain-water-ii/   
 
-定义什么是可整合数组：一个数组排完序之后，除了最左侧的数外，有arr[i] = arr[i-1]+1
-则称这个数组为可整合数组比如{5,1,2,4,3}、{6,2,3,1,5,4}都是可整合数组，返回arr中最长可整合子数组的长度
+4. 一个不含有负数的数组可以代表一圈环形山，每个位置的值代表山的高度   
+   比如， {3,1,2,4,5}、{4,5,3,1,2}或{1,2,4,5,3}都代表同样结构的环形山   
+   山峰A和山峰B能够相互看见的条件为:      
+   1) 如果A和B是同一座山，认为不能相互看见   
+   2) 如果A和B是不同的山，并且在环中相邻，认为可以相互看见   
+   3) 如果A和B是不同的山，并且在环中不相邻，假设两座山高度的最小值为min   
+      a) 如果A通过顺时针方向到B的途中没有高度比min大的山峰，认为A和B可以相互看见   
+      b) 如果A通过逆时针方向到B的途中没有高度比min大的山峰，认为A和B可以相互看见   
+   两个方向只要有一个能看见，就算A和B可以相互看见   
+   给定一个不含有负数且没有重复值的数组 arr，请返回有多少对山峰能够相互看见   
+   进阶，给定一个不含有负数但可能含有重复值的数组arr，返回有多少对山峰能够相互看见   
 
-超级水王问题
-给定一个数组arr，长度为N，如果某个数出现次数大于N/2，称该数为水王数，如果arr中有水王数，打印这个数；如果没有水王数，打印没有水王数
-要求时间复杂度O(N)，额外空间复杂度O(1)
-扩展1：摩尔投票
-扩展2：给定一个正数K，返回所有出现次数>N/K的数
+5. 你正在安装一个广告牌，并希望它高度最大。这块广告牌将有两个钢制支架，两边各一个。每个钢支架的高度必须相等。   
+   你有一堆可以焊接在一起的钢筋 rods。举个例子，如果钢筋的长度为 1、2 和 3，则可以将它们焊接在一起形成长度为 6 的支架。   
+   返回广告牌的最大可能安装高度。如果没法安装广告牌，请返回 0。   
+   Leetcode题目：https://leetcode.com/problems/tallest-billboard/   
 
-有 N 堆石头排成一排，第 i 堆中有stones[i]块石头。每次移动（move）需要将连续的K堆石头合并为一堆，而这个移动的成本为这K堆石头的总数。
-找出把所有石头合并成一堆的最低成本。如果不可能，返回 -1 。
-Leetcode题目：https://leetcode.com/problems/minimum-cost-to-merge-stones/
+
+
+### 23-大厂高频算法和数据结构面试题23
+<font color="red" size="5px">**题目：**</font>
+
+1. 给定数组father大小为N，表示一共有N个节点   
+   father[i] = j 表示点i的父亲是点j， father表示的树一定是一棵树而不是森林   
+   queries是二维数组，大小为M*2，每一个长度为2的数组都表示一条查询   
+   [4,9], 表示想查询4和9之间的最低公共祖先…   
+   [3,7], 表示想查询3和7之间的最低公共祖先…   
+   tree和queries里面的所有值，都一定在0~N-1之间   
+   返回一个数组ans，大小为M，ans[i]表示第i条查询的答案   
+
+2. 给定一个数组arr，长度为N > 1，从中间切一刀，保证左部分和右部分都有数字，一共有N-1种切法   
+   如此多的切法中，每一种都有:绝对值(左部分最大值 – 右部分最大值)，返回最大的绝对值是多少   
+
+3. 定义什么是可整合数组：一个数组排完序之后，除了最左侧的数外，有arr[i] = arr[i-1]+1      
+   则称这个数组为可整合数组比如{5,1,2,4,3}、{6,2,3,1,5,4}都是可整合数组，返回arr中最长可整合子数组的长度   
+
+4. 超级水王问题   
+   给定一个数组arr，长度为N，如果某个数出现次数大于N/2，称该数为水王数，如果arr中有水王数，打印这个数；如果没有水王数，打印没有水王数   
+   要求时间复杂度O(N)，额外空间复杂度O(1)   
+   扩展1：摩尔投票   
+   扩展2：给定一个正数K，返回所有出现次数>N/K的数   
+
+5. 有 N 堆石头排成一排，第 i 堆中有stones[i]块石头。每次移动（move）需要将连续的K堆石头合并为一堆，而这个移动的成本为这K堆石头的总数。   
+   找出把所有石头合并成一堆的最低成本。如果不可能，返回 -1 。   
+   Leetcode题目：https://leetcode.com/problems/minimum-cost-to-merge-stones/   
 
 
 
