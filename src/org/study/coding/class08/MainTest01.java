@@ -1,7 +1,7 @@
 package org.study.coding.class08;
 
+import java.util.LinkedList;
 import java.util.Objects;
-import java.util.Stack;
 
 /**
  * @author phil
@@ -17,10 +17,11 @@ public class MainTest01 {
 
     /**
      * 只支持加减乘除，不支持括号
+     *
      * @since 2022-03-25 17:43:40
      */
-    public static int cal(String exp){
-        if (exp.contains(")") || exp.contains("(")){
+    public static int cal(String exp) {
+        if (exp.contains(")") || exp.contains("(")) {
             return 0;
         }
         char[] str = exp.toCharArray();
@@ -81,50 +82,57 @@ public class MainTest01 {
 
 
     public static int[] process(char[] exps, int index) {
-        Stack<String> stack = new Stack<>();
+        LinkedList<String> queue = new LinkedList<>();
         int cur = 0;
 
         while (index != exps.length && exps[index] != ')') {
             if (exps[index] <= '9' && exps[index] >= '0') {
                 // 数字
                 cur = cur * 10 + (exps[index++] - '0');
-            } else if (exps[index] == ')') {
+            } else if (exps[index] == '(') {
                 // 左括号
                 int[] bra = process(exps, index + 1);
                 cur = bra[0];
                 index = bra[1] + 1;
             } else {
                 // 运算符
-                pushNum(stack, cur);
-                stack.push(String.valueOf(exps[index++]));
+                pushNum(queue, cur);
+                queue.addLast(String.valueOf(exps[index++]));
                 cur = 0;
             }
 
         }
-        pushNum(stack, cur);
-        return new int[]{calculateStack(stack), index};
+        pushNum(queue, cur);
+        return new int[]{calculateStack(queue), index};
     }
 
-    public static void pushNum(Stack<String> stack, int num) {
-        if (!stack.isEmpty() && (stack.peek().equals("*") || stack.peek().equals("/"))) {
+    public static void pushNum(LinkedList<String> queue, int num) {
+        if (!queue.isEmpty() && (queue.peekLast().equals("*") || queue.peekLast().equals("/"))) {
             // merge
-            num = stack.pop().equals("*") ? num * Integer.parseInt(stack.pop()) : num / Integer.parseInt(stack.pop());
+            num = queue.pollLast().equals("*") ?
+                    num * Integer.parseInt(Objects.requireNonNull(queue.pollLast())) :
+                    num / Integer.parseInt(Objects.requireNonNull(queue.pollLast()));
         }
-        stack.push(String.valueOf(num));
+        queue.addLast(String.valueOf(num));
     }
 
-    public static int calculateStack(Stack<String> stack) {
+    /**
+     * 应该用队列
+     *
+     * @since 2022-03-25 18:17:06
+     */
+    public static int calculateStack(LinkedList<String> queue) {
         int num = 0;
 
-        while (!stack.isEmpty()){
-            String top = stack.pop();
+        while (!queue.isEmpty()) {
+            String top = queue.pollFirst();
 
-            if (top.equals("+")){
-                num += Integer.parseInt(stack.pop());
+            if (top.equals("+")) {
+                num += Integer.parseInt(Objects.requireNonNull(queue.pollFirst()));
 
-            }else if (top.equals("-")){
-                num -= Integer.parseInt(stack.pop());
-            }else{
+            } else if (top.equals("-")) {
+                num = num - Integer.parseInt(Objects.requireNonNull(queue.pollFirst()));
+            } else {
                 num = Integer.parseInt(top);
             }
         }
