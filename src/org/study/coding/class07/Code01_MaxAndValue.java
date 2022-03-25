@@ -46,14 +46,18 @@ public class Code01_MaxAndValue {
 	 */
 	public static int maxAndValue2(int[] arr) {
 		// arr[0...M-1]  arr[M....]
+		// 只考察前面M个，不需要考察的，直接挪到后面去
 		int M = arr.length;
 		int ans = 0;
 		for (int bit = 30; bit >= 0; bit--) {
 			// arr[0...M-1] arr[M...]
 			int i = 0;
+
+			// 记录一下需要考察的长度。如果当前位搞不定，需要去到下一位
 			int tmp = M;
 			while (i < M) {
 				// arr[0...M-1]
+				// 当前位是0.挪到后面去
 				if ((arr[i] & (1 << bit)) == 0) {
 					swap(arr, i, --M);
 				} else {
