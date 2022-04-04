@@ -581,95 +581,92 @@ Leetcode题目：https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-
 
 
 
-24 大厂高频算法和数据结构面试题24
+### 24-大厂高频算法和数据结构面试题24
+<font color="red" size="5px">**题目：**</font>
 
-题目：
+1. 给定一个正数数组arr，长度一定大于6（>=7），一定要选3个数字做分割点，从而分出4个部分，并且每部分都有数   
+   分割点的数字直接删除，不属于任何4个部分中的任何一个。返回有没有可能分出的4个部分累加和一样大   
+   如：{3,2,3,7,4,4,3,1,1,6,7,1,5,2}。可以分成{3,2,3}、{4,4}、{1,1,6}、{1,5,2}。分割点是不算的！   
 
-给定一个正数数组arr，长度一定大于6（>=7），一定要选3个数字做分割点，从而分出4个部分，并且每部分都有数
-分割点的数字直接删除，不属于任何4个部分中的任何一个。返回有没有可能分出的4个部分累加和一样大
-如：{3,2,3,7,4,4,3,1,1,6,7,1,5,2}。可以分成{3,2,3}、{4,4}、{1,1,6}、{1,5,2}。分割点是不算的！
+2. 长度为N的数组arr，一定可以组成N^2个数字对。例如arr = [3,1,2]，数字对有(3,3) (3,1) (3,2) (1,3) (1,1) (1,2) (2,3) (2,1) (2,2)   
+   也就是任意两个数都可以，而且自己和自己也算数字对。数字对怎么排序？第一维数据从小到大；第一维数据一样的，第二维数组也从小到大   
+   所以上面的数值对排序的结果为：(1,1)(1,2)(1,3)(2,1)(2,2)(2,3)(3,1)(3,2)(3,3)。给定一个数组arr，和整数k，返回第k小的数值对   
 
-长度为N的数组arr，一定可以组成N^2个数字对。例如arr = [3,1,2]，数字对有(3,3) (3,1) (3,2) (1,3) (1,1) (1,2) (2,3) (2,1) (2,2)
-也就是任意两个数都可以，而且自己和自己也算数字对。数字对怎么排序？第一维数据从小到大；第一维数据一样的，第二维数组也从小到大
-所以上面的数值对排序的结果为：(1,1)(1,2)(1,3)(2,1)(2,2)(2,3)(3,1)(3,2)(3,3)。给定一个数组arr，和整数k，返回第k小的数值对
+3. 正常的里程表会依次显示自然数表示里程   
+   吉祥的里程表会忽略含有4的数字而跳到下一个完全不含有4的数   
+   正常：1 2 3 4 5 6 7 8  9 10 11 12 13 14 15   
+   吉祥：1 2 3 5 6 7 8 9 10 11 12 13 15 16 17 ... 38 39 50 51 52 53 55   
+   给定一个吉祥里程表的数字num(当然这个数字中不含有4)   
+   返回这个数字代表的真实里程   
 
-正常的里程表会依次显示自然数表示里程
-吉祥的里程表会忽略含有4的数字而跳到下一个完全不含有4的数
-正常：1 2 3 4 5 6 7 8  9 10 11 12 13 14 15
-吉祥：1 2 3 5 6 7 8 9 10 11 12 13 15 16 17 ... 38 39 50 51 52 53 55
-给定一个吉祥里程表的数字num(当然这个数字中不含有4)
-返回这个数字代表的真实里程
+4. N * M的棋盘（N和M是输入参数），每种颜色的格子数必须相同的，上下左右的格子算相邻，相邻格子染的颜色必须不同，所有格子必须染色，返回至少多少种颜色可以完成任务   
 
-N * M的棋盘（N和M是输入参数），每种颜色的格子数必须相同的，上下左右的格子算相邻，相邻格子染的颜色必须不同，所有格子必须染色，返回至少多少种颜色可以完成任务
+5. 给定两个字符串str1和str2，在str1中寻找一个最短子串，能包含str2的所有字符，字符顺序无所谓，str1的这个最短子串也可以包含多余的字符，返回这个最短包含子串   
 
-给定两个字符串str1和str2，在str1中寻找一个最短子串，能包含str2的所有字符，字符顺序无所谓，str1的这个最短子串也可以包含多余的字符，返回这个最短包含子串
-
-给你一个字符串 s ，请你去除字符串中重复的字母，使得每个字母只出现一次。需保证 返回结果的字典序最小（要求不能打乱其他字符的相对位置）
-Leetcode题目：https://leetcode.com/problems/remove-duplicate-letters/
-
-
-
-25 大厂高频算法和数据结构面试题25
-
-题目：
-
-An IP address is a formatted 32-bit unsigned integer where each group of 8 bits is printed as a decimal number and the dot character '.' splits the groups.
-For example, the binary number 00001111 10001000 11111111 01101011 (spaces added for clarity) formatted as an IP address would be "15.136.255.107".
-A CIDR block is a format used to denote a specific set of IP addresses. It is a string consisting of a base IP address, followed by a slash, followed by a prefix length k.
-The addresses it covers are all the IPs whose first k bits are the same as the base IP address.
-For example, "123.45.67.89/20" is a CIDR block with a prefix length of 20. Any IP address whose binary representation matches
-01111011 00101101 0100xxxx xxxxxxxx, where x can be either 0 or 1, is in the set covered by the CIDR block.
-You are given a start IP address ip and the number of IP addresses we need to cover n.
-Your goal is to use as few CIDR blocks as possible to cover all the IP addresses in the inclusive range [ip, ip + n - 1] exactly
-No other IP addresses outside of the range should be covered.
-Return the shortest list of CIDR blocks that covers the range of IP addresses. If there are multiple answers, return any of them.
-Leetcode题目：https://leetcode.com/problems/ip-to-cidr/
-
-给你一个包含 n 个整数的数组nums，判断nums中是否存在三个元素 a，b，c ，使得a + b + c = 0 ？请你找出所有和为 0 且不重复的三元组
-注意：答案中不可以包含重复的三元组
-Leetcode题目：https://leetcode.com/problems/3sum/
-
-给你一个数组 points ，其中 points[i] = [xi, yi] 表示 X-Y 平面上的一个点。求最多有多少个点在同一条直线上。
-Leetcode题目：https://leetcode.com/problems/max-points-on-a-line/
-
-良好加油站问题最优解
-Leetcode题目：https://leetcode.com/problems/gas-station/
+6. 给你一个字符串 s ，请你去除字符串中重复的字母，使得每个字母只出现一次。需保证 返回结果的字典序最小（要求不能打乱其他字符的相对位置）   
+   Leetcode题目：https://leetcode.com/problems/remove-duplicate-letters/   
 
 
 
-26 大厂高频算法和数据结构面试题26
+### 25-大厂高频算法和数据结构面试题25
+<font color="red" size="5px">**题目：**</font>
 
-题目：
+1. An IP address is a formatted 32-bit unsigned integer where each group of 8 bits is printed as a decimal number and the dot character '.' splits the groups.   
+   For example, the binary number 00001111 10001000 11111111 01101011 (spaces added for clarity) formatted as an IP address would be "15.136.255.107".   
+   A CIDR block is a format used to denote a specific set of IP addresses. It is a string consisting of a base IP address, followed by a slash, followed by a prefix length k.   
+   The addresses it covers are all the IPs whose first k bits are the same as the base IP address.   
+   For example, "123.45.67.89/20" is a CIDR block with a prefix length of 20. Any IP address whose binary representation matches   
+   01111011 00101101 0100xxxx xxxxxxxx, where x can be either 0 or 1, is in the set covered by the CIDR block.   
+   You are given a start IP address ip and the number of IP addresses we need to cover n.   
+   Your goal is to use as few CIDR blocks as possible to cover all the IP addresses in the inclusive range [ip, ip + n - 1] exactly   
+   No other IP addresses outside of the range should be covered.   
+   Return the shortest list of CIDR blocks that covers the range of IP addresses. If there are multiple answers, return any of them.   
+   Leetcode题目：https://leetcode.com/problems/ip-to-cidr/   
 
-有三个有序数组，分别在三个数组中挑出3个数，x、y、z。返回 |x-y| + |y-z| + |z-x|最小是多少？
-Leetcode题目：https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/
+2. 给你一个包含 n 个整数的数组nums，判断nums中是否存在三个元素 a，b，c ，使得a + b + c = 0 ？请你找出所有和为 0 且不重复的三元组   
+   注意：答案中不可以包含重复的三元组   
+   Leetcode题目：https://leetcode.com/problems/3sum/   
 
-给定一个m x n 二维字符网格board和一个单词（字符串）列表 words，找出所有同时在二维网格和字典中出现的单词
-单词必须按照字母顺序，通过 相邻的单元格 内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格
-同一个单元格内的字母在一个单词中不允许被重复使用。
-Leetcode题目：https://leetcode.com/problems/word-search-ii/
+3. 给你一个数组 points ，其中 points[i] = [xi, yi] 表示 X-Y 平面上的一个点。求最多有多少个点在同一条直线上。   
+   Leetcode题目：https://leetcode.com/problems/max-points-on-a-line/   
 
-给定一个仅包含数字0-9的字符串和一个目标值，在数字之间添加 二元 运算符（不是一元）+、-或*，返回所有能够得到目标值的表达式。
-输入: num = "123", target = 6
-输出: ["1+2+3", "1*2*3"]
-示例2:
-输入: num = "232", target = 8
-输出: ["2*3+2", "2+3*2"]
-示例 3:
-输入: num = "105", target = 5
-输出: ["1*0+5","10-5"]
-示例4:
-输入: num = "00", target = 0
-输出: ["0+0", "0-0", "0*0"]
-Leetcode题目：https://leetcode.com/problems/expression-add-operators/
+4. 良好加油站问题最优解   
+   Leetcode题目：https://leetcode.com/problems/gas-station/   
 
-按字典wordList 完成从单词 beginWord 到单词 endWord 转化，一个表示此过程的 转换序列 是形式上像 beginWord -> s1 -> s2 -> ... -> sk 这样的单词序列，并满足：
-每对相邻的单词之间仅有单个字母不同。
-转换过程中的每个单词 si（1 <= i <= k）必须是字典wordList 中的单词。注意，beginWord 不必是字典 wordList 中的单词
-给你两个单词 beginWord 和 endWord ，以及一个字典 wordList
-请你找出并返回所有从 beginWord 到 endWord 的 最短转换序列 ，如果不存在这样的转换序列，返回一个空列表
-每个序列都应该以单词列表 [beginWord, s1, s2, ..., sk] 的形式返回
-Leetcode题目：https://leetcode.com/problems/word-ladder-ii/
+
+
+### 26-大厂高频算法和数据结构面试题26
+<font color="red" size="5px">**题目：**</font>
+
+1. 有三个有序数组，分别在三个数组中挑出3个数，x、y、z。返回 |x-y| + |y-z| + |z-x|最小是多少？   
+   Leetcode题目：https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/   
+
+2. 给定一个m x n 二维字符网格board和一个单词（字符串）列表 words，找出所有同时在二维网格和字典中出现的单词   
+   单词必须按照字母顺序，通过 相邻的单元格 内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格   
+   同一个单元格内的字母在一个单词中不允许被重复使用。   
+   Leetcode题目：https://leetcode.com/problems/word-search-ii/   
+
+3. 给定一个仅包含数字0-9的字符串和一个目标值，在数字之间添加 二元 运算符（不是一元）+、-或*，返回所有能够得到目标值的表达式。   
+   输入: num = "123", target = 6   
+   输出: ["1+2+3", "1*2*3"]   
+   示例2:   
+   输入: num = "232", target = 8   
+   输出: ["2*3+2", "2+3*2"]   
+   示例 3:   
+   输入: num = "105", target = 5   
+   输出: ["1*0+5","10-5"]   
+   示例4:   
+   输入: num = "00", target = 0   
+   输出: ["0+0", "0-0", "0*0"]   
+   Leetcode题目：https://leetcode.com/problems/expression-add-operators/   
+
+4. 按字典wordList 完成从单词 beginWord 到单词 endWord 转化，一个表示此过程的 转换序列 是形式上像 beginWord -> s1 -> s2 -> ... -> sk 这样的单词序列，并满足：   
+   每对相邻的单词之间仅有单个字母不同。   
+   转换过程中的每个单词 si（1 <= i <= k）必须是字典wordList 中的单词。注意，beginWord 不必是字典 wordList 中的单词   
+   给你两个单词 beginWord 和 endWord ，以及一个字典 wordList   
+   请你找出并返回所有从 beginWord 到 endWord 的 最短转换序列 ，如果不存在这样的转换序列，返回一个空列表   
+   每个序列都应该以单词列表 [beginWord, s1, s2, ..., sk] 的形式返回   
+   Leetcode题目：https://leetcode.com/problems/word-ladder-ii/   
 
 
 
