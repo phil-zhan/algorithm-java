@@ -127,12 +127,13 @@ public class MainTest01 {
         while (!queue.isEmpty()) {
             String top = queue.pollFirst();
 
-            if (top.equals("+")) {
+            if ("+".equals(top)) {
                 num += Integer.parseInt(Objects.requireNonNull(queue.pollFirst()));
 
-            } else if (top.equals("-")) {
+            } else if ("-".equals(top)) {
                 num = num - Integer.parseInt(Objects.requireNonNull(queue.pollFirst()));
             } else {
+                // 第一个位置的时候
                 num = Integer.parseInt(top);
             }
         }
