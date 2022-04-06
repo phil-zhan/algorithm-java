@@ -36,9 +36,11 @@ public class Code05_TallestBillboard {
         // 空集 和 空集
         dp.put(0, 0);
         for (int num : rods) {
+
+            // 数组元素等于0的。无需考虑
             if (num != 0) {
                 // cur 内部数据完全和dp一样
-                // 考虑x之前的集合差值状况拷贝下来
+                // 考虑x之前的集合差值状况拷贝下来【用于遍历】【直接在一个表里面捣鼓的话，会把表搞乱的】
                 cur = new HashMap<>(dp);
                 for (int d : cur.keySet()) {
 
@@ -46,7 +48,7 @@ public class Code05_TallestBillboard {
                     int diffMore = cur.get(d);
                     // x决定放入，比较大的那个
                     dp.put(d + num, Math.max(diffMore, dp.getOrDefault(num + d, 0)));
-                    
+
                     // x决定放入，比较小的那个
                     // 新的差值 Math.abs(x - d)
                     // 之前差值为Math.abs(x - d)，的那一对，就要和这一对，决策一下
