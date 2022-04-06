@@ -33,7 +33,7 @@ package org.study.coding.class09;
  * 最优解O(NlogN)
  * 准备一个dp数组和一个end数组【长度和原数组一样】
  * dp[i] 表示 arr[0...i] 的最长递增子序列
- * end[i] :表示就当前遍历完 i 位置之后。目前所有长度为 i+1 的递增子序列中，最小的结尾是 end[i]。每个end[i] 都代表一个自增子序列的最小值
+ * end[i] :表示就当前包含 i 位置在内。目前所有长度为 i+1 的递增子序列中，最小的结尾是 end[i]。每个end[i] 都代表一个自增子序列的最小值
  * 如果 end[0] = 3  :表示当前所有长度为 1 的递增子序列中，最小的结尾是 3
  * <p>
  * end中记录了当前所有的子序列长度。和对应长度的最小结尾值
@@ -53,12 +53,18 @@ package org.study.coding.class09;
  */
 public class Code03_LongestIncreasingSubsequence {
 
+    /**
+     * 最优解 O(NlogN)
+     * @since 2022-04-06 14:45:51
+     */
     public static int lengthOfLIS(int[] nums) {
         if (nums == null || nums.length == 0) {
             return 0;
         }
         int[] ends = new int[nums.length];
         ends[0] = nums[0];
+
+        // end数组的右边界
         int right = 0;
         int l = 0;
         int r = 0;
@@ -67,6 +73,8 @@ public class Code03_LongestIncreasingSubsequence {
         for (int i = 1; i < nums.length; i++) {
             l = 0;
             r = right;
+
+            // 在end数组上二分
             while (l <= r) {
                 m = (l + r) / 2;
                 if (nums[i] > ends[m]) {
@@ -75,6 +83,12 @@ public class Code03_LongestIncreasingSubsequence {
                     r = m - 1;
                 }
             }
+            // while 循环结束。只会有两种情况
+            // 1)当前数比end中的如何一个都打。也就是l一直右移，直到大于r的位置。此时前面的 l 个数都能给当前数撑起前缀
+            // 2)在end中，存在比当前数大的数。就会存在r左移。那么在l>的时候，结束循环。此时的l位置就是刚好比当前数大的位置 。
+            // 不管是情况1还是情况2. end[l] 都要设置为当前数
+
+            // 检查是否能推高end的右边界
             right = Math.max(right, l);
             ends[l] = nums[i];
             max = Math.max(max, l + 1);

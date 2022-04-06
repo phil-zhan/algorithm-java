@@ -29,15 +29,26 @@ import java.util.Comparator;
  * 排完序后，将所有高度都拿出来组成一个一维数组
  * 结论：在这个数组中，最长递增子序列长度就是套娃的层数
  * <p>
- * 递增子序列，那么高度这个层面肯定是能套进去的。
+ * 递增子序列，那么高度这个层面肯定是能套进去的。【按照高度递增】
  * 宽度这个层面。因为排序的时候是先按照宽度从小到大的。【那么当前位置前面的所有数，其宽度都必定小于自己】
- * 也就是说，在这个一维数组中，高度和自己一样，但是宽度不如自己的，肯定在自己的后面【只要宽度不如自己的，都在当前位置的后面】【宽度小到大】
+ * 也就是说，在这个一维数组中，高度和自己一样，但是宽度不如自己的【宽度比自己大的】，肯定在自己的后面【只要宽度不如自己的（比自己大），都在当前位置的后面】【宽度小到大】
+ * <p>
+ * <p>
+ * 重点：数组排完序后，在递增比较的时候，只比较高度。也就是高度递增
+ * 宽度的层面，前面的肯定能塞在后面的里面
  *
  * @since 2022-03-10 09:26:45
  */
 public class Code04_EnvelopesProblem {
+    public static void main(String[] args) {
+        int[][] matrix = new int[][]{{5, 4}, {6, 4}, {6, 7}, {2, 3}};
+        System.out.println(maxEnvelopes(matrix));
+    }
 
     public static int maxEnvelopes(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0] == null || matrix[0].length == 0){
+            return 0;
+        }
         Envelope[] arr = sort(matrix);
         int[] ends = new int[matrix.length];
         ends[0] = arr[0].h;
@@ -66,9 +77,9 @@ public class Code04_EnvelopesProblem {
         public int l;
         public int h;
 
-        public Envelope(int weight, int hight) {
+        public Envelope(int weight, int height) {
             l = weight;
-            h = hight;
+            h = height;
         }
     }
 

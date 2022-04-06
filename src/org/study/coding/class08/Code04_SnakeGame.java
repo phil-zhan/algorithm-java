@@ -22,6 +22,10 @@ import java.util.Arrays;
  */
 public class Code04_SnakeGame {
 
+	/**
+	 * dp way
+	 * @since 2022-04-05 11:41:41
+	 */
 	public static int walk1(int[][] matrix) {
 		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
 			return 0;
@@ -36,6 +40,10 @@ public class Code04_SnakeGame {
 		return res;
 	}
 
+	/**
+	 * dp way 【课上代码】
+	 * @since 2022-04-05 11:41:51
+	 */
 	public static int zuo(int[][] matrix) {
 		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
 			return 0;
@@ -124,6 +132,8 @@ public class Code04_SnakeGame {
 
 
 	/**
+	 * 递归版本
+	 *
 	 * 考察蛇从一个最优的最左侧的位置开始，到达（i,j）位置停，
 	 * 返回没有使用能力获得的最大增长值是多少和使用一次能力获得的最好结果
 	 *
@@ -139,16 +149,22 @@ public class Code04_SnakeGame {
 			// (i,j)就是最左侧的位置
 			return new int[] { m[i][j], -m[i][j] };
 		}
+
+		// 左
 		int[] preAns = process(m, i, j - 1);
 		// 所有的路中，完全不使用能力的情况下，能够到达的最好长度是多大
 		int preUnuse = preAns[0];
 		// 所有的路中，使用过一次能力的情况下，能够到达的最好长度是多大
 		int preUse = preAns[1];
+
+		// 左上
 		if (i - 1 >= 0) {
 			preAns = process(m, i - 1, j - 1);
 			preUnuse = Math.max(preUnuse, preAns[0]);
 			preUse = Math.max(preUse, preAns[1]);
 		}
+
+		// 左下
 		if (i + 1 < m.length) {
 			preAns = process(m, i + 1, j - 1);
 			preUnuse = Math.max(preUnuse, preAns[0]);
@@ -172,12 +188,18 @@ public class Code04_SnakeGame {
 	}
 
 
-
+	/**
+	 * dp way
+	 * @since 2022-04-05 11:41:17
+	 */
 	public static int walk2(int[][] matrix) {
 		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
 			return 0;
 		}
 		int max = Integer.MIN_VALUE;
+
+		// dp[i][j][0]：没使用特权的情况下，到达i、j位置能获得的最大值
+		// dp[i][j][1]：使用特权的情况下，到达i、j位置能获得的最大值
 		int[][][] dp = new int[matrix.length][matrix[0].length][2];
 		for (int i = 0; i < dp.length; i++) {
 			dp[i][0][0] = matrix[i][0];
@@ -186,16 +208,24 @@ public class Code04_SnakeGame {
 		}
 		for (int j = 1; j < matrix[0].length; j++) {
 			for (int i = 0; i < matrix.length; i++) {
+
+				// 左
 				int preUnuse = dp[i][j - 1][0];
 				int preUse = dp[i][j - 1][1];
+
+				// 左上
 				if (i - 1 >= 0) {
 					preUnuse = Math.max(preUnuse, dp[i - 1][j - 1][0]);
 					preUse = Math.max(preUse, dp[i - 1][j - 1][1]);
 				}
+
+				// 左下
 				if (i + 1 < matrix.length) {
 					preUnuse = Math.max(preUnuse, dp[i + 1][j - 1][0]);
 					preUse = Math.max(preUse, dp[i + 1][j - 1][1]);
 				}
+
+				// add cache
 				dp[i][j][0] = -1;
 				dp[i][j][1] = -1;
 				if (preUnuse >= 0) {
@@ -205,6 +235,8 @@ public class Code04_SnakeGame {
 				if (preUse >= 0) {
 					dp[i][j][1] = Math.max(dp[i][j][1], matrix[i][j] + preUse);
 				}
+
+				// update max
 				max = Math.max(max, Math.max(dp[i][j][0], dp[i][j][1]));
 			}
 		}

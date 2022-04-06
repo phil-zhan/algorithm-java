@@ -44,6 +44,9 @@ import java.util.List;
  * @since 2022-03-10 08:11:31
  */
 public class Code02_RemoveInvalidParentheses {
+    public static void main(String[] args) {
+        System.out.println(removeInvalidParentheses("(()((())))"));
+    }
 
     /**
      * 来自leetcode投票第一的答案，实现非常好，我们来赏析一下
@@ -75,7 +78,7 @@ public class Code02_RemoveInvalidParentheses {
      * 0 1 2 3 4 5 6
      * checkIndex = 6 ，modifyIndex = 4
      * 也就是说，
-     * checkIndex和modifyIndex，分别表示查的开始 和 调的开始，之前的都不用管了  par[0] = '('     par[0] = ')‘
+     * checkIndex和modifyIndex，分别表示查的开始 和 调整的开始，之前的都不用管了  par[0] = '('     par[0] = ')‘
      *
      * @since 2022-03-10 08:48:50
      */
@@ -113,7 +116,7 @@ public class Code02_RemoveInvalidParentheses {
 
         // 我们是先检查左括号，再检查右括号。如果 par[0] == '(' 。
         // 如果传进来的 par[0] 是左括号，说明是第一次反转了。有必要进行反转
-        // 如果传进来的 par[0] 不是左括号，说明是第二次反转了。就没必要进行，直接收集答案。【防止递归转不完】
+        // 如果传进来的 par[0] 不是左括号，说明是第二次反转了。就没必要进行，直接收集答案。【防止递归转不完】【此时的左右括号数量相等】
 
         if (par[0] == '(') {
             remove(reversed, ans, 0, 0, new char[]{')', '('});

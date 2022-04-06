@@ -76,9 +76,9 @@ public class Code01_LightProblem {
 
             curStatus ^= 1;
             // 影响下一个位置的状态
-            int cur = arr[nextIndex] ^ 1;
+            int nextStatus = arr[nextIndex] ^ 1;
 
-            int next = process1(arr, nextIndex + 1, curStatus, cur);
+            int next = process1(arr, nextIndex + 1, curStatus, nextStatus);
             return next == Integer.MAX_VALUE ? next : (next + 1);
         } else {
             // 一定不能改变
