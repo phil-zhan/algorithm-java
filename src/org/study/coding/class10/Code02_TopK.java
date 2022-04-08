@@ -29,6 +29,20 @@ import java.util.TreeSet;
  */
 public class Code02_TopK {
 
+
+    public static void main(String[] args) {
+        Code02_TopK code02_topK = new Code02_TopK(2);
+        code02_topK.add("a");
+        code02_topK.add("b");
+        code02_topK.add("c");
+        code02_topK.add("a");
+        code02_topK.add("c");
+        System.out.println(code02_topK.topk());
+    }
+
+
+
+
     private Node[] heap;
     private int heapSize;
     /**
@@ -62,6 +76,7 @@ public class Code02_TopK {
 
     public static class NodeHeapComp implements Comparator<Node> {
 
+        // 保留频次高的。频次一样的，保留字典序低的【每次都会一处堆顶】【将频次低的或字典序高的放在前面】
         @Override
         public int compare(Node o1, Node o2) {
             return o1.times != o2.times ? (o1.times - o2.times) : (o2.str.compareTo(o1.str));
@@ -71,6 +86,7 @@ public class Code02_TopK {
 
     public static class NodeTreeSetComp implements Comparator<Node> {
 
+        // 输出返回的时候，先按照频次从低到高。频次一样的时候，按照字典序从低到高
         @Override
         public int compare(Node o1, Node o2) {
             return o1.times != o2.times ? (o2.times - o1.times) : (o1.str.compareTo(o2.str));

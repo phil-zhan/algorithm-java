@@ -20,7 +20,7 @@ package org.study.coding.class10;
  *
  * 输出: 10
  *
-
+ * 解法：
  *
  * 偶数位置 非0即1
  * 奇数位置 只可能是逻辑符号 and  or xor
@@ -89,6 +89,7 @@ public class Code05_BooleanEvaluation {
         int t = 0;
         int f = 0;
         if (L == R) {
+            // 注意这个判断的时候，用字符的1不要用数字的1.容易出错
             t = str[L] == '1' ? 1 : 0;
             f = str[L] == '0' ? 1 : 0;
         } else {

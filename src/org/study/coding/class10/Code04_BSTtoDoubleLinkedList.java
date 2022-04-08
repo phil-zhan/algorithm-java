@@ -49,7 +49,7 @@ public class Code04_BSTtoDoubleLinkedList {
             return new Info(null, null);
         }
 
-        // 左右都搞定后，将自己插在中间。搞定
+        // 左右都搞定后，将自己插在中间。搞定【也就是将当前节点插在左边的end后面，右边的start前面】
         Info lInfo = process(X.left);
         Info rInfo = process(X.right);
         if (lInfo.end != null) {
