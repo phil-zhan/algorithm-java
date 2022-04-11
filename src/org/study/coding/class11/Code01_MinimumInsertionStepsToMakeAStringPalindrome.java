@@ -8,7 +8,7 @@ import java.util.List;
  * // 本题测试链接 : https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/
  * 1. 问题一：一个字符串至少需要添加多少个字符能整体变成回文串
  * 范围尝试模型
- * 考虑 [L...R] 范围上，要让其变为回文串，至少需要添加多少个字符
+ * 考虑 [L...R] 范围上，要让其变为回文串，至少需要添加多少个字符【上三角】
  * dp[i][j]: 表示 i到j 范围上
  * <p>
  * 对角线都是 0 【一个字符，其本身就是回文】
@@ -192,7 +192,7 @@ public class Code01_MinimumInsertionStepsToMakeAStringPalindrome {
                 path[pr] = str[L];
                 process(str, dp, L + 1, R, path, pl + 1, pr - 1, ans);
             }
-            if (str[L] == str[R] && (L == R - 1 || dp[L + 1][R - 1] == dp[L][R])) {
+            if (str[L] == str[R] && (dp[L + 1][R - 1] == dp[L][R])) {
                 path[pl] = str[L];
                 path[pr] = str[R];
                 process(str, dp, L + 1, R - 1, path, pl + 1, pr - 1, ans);

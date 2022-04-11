@@ -41,8 +41,9 @@ public class Code02_PalindromePartitioningII {
         boolean[][] checkMap = createCheckMap(str, N);
 
         // dp[i]: 表示 [i...n-1] 需要切成多少部分
-        int[] dp = new int[N + 1];
-        dp[N] = 0;
+        int[] dp = new int[N];
+        // 每个位置都需要后面的位置来做参考。这里补个0.省去对最后的位置单独考虑
+        //dp[N] = 0;
 
         // 考虑第一刀切在哪。切完第一刀后。剩下的 [i...n-1] 还需要多少刀
         // 切第一刀的时候，必须保证所切位置的左边是回文串
@@ -184,6 +185,8 @@ public class Code02_PalindromePartitioningII {
     }
 
     /**
+     * 考虑 [i...j]作为当前的第一部分。去考虑剩下的
+     *
      * s[0....i-1]  存到path里去了
      * s[i..j-1]考察的分出来的第一份
      *
