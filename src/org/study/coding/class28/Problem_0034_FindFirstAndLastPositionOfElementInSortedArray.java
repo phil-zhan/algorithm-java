@@ -1,5 +1,13 @@
 package org.study.coding.class28;
 
+/**
+ * 在排序数组中查找元素的第一个和最后一个位置
+ *
+ * 解法：有序数组中进行二分
+ *
+ *
+ * @since 2022-04-12 07:25:44
+ */
 public class Problem_0034_FindFirstAndLastPositionOfElementInSortedArray {
 
 	public static int[] searchRange(int[] nums, int target) {
