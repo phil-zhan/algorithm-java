@@ -2,6 +2,10 @@ package org.study.coding.class29;
 
 public class Problem_0050_PowXN {
 
+	/**
+	 * 计算 a的n次方【n是正数】
+	 * @since 2022-04-13 07:55:22
+	 */
 	public static int pow(int a, int n) {
 		int ans = 1;
 		int t = a;
@@ -15,7 +19,16 @@ public class Problem_0050_PowXN {
 		return ans;
 	}
 
-	// x的n次方，n可能是负数
+	/**
+	 * x的n次方，n可能是负数
+	 *
+	 * 注意考虑系统最小值
+	 * 它是不能转为正数的绝对值的
+	 * 接不住
+	 * 转了也还是它自己
+	 *
+	 * @since 2022-04-13 07:56:34
+	 */
 	public static double myPow(double x, int n) {
 		if (n == 0) {
 			return 1D;
