@@ -42,4 +42,29 @@ public class Code01_JumpGame {
         return step;
     }
 
+
+    public boolean canJump(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return false;
+        }
+        int step = 0;
+        int cur = 0;
+        int next = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (cur<i && next < i){
+                return false;
+            }
+            if (cur < i) {
+                step++;
+                cur = next;
+            }
+            next = Math.max(next, i + nums[i]);
+        }
+        return cur>=(nums.length-1);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new Code01_JumpGame().canJump(new int[]{0,2,1}));
+    }
+
 }
