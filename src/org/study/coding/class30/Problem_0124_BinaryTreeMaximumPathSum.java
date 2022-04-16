@@ -5,7 +5,29 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-// follow up : 如果要求返回整个路径怎么做？
+/**
+ * 124. 二叉树中的最大路径和
+ * 路径 被定义为一条从树中任意节点出发，沿父节点-子节点连接，达到任意节点的序列。同一个节点在一条路径序列中 至多出现一次 。该路径 至少包含一个 节点，且不一定经过根节点。
+ * 路径和 是路径中各节点值的总和。
+ * 给你一个二叉树的根节点 root ，返回其 最大路径和 。
+ * 【任何两点间都存在路径和，返回最大的路径和】
+ *
+ * follow up : 如果要求返回整个路径怎么做？
+ *
+ * 解法：
+ * 考虑二叉树的递归套路。
+ * 最终的最大路径和与头节点无关【或者与头节点有关】
+ * 1）与头节点无关
+ * 	最大路径和来自左树或者来自右树【去个max最大值】【需要记录当前树上的最大路径和】
+ * 2）与头节点有关
+ *  ①：最大路径和只包含头节点
+ *  ②：头结点只往左扎，走出来的最大路径和【需要记录当前树必须从头出发的情况下的最大路径和】
+ *  ③：头结点只往右扎，走出来的最大路径和【需要记录当前树必须从头出发的情况下的最大路径和】
+ *  ④：头结点既往左扎也往右扎。走出来的最大路径和【需要记录当前树必须从头出发的情况下的最大路径和】
+ * 总结：需要记录当前树的最大路径和。以及需要记录必须从头节点出发情况下的最大路径和
+ *
+ * @since 2022-04-16 10:52:04
+ */
 public class Problem_0124_BinaryTreeMaximumPathSum {
 
 	public static class TreeNode {
@@ -26,7 +48,11 @@ public class Problem_0124_BinaryTreeMaximumPathSum {
 		return process(root).maxPathSum;
 	}
 
-	// 任何一棵树，必须汇报上来的信息
+	/**
+	 * 任何一棵树，必须汇报上来的信息
+	 *
+	 * @since 2022-04-16 11:06:33
+	 */
 	public static class Info {
 		public int maxPathSum;
 		public int maxPathSumFromHead;
@@ -59,7 +85,8 @@ public class Problem_0124_BinaryTreeMaximumPathSum {
 		if (rightInfo != null) {
 			maxPathSum = Math.max(maxPathSum, rightInfo.maxPathSum);
 		}
-		// 4) x只往左扎 5）x只往右扎
+		// 4) x只往左扎
+		// 5）x只往右扎
 		maxPathSum = Math.max(maxPathSumFromHead, maxPathSum);
 		// 6）一起扎
 		if (leftInfo != null && rightInfo != null && leftInfo.maxPathSumFromHead > 0
@@ -69,24 +96,51 @@ public class Problem_0124_BinaryTreeMaximumPathSum {
 		return new Info(maxPathSum, maxPathSumFromHead);
 	}
 
-	// 如果要返回路径的做法
+	/**
+	 * 如果要返回路径的做法
+	 *
+	 * @since 2022-04-16 11:07:04
+	 */
 	public static List<TreeNode> getMaxSumPath(TreeNode head) {
 		List<TreeNode> ans = new ArrayList<>();
 		if (head != null) {
 			Data data = f(head);
 			HashMap<TreeNode, TreeNode> fmap = new HashMap<>();
 			fmap.put(head, head);
+
+			// 做出父map
 			fatherMap(head, fmap);
+
+			// 整合路径
 			fillPath(fmap, data.from, data.to, ans);
 		}
 		return ans;
 	}
 
 	public static class Data {
+		/**
+		 * 整体的路径和
+		 * @since 2022-04-16 11:26:23
+		 */
 		public int maxAllSum;
+
+		/**
+		 * 最大路径和的路径起始点也记录一下。最后再根据这两个节点的最低公共祖先去生成整个路径
+		 * @since 2022-04-16 11:22:08
+		 */
 		public TreeNode from;
 		public TreeNode to;
+
+		/**
+		 * 必须从头出发的路径和
+		 * @since 2022-04-16 11:26:34
+		 */
 		public int maxHeadSum;
+
+		/**
+		 * 必须从头出发的路径和，往下扎到了哪。
+		 * @since 2022-04-16 11:21:59
+		 */
 		public TreeNode end;
 
 		public Data(int a, TreeNode b, TreeNode c, int d, TreeNode e) {
@@ -106,27 +160,39 @@ public class Problem_0124_BinaryTreeMaximumPathSum {
 		Data r = f(x.right);
 		int maxHeadSum = x.val;
 		TreeNode end = x;
+
+		// 左树能不能推高从头出发的最大路径和
 		if (l != null && l.maxHeadSum > 0 && (r == null || l.maxHeadSum > r.maxHeadSum)) {
 			maxHeadSum += l.maxHeadSum;
 			end = l.end;
 		}
+
+		// 右树能不能推高从头出发的最大路径和
 		if (r != null && r.maxHeadSum > 0 && (l == null || r.maxHeadSum > l.maxHeadSum)) {
 			maxHeadSum += r.maxHeadSum;
 			end = r.end;
 		}
+
+		// 当前树的最大路径和能不能被推高。能被推高，就记录对应的首尾两端
 		int maxAllSum = Integer.MIN_VALUE;
 		TreeNode from = null;
 		TreeNode to = null;
+
+		// 左边
 		if (l != null) {
 			maxAllSum = l.maxAllSum;
 			from = l.from;
 			to = l.to;
 		}
+
+		// 右边
 		if (r != null && r.maxAllSum > maxAllSum) {
 			maxAllSum = r.maxAllSum;
 			from = r.from;
 			to = r.to;
 		}
+
+		// 即往左也往右。这时候的from和to要记录成对应的end
 		int p3 = x.val + (l != null && l.maxHeadSum > 0 ? l.maxHeadSum : 0)
 				+ (r != null && r.maxHeadSum > 0 ? r.maxHeadSum : 0);
 		if (p3 > maxAllSum) {
@@ -134,6 +200,8 @@ public class Problem_0124_BinaryTreeMaximumPathSum {
 			from = (l != null && l.maxHeadSum > 0) ? l.end : x;
 			to = (r != null && r.maxHeadSum > 0) ? r.end : x;
 		}
+
+		// return
 		return new Data(maxAllSum, from, to, maxHeadSum, end);
 	}
 
