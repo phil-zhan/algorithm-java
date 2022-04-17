@@ -3,102 +3,166 @@ package org.study.coding.class31;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 140. 单词拆分 II
+ * 给定一个字符串 s 和一个字符串字典wordDict，在字符串s中增加空格来构建一个句子，使得句子中所有的单词都在词典中。以任意顺序 返回所有这些可能的句子。
+ * 注意：词典中的同一个单词可能在分段中被重复使用多次。
+ *
+ *
+ *
+ * 示例 1：
+ *
+ * 输入:s = "catsanddog", wordDict = ["cat","cats","and","sand","dog"]
+ * 输出:["cats and dog","cat sand dog"]
+ * 示例 2：
+ *
+ * 输入:s = "pineapplepenapple", wordDict = ["apple","pen","applepen","pine","pineapple"]
+ * 输出:["pine apple pen apple","pineapple pen apple","pine applepen apple"]
+ * 解释: 注意你可以重复使用字典中的单词。
+ * 示例3：
+ *
+ * 输入:s = "catsandog", wordDict = ["cats","dog","sand","and","cat"]
+ * 输出:[]
+ *
+ *
+ * 解答：
+ * 方法1：和前一题一样，考虑 index...n-1 能不能被字典搞定。收集沿途的前缀
+ * 方法2：和前一题一样，先生成dp。dp[index] : 表示 index...n-1 能不能被字典搞定。最后再根据dp，采用回溯法，逆向生成答案。
+ *
+ *
+ * @since 2022-04-17 12:19:07
+ */
 public class Problem_0140_WordBreakII {
 
-	public static class Node {
-		public String path;
-		public boolean end;
-		public Node[] nexts;
+    public static class Node {
 
-		public Node() {
-			path = null;
-			end = false;
-			nexts = new Node[26];
-		}
-	}
+        /**
+         * 记录一下以当前字符为结尾的单词。方便要的时候取。而不用截取字符串
+         *
+         * @since 2022-04-17 16:01:00
+         */
+        public String path;
+        public boolean end;
+        public Node[] nexts;
 
-	public static List<String> wordBreak(String s, List<String> wordDict) {
-		char[] str = s.toCharArray();
-		Node root = gettrie(wordDict);
-		boolean[] dp = getdp(s, root);
-		ArrayList<String> path = new ArrayList<>();
-		List<String> ans = new ArrayList<>();
-		process(str, 0, root, dp, path, ans);
-		return ans;
-	}
+        public Node() {
+            path = null;
+            end = false;
+            nexts = new Node[26];
+        }
+    }
 
-	// str[index.....] 是要搞定的字符串
-	// dp[0...N-1] 0... 1.... 2... N-1... 在dp里
-	// root 单词表所有单词生成的前缀树头节点
-	// path str[0..index-1]做过决定了，做的决定放在path里
-	public static void process(char[] str, int index, Node root, boolean[] dp, ArrayList<String> path,
-			List<String> ans) {
-		if (index == str.length) {
-			StringBuilder builder = new StringBuilder();
-			for (int i = 0; i < path.size() - 1; i++) {
-				builder.append(path.get(i) + " ");
-			}
-			builder.append(path.get(path.size() - 1));
-			ans.add(builder.toString());
-		} else {
-			Node cur = root;
-			for (int end = index; end < str.length; end++) {
-				// str[i..end] （能不能拆出来）
-				int road = str[end] - 'a';
-				if (cur.nexts[road] == null) {
-					break;
-				}
-				cur = cur.nexts[road];
-				if (cur.end && dp[end + 1]) {
-					// [i...end] 前缀串
-					// str.subString(i,end+1)  [i..end]
-					path.add(cur.path);
-					process(str, end + 1, root, dp, path, ans);
-					path.remove(path.size() - 1);
-				}
-			}
-		}
-	}
+    public static List<String> wordBreak(String s, List<String> wordDict) {
+        char[] str = s.toCharArray();
 
-	public static Node gettrie(List<String> wordDict) {
-		Node root = new Node();
-		for (String str : wordDict) {
-			char[] chs = str.toCharArray();
-			Node node = root;
-			int index = 0;
-			for (int i = 0; i < chs.length; i++) {
-				index = chs[i] - 'a';
-				if (node.nexts[index] == null) {
-					node.nexts[index] = new Node();
-				}
-				node = node.nexts[index];
-			}
-			node.path = str;
-			node.end = true;
-		}
-		return root;
-	}
+        // 前缀树
+        Node root = gettrie(wordDict);
 
-	public static boolean[] getdp(String s, Node root) {
-		char[] str = s.toCharArray();
-		int N = str.length;
-		boolean[] dp = new boolean[N + 1];
-		dp[N] = true;
-		for (int i = N - 1; i >= 0; i--) {
-			Node cur = root;
-			for (int end = i; end < N; end++) {
-				int path = str[end] - 'a';
-				if (cur.nexts[path] == null) {
-					break;
-				}
-				cur = cur.nexts[path];
-				if (cur.end && dp[end + 1]) {
-					dp[i] = true;
-					break;
-				}
-			}
-		}
-		return dp;
-	}
+        // 动态规划生成dp
+        boolean[] dp = getdp(s, root);
+        ArrayList<String> path = new ArrayList<>();
+        List<String> ans = new ArrayList<>();
+
+        // 回溯发生成答案
+        process(str, 0, root, dp, path, ans);
+        return ans;
+    }
+
+
+    /**
+     * str[index.....] 是要搞定的字符串
+     * dp[0...N-1] 0... 1.... 2... N-1... 在dp里
+     * root 单词表所有单词生成的前缀树头节点
+     * path str[0..index-1]做过决定了，做的决定放在path里
+     *
+     * @since 2022-04-17 15:42:40
+     */
+    public static void process(char[] str, int index, Node root, boolean[] dp, ArrayList<String> path,
+                               List<String> ans) {
+        if (index == str.length) {
+
+            // 将沿途的前缀，用空格分开，生成一个长的字符串。
+            StringBuilder builder = new StringBuilder();
+
+            // 最后一个单词单独处理。因为最后一个单词的后面不需要加空格
+            for (int i = 0; i < path.size() - 1; i++) {
+                builder.append(path.get(i) + " ");
+            }
+            builder.append(path.get(path.size() - 1));
+            ans.add(builder.toString());
+        } else {
+            Node cur = root;
+            for (int end = index; end < str.length; end++) {
+                // str[i..end] （能不能拆出来）
+                // 【有路就能往下走。没路就走不下去了】
+                int road = str[end] - 'a';
+                if (cur.nexts[road] == null) {
+                    break;
+                }
+                cur = cur.nexts[road];
+
+                // 字典中存在以当前字符结尾的字符串。且dp[end+1] 能被搞定
+                if (cur.end && dp[end + 1]) {
+                    // [i...end] 前缀串
+                    // str.subString(i,end+1)  [i..end]
+                    // 采用的是深度优先。需要处理现场
+                    path.add(cur.path);
+                    process(str, end + 1, root, dp, path, ans);
+                    path.remove(path.size() - 1);
+                }
+            }
+        }
+    }
+
+    /**
+     * 生成前缀树
+     *
+     * @since 2022-04-17 15:43:18
+     */
+    public static Node gettrie(List<String> wordDict) {
+        Node root = new Node();
+        for (String str : wordDict) {
+            char[] chs = str.toCharArray();
+            Node node = root;
+            int index = 0;
+            for (int i = 0; i < chs.length; i++) {
+                index = chs[i] - 'a';
+                if (node.nexts[index] == null) {
+                    node.nexts[index] = new Node();
+                }
+                node = node.nexts[index];
+            }
+            node.path = str;
+            node.end = true;
+        }
+        return root;
+    }
+
+    /**
+     * 动态规划，生成dp
+     *
+     * @since 2022-04-17 15:43:29
+     */
+    public static boolean[] getdp(String s, Node root) {
+        char[] str = s.toCharArray();
+        int N = str.length;
+        boolean[] dp = new boolean[N + 1];
+        dp[N] = true;
+        for (int i = N - 1; i >= 0; i--) {
+            Node cur = root;
+            for (int end = i; end < N; end++) {
+                int path = str[end] - 'a';
+                if (cur.nexts[path] == null) {
+                    break;
+                }
+                cur = cur.nexts[path];
+                if (cur.end && dp[end + 1]) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp;
+    }
 
 }

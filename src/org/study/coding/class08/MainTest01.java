@@ -9,6 +9,14 @@ import java.util.Objects;
  */
 public class MainTest01 {
     public static void main(String[] args) {
+
+        // 示例 1
+        //"3+2*2"
+        //示例 2
+        //" 3/2 "
+        //示例 3
+        //" 3+5 / 2 "
+
         String exp = "31+2*3";
         System.out.println(cal(exp));
         System.out.println(calculate("-3+2-(-3)*5"));
