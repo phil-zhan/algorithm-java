@@ -52,7 +52,7 @@ import java.util.LinkedList;
 public class Code01_ExpressionCompute {
 
 	public static void main(String[] args) {
-		System.out.println(calculate("-3+2-(-3)*5"));
+		System.out.println(calculate(" 3/2 "));
 	}
 
 	public static int calculate(String str) {
@@ -75,6 +75,10 @@ public class Code01_ExpressionCompute {
 		// 从i出发，开始撸串
 		// 遇到右括号或者遇到字符串的终止
 		while (i < str.length && str[i] != ')') {
+			if (str[i] == ' '){
+				i++;
+				continue;
+			}
 			if (str[i] >= '0' && str[i] <= '9') {
 				// 数字
 				// 往后，拿到完整的数字

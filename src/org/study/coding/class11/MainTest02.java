@@ -12,6 +12,7 @@ public class MainTest02 {
     public static void main(String[] args) {
         System.out.println(minCut("abcdc"));
         System.out.println(minCutOneWay("abcdc"));
+        System.out.println(minCutAllWays("abcdc"));
     }
 
     public static int minCut(String s) {
@@ -98,35 +99,31 @@ public class MainTest02 {
     public static List<List<String>> minCutAllWays(String s) {
         List<List<String>> ans = new ArrayList<>();
         if (s == null || s.length() < 2) {
-            List<String> path = new ArrayList<>();
-            path.add(s);
-            ans.add(path);
+            List<String> cur = new ArrayList<>();
+            cur.add(s);
+            ans.add(cur);
         } else {
             char[] str = s.toCharArray();
-            int len = str.length;
+            int N = str.length;
             boolean[][] checkMap = createCheckMap(str);
-            int[] dp = new int[len + 1];
-            dp[len] = 0;
-            for (int i = len - 1; i >= 0; i++) {
-                if (checkMap[i][len - 1]) {
+            int[] dp = new int[N + 1];
+            dp[N] = 0;
+            for (int i = N - 1; i >= 0; i--) {
+                if (checkMap[i][N - 1]) {
                     dp[i] = 1;
                 } else {
                     int next = Integer.MAX_VALUE;
-                    for (int j = i; j < len; j++) {
+                    for (int j = i; j < N; j++) {
                         if (checkMap[i][j]) {
                             next = Math.min(next, dp[j + 1]);
                         }
                     }
-
-                    dp[i] = next + 1;
+                    dp[i] = 1 + next;
                 }
             }
-
             process(s, 0, 1, checkMap, dp, new ArrayList<>(), ans);
-
-
-            // process
         }
+
 
         return ans;
     }

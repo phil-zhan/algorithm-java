@@ -1,9 +1,8 @@
 package org.study.coding.class23;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 /**
  * 4. 超级水王问题

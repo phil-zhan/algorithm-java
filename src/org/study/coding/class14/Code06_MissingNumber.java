@@ -44,7 +44,15 @@ package org.study.coding.class14;
  * @since 2022-03-16 08:56:25
  */
 public class Code06_MissingNumber {
+    public static void main(String[] args) {
+        System.out.println(firstMissingPositive(new int[]{0}));
+    }
 
+    /**
+     * 求解数组中缺失的最小正整数【也就是大于等于1的数】
+     *
+     * @since 2022-04-18 21:52:44
+     */
     public static int firstMissingPositive(int[] arr) {
         // l是盯着的位置【当前考察的位置】
         // 0 ~ L-1有效区
@@ -55,10 +63,13 @@ public class Code06_MissingNumber {
                 // 当前数有效
                 L++;
             } else if (arr[L] <= L || arr[L] > R || arr[arr[L] - 1] == arr[L]) {
+                // arr[arr[L] - 1] == arr[L]  针对第三个条件。当前数在L...R 范围内。 arr[L] - 1 是当前数应该去的位置。比如 arr[L]=23 .那么它就应该放在下标为 22的位置
+                // 如果它该放的位置上已经有一个一样的数了，那么该数就是垃圾
+
                 // 垃圾的情况
                 swap(arr, L, --R);
             } else {
-                // arr[L] 在 [L...R]范围
+                // arr[L] 在 [L...R]范围。是可能的有效值。且当前数该去的位置还没有躺着一个与当前的arr[L]一样的数。那么就将当前数换到它该去的位置
                 swap(arr, L, arr[L] - 1);
             }
         }
