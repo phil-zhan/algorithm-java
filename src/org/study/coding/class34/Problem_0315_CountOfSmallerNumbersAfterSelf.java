@@ -3,6 +3,35 @@ package org.study.coding.class34;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 315. 计算右侧小于当前元素的个数
+ * 给你一个整数数组 nums ，按要求返回一个新数组counts 。数组 counts 有该性质： counts[i] 的值是 nums[i] 右侧小于nums[i] 的元素的数量。
+ *
+ *
+ * 示例 1：
+ * 输入：nums = [5,2,6,1]
+ * 输出：[2,1,1,0]
+ * 解释：
+ * 5 的右侧有 2 个更小的元素 (2 和 1)
+ * 2 的右侧仅有 1 个更小的元素 (1)
+ * 6 的右侧有 1 个更小的元素 (1)
+ * 1 的右侧有 0 个更小的元素
+ *
+ *
+ * 示例 2：
+ * 输入：nums = [-1]
+ * 输出：[0]
+ * 示例 3：
+ *
+ * 输入：nums = [-1,-1]
+ * 输出：[0,0]
+ *
+ * 解法：
+ * 整个过程是套在归并排序里面的。类似于归并排序求逆序对问题。
+ *
+ *
+ * @since 2022-04-21 22:36:33
+ */
 public class Problem_0315_CountOfSmallerNumbersAfterSelf {
 
 	public static class Node {
@@ -50,6 +79,8 @@ public class Problem_0315_CountOfSmallerNumbersAfterSelf {
 		int p1 = m;
 		int p2 = r;
 		while (p1 >= l && p2 >= m + 1) {
+
+			// 结算的时候
 			if (arr[p1].value > arr[p2].value) {
 				ans.set(arr[p1].index, ans.get(arr[p1].index) + p2 - m);
 			}
