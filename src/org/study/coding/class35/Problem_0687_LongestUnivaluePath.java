@@ -1,5 +1,23 @@
 package org.study.coding.class35;
 
+/**
+ * 687. 最长同值路径
+ * 给定一个二叉树的 root ，返回 最长的路径的长度 ，这个路径中的 每个节点具有相同值 。 这条路径可以经过也可以不经过根节点。
+ * 两个节点之间的路径长度 由它们之间的边数表示。
+ *
+ * 解法：
+ * 考虑二叉树递归套路
+ *
+ * 以x为头的节点。最大路径是多大【必须是值相同的节点，才能组成路径】
+ * 1）和x节点无关【左右树取一个最大值】
+ * 2）和x节点有关
+ *
+ * a. 只包含x节点。
+ * b. 左树能被头拉进来，左树能扎多深。右树能被头拉进来，右树能扎多深。最后求和再加1
+ *
+ *
+ * @since 2022-04-24 21:43:53
+ */
 public class Problem_0687_LongestUnivaluePath {
 
 	public static class TreeNode {
@@ -19,7 +37,11 @@ public class Problem_0687_LongestUnivaluePath {
 		return process(root).max - 1;
 	}
 
-	// 建设以x节点为头的树，返回两个信息
+	/**
+	 * 建设以x节点为头的树，返回两个信息
+	 *
+	 * @since 2022-04-24 21:44:00
+	 */
 	public static class Info {
 		// 在一条路径上：要求每个节点通过且只通过一遍
 		public int len; // 路径必须从x出发且只能往下走的情况下，路径的最大距离
