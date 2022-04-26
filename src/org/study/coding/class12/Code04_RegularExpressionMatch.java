@@ -86,6 +86,7 @@ public class Code04_RegularExpressionMatch {
 
         // si 已经结尾了
         // 或者是ei位置搞不定，只能让 ei + 1 位置的 * 变0个字符，然后让 ei+2 的位置继续捣腾
+        // 已经没有字符串了， ei+2  及其后面的字符串不需要自己消化
         return process(s, e, si, ei + 2);
     }
 

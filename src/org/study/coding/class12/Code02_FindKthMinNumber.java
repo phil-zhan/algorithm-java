@@ -1,7 +1,7 @@
 package org.study.coding.class12;
 
 /**
- * // 本题测试链接 : https://leetcode.com/problems/median-of-two-sorted-arrays/
+ * 本题测试链接 : <a href="https://leetcode.com/problems/median-of-two-sorted-arrays/">https://leetcode.com/problems/median-of-two-sorted-arrays/</a>
  * <p>
  * 给定两个大小分别为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。请你找出并返回这两个正序数组的中位数
  * 进阶，在两个都有序的数组中找整体第K小的数，可以做到O(log(Min(M,N)))
@@ -125,7 +125,7 @@ public class Code02_FindKthMinNumber {
     }
 
     /**
-     * 进阶问题 : 在两个都有序的数组中，找整体第K小的数
+     * 进阶问题 : 在两个都有序的数组中，找整体第K小的数,也就是找到合并后，下标是k-1的数
      * 可以做到O(log(Min(M,N)))
      *
      * @since 2022-03-13 05:05:32
@@ -137,6 +137,12 @@ public class Code02_FindKthMinNumber {
         int[] shorts = arr1.length < arr2.length ? arr1 : arr2;
         int l = longs.length;
         int s = shorts.length;
+
+        // arr1: 1 3 5 7 9 11 13
+        // arr2: 1 3 5 7
+        // kth: 3
+        // kth: 9
+        // kth: 6
 
 
         if (kth <= s) {
@@ -167,7 +173,7 @@ public class Code02_FindKthMinNumber {
      * A[s1...e1]
      * B[s2...e2]
      * 一定等长！
-     * 返回整体的，上中位数！8（4） 10（5） 12（6）
+     * 返回整体的，上中位数！8（4） 10（5） 12（6） 也就是返回中位数中较小的那个
      * 1）两个有序且等长的数组 arr1、arr2. 请你找出并返回这两个正序数组的第中间小的数【最优解：O(logN)】
      * 每次都砍掉一半
      *
@@ -218,6 +224,11 @@ public class Code02_FindKthMinNumber {
         // s2 == e2
         // 两个数组都只有一个数，返回第一小。谁小返回谁
         return Math.min(A[s1], B[s2]);
+    }
+
+    public static void main(String[] args) {
+        // 1 2 3 4 5 6
+        System.out.println(getUpMedian(new int[]{1, 3, 5}, 0, 2, new int[]{2, 4, 6}, 0, 2));
     }
 
 }

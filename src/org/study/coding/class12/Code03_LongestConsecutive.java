@@ -32,11 +32,17 @@ public class Code03_LongestConsecutive {
 
     public static void main(String[] args) {
         System.out.println(new Code03_LongestConsecutive().longestConsecutive2(new int[]{-6, -5, -9, -7, -6, -7, -8}));
+        System.out.println(new Code03_LongestConsecutive().longestConsecutive2(new int[]{1, 2, 3, 4, 5, 6, 7, 8}));
     }
 
     public int longestConsecutive2(int[] nums) {
+
+        // key : 对应一个数字
+        // value：当前数字为头（尾）的链表长度
         HashMap<Integer, Integer> headMap = new HashMap<>();
         HashMap<Integer, Integer> tailMap = new HashMap<>();
+
+        // 某个数字做完头或尾，就不要再对其长度为1了。只有一次出现的时候，才认为起长度是1
         HashSet<Integer> setHead = new HashSet<>();
         HashSet<Integer> setTail = new HashSet<>();
         int max = 0;

@@ -6,12 +6,12 @@ package org.study.coding.class12;
  */
 public class MainTest01 {
 
-    public boolean checkInclusion(String s1,String s2){
+    public boolean checkInclusion(String s1, String s2) {
         if (s1 == null || s2 == null || s1.length() == 0 || s2.length() < s1.length()) {
             return false;
         }
 
-        return containExactly3(s2,s1) != -1;
+        return containExactly3(s2, s1) != -1;
     }
 
     public int containExactly3(String s1, String s2) {
