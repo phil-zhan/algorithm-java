@@ -1,7 +1,5 @@
 package org.study.coding.class12;
 
-import org.study.coding.class05.Hash;
-
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -31,11 +29,17 @@ import java.util.HashSet;
 public class Code03_LongestConsecutive {
 
     public static void main(String[] args) {
-        System.out.println(new Code03_LongestConsecutive().longestConsecutive2(new int[]{-6, -5, -9, -7, -6, -7, -8}));
+        System.out.println(new Code03_LongestConsecutive().longestConsecutive1(new int[]{-6, 8, -5, 7, -9, -1, -7, -6, -9, -7, 5, 7, -1, -8, -8, -2, 0}));
+        System.out.println(new Code03_LongestConsecutive().longestConsecutive2(new int[]{-6, 8, -5, 7, -9, -1, -7, -6, -9, -7, 5, 7, -1, -8, -8, -2, 0}));
+        System.out.println(new Code03_LongestConsecutive().longestConsecutive2(new int[]{100, 4, 200, 1, 3, 2}));
+        System.out.println(new Code03_LongestConsecutive().longestConsecutive2(new int[]{0, 3, 7, 2, 5, 8, 4, 6, 0, 1}));
+        System.out.println(new Code03_LongestConsecutive().longestConsecutive2(new int[]{0, 3, 7, 2, 5, 8, 4, 6, 0, 1}));
+
+
         System.out.println(new Code03_LongestConsecutive().longestConsecutive2(new int[]{1, 2, 3, 4, 5, 6, 7, 8}));
     }
 
-    public int longestConsecutive2(int[] nums) {
+    public int longestConsecutive1(int[] nums) {
 
         // key : 对应一个数字
         // value：当前数字为头（尾）的链表长度
@@ -55,6 +59,68 @@ public class Code03_LongestConsecutive {
             if (!tailMap.containsKey(num) && !setTail.contains(num)) {
                 tailMap.put(num, 1);
                 setTail.add(num);
+            }
+            max = Math.max(max, 1);
+
+            if (tailMap.containsKey(num - 1) && headMap.containsKey(num + 1)) {
+                // 当前数可以插在中间
+                int curLen = headMap.get(num + 1) + tailMap.get(num - 1) + 1;
+                tailMap.put(num + headMap.get(num + 1), curLen);
+                headMap.put(num - tailMap.get(num - 1), curLen);
+
+                max = Math.max(max, curLen);
+
+                headMap.remove(num + 1);
+                tailMap.remove(num - 1);
+                headMap.remove(num);
+                tailMap.remove(num);
+            }
+
+            if (tailMap.containsKey(num - 1)) {
+                // 当前数可以插在尾上
+
+                tailMap.put(num, tailMap.get(num - 1) + 1);
+                headMap.put(num - tailMap.get(num - 1), tailMap.get(num - 1) + 1);
+                tailMap.remove(num - 1);
+                max = Math.max(max, tailMap.get(num));
+
+                headMap.remove(num);
+            }
+
+            if (headMap.containsKey(num + 1)) {
+                // 当前数可以插在头上
+
+                headMap.put(num, headMap.get(num + 1) + 1);
+                tailMap.put(num + headMap.get(num + 1), headMap.get(num + 1) + 1);
+                headMap.remove(num + 1);
+                max = Math.max(max, headMap.get(num));
+
+                tailMap.remove(num);
+            }
+
+        }
+
+
+        return max;
+    }
+
+
+    public int longestConsecutive2(int[] nums) {
+
+        HashSet<Integer> hashSet = new HashSet<>();
+        for (Integer num : nums) {
+            hashSet.add(num);
+        }
+        HashMap<Integer, Integer> headMap = new HashMap<>();
+        HashMap<Integer, Integer> tailMap = new HashMap<>();
+        int max = 0;
+
+        for (int num : hashSet) {
+            if (!headMap.containsKey(num)) {
+                headMap.put(num, 1);
+            }
+            if (!tailMap.containsKey(num)) {
+                tailMap.put(num, 1);
             }
             max = Math.max(max, 1);
 
