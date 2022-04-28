@@ -41,6 +41,8 @@ public class MainTest04 {
         // 2) ei+1 是 '*'【】
         while (si != str.length && (exp[ei] == str[si] || exp[ei] == '.')) {
             // ei 和 ei+1 搞定 0 1 2 3 ...  【这些字符必须是一样的】
+            // 当前位置能搞定，可以选择搞定 0 1 2 3 4 ... 个
+
             if (process1(str, si, exp, ei + 2)) {
                 return true;
             }
@@ -48,8 +50,8 @@ public class MainTest04 {
             si++;
         }
 
-        // 没有字符串了，或者ei位置搞不定
-        // ei 和 ei+1 只能搞定 0 个。
+        // 没有字符串了。si没有字符，后面的ei需要自己消化掉
+        // 或者ei位置搞不定.ei 和 ei+1 只能搞定 0 个。
         return process1(str, si, exp, ei + 2);
     }
 
