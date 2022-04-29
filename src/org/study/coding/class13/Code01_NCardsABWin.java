@@ -26,6 +26,8 @@ public class Code01_NCardsABWin {
 			return 0.0;
 		}
 		double w = 0.0;
+
+		// 可能的抽到结果
 		for (int i = 1; i <= 10; i++) {
 			w += p1(cur + i);
 		}
