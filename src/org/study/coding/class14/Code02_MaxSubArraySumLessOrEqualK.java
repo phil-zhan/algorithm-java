@@ -11,7 +11,7 @@ public class Code02_MaxSubArraySumLessOrEqualK {
 	 */
 	public static int getMaxLessOrEqualK(int[] arr, int K) {
 		// 记录i之前的，前缀和，按照有序表组织
-		TreeSet<Integer> set = new TreeSet<Integer>();
+		TreeSet<Integer> set = new TreeSet<>();
 		// 一个数也没有的时候，就已经有一个前缀和是0了
 		set.add(0);
 		int max = Integer.MIN_VALUE;
