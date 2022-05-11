@@ -114,6 +114,9 @@ public class Code05_BestTimeToBuyAndSellStockWithCooldown {
 
 
         for (int i = 2; i < N; i++) {
+            // i 位置可买可不买。
+            // i 位置可卖可不买
+
             buy[i] = Math.max(buy[i - 1], sell[i - 2] - prices[i]);
 
             sell[i] = Math.max(sell[i - 1], buy[i - 1] + prices[i]);
