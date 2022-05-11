@@ -1,7 +1,7 @@
 package org.study.coding.class13;
 
 /**
- * 本题测试链接 : https://leetcode.com/problems/bricks-falling-when-hit/
+ * 本题测试链接 : <a href="https://leetcode.com/problems/bricks-falling-when-hit/">https://leetcode.com/problems/bricks-falling-when-hit/</a>
  * 有一个 m x n 的二元网格，其中 1 表示砖块，0 表示空白。砖块 稳定（不会掉落）的前提是：
  * 一块砖直接连接到网格的顶部，或者至少有一块相邻（4个方向之一）砖块稳定不会掉落时
  * 给你一个数组 hits ，这是需要依次消除砖块的位置。每当消除hits[i] = (rowi, coli) 位置上的砖块时，对应位置的砖块（若存在）会消失

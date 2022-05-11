@@ -2,7 +2,7 @@ package org.study.coding.class13;
 
 
 /**
- * // 本题测试链接 : https://leetcode.com/problems/scramble-string/
+ * // 本题测试链接 : <a href="https://leetcode.com/problems/scramble-string/">https://leetcode.com/problems/scramble-string/</a>
  * 玄变串
  * 判断两个字符串是否互为玄变串
  * 旋变字符串
