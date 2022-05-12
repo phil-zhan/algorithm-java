@@ -6,11 +6,11 @@ import java.util.Arrays;
 /**
  * @author phil
  */
-public class Code01 {
+public class Code01_Logarithm {
 
     public static void main(String[] args) {
 
-        InsertSort mySort = new InsertSort();
+        Code02_InsertSort mySort = new Code02_InsertSort();
 
         // 测试次数
         int testTimes = 5000000;

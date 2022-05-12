@@ -4,7 +4,7 @@ package org.study.system.class02;
  * @author phil
  * @date 2021/12/7 16:59
  */
-public class Code01 {
+public class Code01_Swap {
 
     public static void main(String[] args) {
         int a = 3;
