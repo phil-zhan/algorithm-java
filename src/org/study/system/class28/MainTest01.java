@@ -113,9 +113,51 @@ public class MainTest01 {
         return res;
     }
 
+
+    public static int manacher3(String s1) {
+        if (s1 == null || s1.length() == 0) {
+            return 0;
+        }
+        char[] str = getManacherString3(s1);
+        int max = Integer.MIN_VALUE;
+        int[] pArr = new int[str.length];
+        int C = -1;
+        int R = -1;
+
+        for (int i = 0; i < str.length; i++) {
+            pArr[i] = R > i ? Math.min(R - i, pArr[(C << 1) - i]) : 1;
+            while (i + pArr[i] < str.length && i - pArr[i] >= 0) {
+                if (str[i + pArr[i]] == str[i - pArr[i]]) {
+                    pArr[i]++;
+                } else {
+                    break;
+                }
+            }
+            if (i + pArr[i] > R) {
+                R = i + pArr[i];
+                C = i;
+            }
+            max = Math.max(max, pArr[i]);
+        }
+        return max - 1;
+    }
+
+
+    public static char[] getManacherString3(String s1) {
+        char[] str = s1.toCharArray();
+        char[] res = new char[(str.length << 1) + 1];
+
+        for (int i = 0; i < res.length; i++) {
+            res[i] = ((i & 1) == 0) ? '#' : str[i >> 1];
+        }
+
+        return res;
+    }
+
     public static void main(String[] args) {
         System.out.println(manacher("babadada"));
         System.out.println(manacher2("babadada"));
+        System.out.println(manacher3("babadada"));
 
     }
 }
