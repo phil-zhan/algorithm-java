@@ -25,7 +25,7 @@ package org.study.system.class02;
  * @author phil
  * @date 2021/3/12 10:39
  */
-public class Code03 {
+public class Code03_OnlyKTimesNum {
 
     /**
      * 异或运算

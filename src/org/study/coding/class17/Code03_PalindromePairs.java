@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 测试链接 : https://leetcode.com/problems/palindrome-pairs/
  * <p>
- * 给定一个String数组。数组中的任意两个字符串随机组合，返回能组成问的对
+ * 给定一个String数组。数组中的任意两个字符串随机组合，返回能组成回文对的组合
  * 如：
  * 输入["aab","aa"]
  * 输出 [[0,1]]
@@ -32,6 +32,10 @@ import java.util.List;
  * @since 2022-03-19 10:16:10
  */
 public class Code03_PalindromePairs {
+
+    public static void main(String[] args) {
+        System.out.println(palindromePairs(new String[]{"abcd", "dcba", "lls", "s", "sssll"}));
+    }
 
     public static List<List<Integer>> palindromePairs(String[] words) {
         HashMap<String, Integer> wordset = new HashMap<>();
@@ -67,6 +71,7 @@ public class Code03_PalindromePairs {
 
             // 位置等于回文半径减1
             // 也就是当前
+            // #a#b#b#a#
             if (i - rs[i] == -1) {
                 rest = words.get(reverse.substring(0, mid - i));
                 if (rest != null && rest != index) {

@@ -13,7 +13,7 @@ package org.study.coding.class17;
  * 解法：
  * 考虑样本对应模型
  * dp[i][j]：S[0...i] 随意组成子序列。有多少个子序列的字面值等于T[0...j]这个前缀串
- * 当前来到 i 位置
+ * 当前来到 i 位置【考虑i位置的字符要不要】
  * 1）：完全不考虑i位置的字符 dp[i][j] = dp[i-1][j]
  * 2）：一定要包含i位置的字符。此时必须S[i]=T[j]。满足这个前提的条件下 dp[i][j] = dp[i-1][j-1]
  * 两种可能性相加，就是当前的dp[i][j]
@@ -34,6 +34,10 @@ public class Code04_DistinctSubseq {
         return process(s, t, s.length, t.length);
     }
 
+    /**
+     * 这里的 i、j都是右边界的开区间【也可以理解为包含字符的个数】
+     * @since 2022-05-18 14:52:32
+     */
     public static int process(char[] s, char[] t, int i, int j) {
         if (j == 0) {
             return 1;

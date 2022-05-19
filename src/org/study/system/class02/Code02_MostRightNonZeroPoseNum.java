@@ -14,7 +14,7 @@ package org.study.system.class02;
  * @author phil
  * @date 2021/3/12 10:39
  */
-public class Code02 {
+public class Code02_MostRightNonZeroPoseNum {
 
     /**
      * 异或运算

@@ -11,18 +11,18 @@ public class Code01_PrintBinary {
 
 	public static void main(String[] args) {
 		// 32位
-//		int num = 4;
+		int num = 4;
+
+		print(num);
 //
-//		print(num);
-//		
-//		
+//
 //		int test = 1123123;
 //		print(test);
 //		print(test<<1);
 //		print(test<<2);
 //		print(test<<8);
-//		
-//		
+//
+//
 //		int a = Integer.MAX_VALUE;
 //		System.out.println(a);
 
@@ -53,10 +53,10 @@ public class Code01_PrintBinary {
 //		print(a);
 //		print(a >> 1);
 //		print(a >>> 1);
-//		
+//
 //		int c = Integer.MIN_VALUE;
 //		int d = -c ;
-//		
+//
 //		print(c);
 //		print(d);
 
