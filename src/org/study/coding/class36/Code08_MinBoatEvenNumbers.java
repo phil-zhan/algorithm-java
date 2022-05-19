@@ -10,6 +10,9 @@ import java.util.Arrays;
 // 2, 一艘船如果坐2人，两个人的体重相加需要是偶数，且总体重不能超过船的载重
 // 3, 一艘船最多坐2人
 // 返回如果想所有人同时坐船，船的最小数量
+
+// 利用过河问题的原型。
+// 如果两个人的体重加起来必须是偶数的话。【将数组拆分成奇数数组和偶数数组。然后分别去利用原型求解。最后将求解的结果求和就是答案】
 public class Code08_MinBoatEvenNumbers {
 
 	public static int minBoat(int[] arr, int limit) {

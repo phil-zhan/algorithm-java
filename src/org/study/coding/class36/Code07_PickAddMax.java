@@ -10,6 +10,8 @@ import java.util.Arrays;
 // 当拿走5时，获得5分，数组变成[9]
 // 当拿走9时，获得9分，数组变成[]
 // 这是最大的拿取方式，返回总分17
+
+// 思路就是从大到小拿
 public class Code07_PickAddMax {
 
 	// 最优解

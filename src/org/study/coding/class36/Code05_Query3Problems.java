@@ -2,11 +2,11 @@ package org.study.coding.class36;
 
 // 来自美团
 // 给定一个数组arr，长度为N，做出一个结构，可以高效的做如下的查询
-// 1) int querySum(L,R) : 查询arr[L...R]上的累加和
+// 1) int querySum(L,R) : 查询arr[L...R]上的累加和  【前缀和】
 // 2) int queryAim(L,R) : 查询arr[L...R]上的目标值，目标值定义如下：
 //        假设arr[L...R]上的值为[a,b,c,d]，a+b+c+d = s
-//        目标值为 : (s-a)^2 + (s-b)^2 + (s-c)^2 + (s-d)^2
-// 3) int queryMax(L,R) : 查询arr[L...R]上的最大值
+//        目标值为 : (s-a)^2 + (s-b)^2 + (s-c)^2 + (s-d)^2	======= 化简一下。就是求 【 (k-2)* x^2  +  a^2+ b^2 ... 】【k是元素个数。x是范围上的累加和 a、b... 是范围上的具体元素】 【平方的前缀和】
+// 3) int queryMax(L,R) : 查询arr[L...R]上的最大值	【线段树】
 // 要求：
 // 1) 初始化该结构的时间复杂度不能超过O(N*logN)
 // 2) 三个查询的时间复杂度不能超过O(logN)
