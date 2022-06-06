@@ -8,6 +8,12 @@ import java.util.Arrays;
  */
 public class MainTest05 {
 
+    public static void main(String[] args) {
+        System.out.println(new MainTest05().numRescueBoats1(new int[]{3, 5, 3, 4}, 5));
+        System.out.println(new MainTest05().numRescueBoats2(new int[]{3, 5, 3, 4}, 5));
+        System.out.println(new MainTest05().numRescueBoats3(new int[]{3, 5, 3, 4}, 5));
+    }
+
     public int numRescueBoats1(int[] people, int limit) {
         if (people == null || people.length == 0) {
             return 0;
@@ -68,14 +74,14 @@ public class MainTest05 {
 
     }
 
-    public int numRescueBoats2(int[] people,int limit){
-        if (people == null || people.length == 0){
+    public int numRescueBoats2(int[] people, int limit) {
+        if (people == null || people.length == 0) {
             return 0;
         }
 
         int len = people.length;
         Arrays.sort(people);
-        if (people[len - 1] > limit){
+        if (people[len - 1] > limit) {
             return -1;
         }
 
@@ -83,12 +89,12 @@ public class MainTest05 {
         int right = len - 1;
         int sum = 0;
         int ans = 0;
-        while (left <= right){
-            sum = left == right? people[left]:people[left]+people[right];
+        while (left <= right) {
+            sum = left == right ? people[left] : people[left] + people[right];
 
-            if (sum>limit){
+            if (sum > limit) {
                 right--;
-            }else{
+            } else {
                 right--;
                 left++;
             }
@@ -97,5 +103,53 @@ public class MainTest05 {
         }
 
         return ans;
+    }
+
+
+    public int numRescueBoats3(int[] weight, int limit) {
+        if (weight == null || weight.length == 0) {
+            return 0;
+        }
+        Arrays.sort(weight);
+        int size = weight.length;
+
+        // 搞不定
+        if (weight[size - 1] > limit) {
+            return -1;
+        }
+
+        int less = -1;
+        for (int i = size - 1; i >= 0; i--) {
+            if (weight[i] <= (limit >> 1)) {
+                less = i;
+                break;
+            }
+        }
+
+        int left = less;
+        int right = less + 1;
+
+        int noUsed = 0;
+        while (left >= 0) {
+            int solved = 0;
+            while (right < size && weight[left] + weight[right] <= (limit >> 1)) {
+                right++;
+                solved++;
+            }
+
+            if (solved == 0) {
+                noUsed++;
+                left--;
+            } else {
+
+                left = Math.max(-1, left - solved);
+            }
+
+        }
+
+        int used = less + 1 - noUsed;
+        int leftRest = (noUsed + 1) >> 1;
+        int rightRest = size - (less + 1) - used;
+        return used + leftRest + rightRest;
     }
 }

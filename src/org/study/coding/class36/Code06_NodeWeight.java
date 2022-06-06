@@ -3,7 +3,7 @@ package org.study.coding.class36;
 import java.util.HashMap;
 
 // 来自美团
-// 有一棵树，给定头节点h，和结构数组m，下标0弃而不用
+// 有一棵树，给定头节点h，和结构数组m，下标0弃而不用【下标表示父节点。下标对应的一维数组表示该父节点的子节点结合】
 // 比如h = 1, m = [ [] , [2,3], [4], [5,6], [], [], []]
 // 表示1的孩子是2、3; 2的孩子是4; 3的孩子是5、6; 4、5和6是叶节点，都不再有孩子
 // 每一个节点都有颜色，记录在c数组里，比如c[i] = 4, 表示节点i的颜色为4
@@ -12,7 +12,7 @@ import java.util.HashMap;
 // 现在规定非叶节点i的权值计算方式：
 // 根据i的所有直接孩子来计算，假设i的所有直接孩子，颜色只有a,b,k
 // w[i] = Max {
-//              (颜色为a的所有孩子个数 + 颜色为a的孩子权值之和), 
+//              (颜色为a的所有孩子个数 + 颜色为a的孩子权值之和),
 //              (颜色为b的所有孩子个数 + 颜色为b的孩子权值之和),
 //              (颜色为k的所有孩子个数 + 颜色k的孩子权值之和)
 //            }
@@ -29,9 +29,14 @@ public class Code06_NodeWeight {
 			return;
 		}
 		// 有若干个直接孩子
+		// key 是节点
+		// value 是该节点对应子节点的颜色种数
 		// 1 7个
 		// 3 10个
 		HashMap<Integer, Integer> colors = new HashMap<Integer, Integer>();
+
+		// key 是颜色
+		// value 是该颜色的权重之和
 		// 1 20
 		// 3 45
 		HashMap<Integer, Integer> weihts = new HashMap<Integer, Integer>();
