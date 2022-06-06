@@ -30,21 +30,38 @@ public class Code11_BusRoutes {
 				map.get(routes[i][j]).add(i);
 			}
 		}
+
+		// 宽度优先遍历。一次搞一层
 		ArrayList<Integer> queue = new ArrayList<>();
+
+		// 表示该线路是否加入过队列
 		boolean[] set = new boolean[n];
+
+		// 先将源头的的线路加入队列。
 		for (int route : map.get(source)) {
 			queue.add(route);
 			set[route] = true;
 		}
+
+
 		int len = 1;
 		while (!queue.isEmpty()) {
+
+			// 准备下一层
 			ArrayList<Integer> nextLevel = new ArrayList<>();
+
+			// 遍历当前层【也就是遍历当前队列中存在的线路。将因为当前队列中的线路而引入进来的新线路加入到下一层中去】
 			for (int route : queue) {
+
+				// 当前层的公交站。【遍历当前线路的公交站。看看能不能引入新的线路】
 				int[] bus = routes[route];
 				for (int station : bus) {
+
 					if (station == target) {
 						return len;
 					}
+
+					// 准备下一层。也就是准备新加入进来的路线
 					for (int nextRoute : map.get(station)) {
 						if (!set[nextRoute]) {
 							nextLevel.add(nextRoute);
@@ -53,6 +70,7 @@ public class Code11_BusRoutes {
 					}
 				}
 			}
+
 			queue = nextLevel;
 			len++;
 		}

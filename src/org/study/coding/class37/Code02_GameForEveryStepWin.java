@@ -9,19 +9,33 @@ package org.study.coding.class37;
 // 5) 每一轮总分大的人获胜
 // 假设小明知道每一轮对手做出选择之后的总分，返回小明在每一轮都赢的情况下，最终的最大分是多少
 // 如果小明怎么都无法保证每一轮都赢，返回-1
+
+
+/**
+ * 题意：也就是 54 张扑克少两张
+ * 最后三轮  小明肯定选择爆发
+ *
+ *
+ * @since 2022-06-02 07:54:47
+ */
 public class Code02_GameForEveryStepWin {
 
-//	public static max(int[] cands, int[] sroces) {
-//		return f(cands, sroces, 0, 0, 0, 0);
-//	}
+	// 主函数
+	//	public static max(int[] cands, int[] sroces) {
+	//		return f(cands, sroces, 0, 0, 0, 0);
+	//	}
+
 
 	// 当前来到index位置，牌是cands[index]值
 	// 对手第i轮的得分，sroces[i]
+
+
 	// int hold : i之前保留的牌的总分
 	// int cur : 当前轮得到的，之前的牌只算上使用的效果，加成是多少
 	// int next : 之前的牌，对index的下一轮，使用效果加成是多少
 	// 返回值：如果i...最后，不能全赢，返回-1
 	// 如果i...最后，能全赢，返回最后一轮的最大值
+
 	
 	// index -> 26种
 	// hold -> (1+2+3+..13) -> 91 -> 91 * 4 - (11 + 12) -> 341
@@ -29,13 +43,15 @@ public class Code02_GameForEveryStepWin {
 	// next -> 13
 	// 26 * 341 * 26 * 13 -> ? * (10 ^ 5)
 	public static int f(int[] cands, int[] sroces, int index, int hold, int cur, int next) {
-		if (index == 25) { // 最后一张
+		if (index == 25) { // 最后一张【必然爆发】
 			int all = hold + cur + cands[index] * 3;
 			if (all <= sroces[index]) {
 				return -1;
 			}
 			return all;
 		}
+		// next 被 cur截胡之后，next 就归0
+
 		// 不仅最后一张
 		// 保留
 		int all1 = hold + cur + cands[index];
