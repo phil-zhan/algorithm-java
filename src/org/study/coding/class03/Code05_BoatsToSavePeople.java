@@ -66,7 +66,7 @@ public class Code05_BoatsToSavePeople {
         }
         int all = lessR + 1;
 
-        // 已经配对得我数量
+        // 已经配对过的数量【多少对】
         int used = all - noUsed;
 
         // 右边未匹配的数量
