@@ -1,5 +1,12 @@
 package org.study.coding.class38;
 
+/**
+ * https://leetcode.cn/problems/palindromic-substrings/
+ *
+ * manacher算法
+ *
+ * @since 2022-06-02 22:59:03
+ */
 public class Problem_0647_PalindromicSubstrings {
 
 	public static int countSubstrings(String s) {
@@ -22,9 +29,9 @@ public class Problem_0647_PalindromicSubstrings {
 		for (int i = 0; i < str.length; i++) {
 			pArr[i] = R > i ? Math.min(pArr[2 * C - i], R - i) : 1;
 			while (i + pArr[i] < str.length && i - pArr[i] > -1) {
-				if (str[i + pArr[i]] == str[i - pArr[i]])
+				if (str[i + pArr[i]] == str[i - pArr[i]]) {
 					pArr[i]++;
-				else {
+				} else {
 					break;
 				}
 			}

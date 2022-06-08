@@ -29,6 +29,27 @@ public class Code01_FillGapMinStep {
 		return Math.min(process(a + i, b, i + 1, n), process(a, b + i, i + 1, n));
 	}
 
+	/**
+	 * 假设经过 i 轮之后。两个数能平衡
+	 * ① a-b = s【是一个定值】
+	 * 要想让给完之后两个数相等。那么就相当于把小的数给大的。打的数给小的 【a+b = b+a】
+	 *
+	 * 也就是总共需要给出 a+b 这么多的量，才能让两个数平衡。
+	 * 那么
+	 * ② a+b = 1+2+3+...+i = i*(i+1)/2; 【等差数列】【假设这个和是 sum】
+	 *
+	 * ②+① 得到 2a = s+sum ====> a = (sum+s)/2
+	 * ②-① 得到 2b = sum-s ====> b = (sum-s)/2
+	 *
+	 * 又 a和b 都是正整数
+	 * 故 只需要保证 s-sum 是一个大于等于0的偶数即可。
+	 *
+	 *
+	 * O(N)
+	 *
+	 *
+	 * @since 2022-06-04 10:33:56
+	 */
 	public static int minStep1(int a, int b) {
 		if (a == b) {
 			return 0;
@@ -42,23 +63,46 @@ public class Code01_FillGapMinStep {
 		return num - 1;
 	}
 
+	/**
+	 * 对时间复杂度 O(N) 的优化。可以做到时间复杂度 O(logN)
+	 * 要让 sum-s 是一个大于等于0的偶数 。
+	 * 首先要让 sum >= s
+	 * 让 i 等于1、 2、4、6、8...这样翻倍去追。
+	 *
+	 * 假设在 i=32 的时候都还没有追上 。但是在 i >= 64 的时候超过了s
+	 * 那么最小的 i 肯定在 [32,64] 这个区间上。再在这个区间上去二分
+	 *
+	 *
+	 * 假设最终找到 i = 47 的时候，sum刚刚大于等于s
+	 * 那么就从 i = 47开始去试。 当 sum-s 是偶数时就停止。
+	 * 【可以证明，这个试的过程不超过三次】 两个数相减的奇偶性。
+	 *
+	 *
+	 * @since 2022-06-04 10:47:07
+	 */
 	public static int minStep2(int a, int b) {
 		if (a == b) {
 			return 0;
 		}
 		int s = Math.abs(a - b);
-		// 找到sum >= s, 最小的i
+		// 找到sum >= s, 最小的i 【也就是找到 i*(i+1) >= 2s 的那个i】
 		int begin = best(s << 1);
-		for (; (begin * (begin + 1) / 2 - s) % 2 != 0;) {
+		while ((begin * (begin + 1) / 2 - s) % 2 != 0) {
 			begin++;
 		}
 		return begin;
 	}
 
+	/**
+	 * 找到sum >= s, 最小的i
+	 * 先倍增，再二分
+	 *
+	 * @since 2022-06-04 10:55:58
+	 */
 	public static int best(int s2) {
 		int L = 0;
 		int R = 1;
-		for (; R * (R + 1) < s2;) {
+		while (R * (R + 1) < s2) {
 			L = R;
 			R *= 2;
 		}

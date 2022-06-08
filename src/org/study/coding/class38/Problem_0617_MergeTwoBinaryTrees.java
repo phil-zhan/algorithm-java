@@ -1,5 +1,13 @@
 package org.study.coding.class38;
 
+/**
+ * https://leetcode.cn/problems/merge-two-binary-trees/
+ *
+ *
+ * 递归套路
+ *
+ * @since 2022-06-02 20:53:06
+ */
 public class Problem_0617_MergeTwoBinaryTrees {
 
 	public static class TreeNode {
