@@ -57,6 +57,12 @@ public class Code01_FillGapMinStep {
 		int s = Math.abs(a - b);
 		int num = 1;
 		int sum = 0;
+		// a+b=sum
+		// a-b = s
+		// b = (sum-s)/2
+		// a = (sum+s)/2
+
+
 		for (; !(sum >= s && (sum - s) % 2 == 0); num++) {
 			sum += num;
 		}

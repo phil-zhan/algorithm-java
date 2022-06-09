@@ -36,14 +36,16 @@ public class Code02_GameForEveryStepWin {
 	// 返回值：如果i...最后，不能全赢，返回-1
 	// 如果i...最后，能全赢，返回最后一轮的最大值
 
-	
+
 	// index -> 26种
 	// hold -> (1+2+3+..13) -> 91 -> 91 * 4 - (11 + 12) -> 341
 	// cur -> 26
 	// next -> 13
 	// 26 * 341 * 26 * 13 -> ? * (10 ^ 5)
 	public static int f(int[] cands, int[] sroces, int index, int hold, int cur, int next) {
-		if (index == 25) { // 最后一张【必然爆发】
+
+		// 最后一张【必然爆发】
+		if (index == 25) {
 			int all = hold + cur + cands[index] * 3;
 			if (all <= sroces[index]) {
 				return -1;
@@ -91,9 +93,9 @@ public class Code02_GameForEveryStepWin {
 			return Math.max(p1, p2);
 		}
 	}
-	
-	
-	
+
+
+
 	// cur -> 牌点数    ->  * 3 之后是效果
 	// next -> 牌点数   ->  * 3之后是效果
 	public static int p(int[] cands, int[] sroces, int index, int hold, int cur, int next) {
@@ -119,9 +121,9 @@ public class Code02_GameForEveryStepWin {
 		}
 		return Math.max(p1, p2);
 	}
-	
+
 	// 改出动态规划，记忆化搜索！
-	
-	
+
+
 
 }

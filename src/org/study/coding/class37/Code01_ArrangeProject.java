@@ -17,49 +17,49 @@ import java.util.Queue;
 // 数据范围：对于所有数据，满足1<=T<=3, 1<=N, Mj<=100000, 0<=Di<=1000, 0<=sum(Ki)<=N*2。
 public class Code01_ArrangeProject {
 
-	/**
-	 * 按照拓扑的方向去遍历
-	 * 选择没有入度的节点去遍历
-	 *
-	 * 遍历到一个节点的时候，去更新其直接后续节点【也就是依赖该节点的哪些节点】
-	 * 默认所有节点的前缀时间都是0 【前缀时间：完成节点的前缀依赖的时间】
-	 *
-	 * 当前节点的时间为 x 天。
-	 * 就将其直接后续节点的 前缀时间与 （当前节点的时间前缀时间+当前节点的完成时间） 做比较 。抓一个大的，作为其直接后续节点的前缀时间
-	 * 也就是去更新其直接后续节点的 前缀时间
-	 *
-	 *
-	 * @since 2022-06-02 07:35:18
-	 */
-	public static int dayCount(ArrayList<Integer>[] nums, int[] days, int[] headCount) {
-		Queue<Integer> head = countHead(headCount);
-		int maxDay = 0;
-		int[] countDay = new int[days.length];
-		while (!head.isEmpty()) {
-			int cur = head.poll();
-			countDay[cur] += days[cur];
-			for (int j = 0; j < nums[cur].size(); j++) {
-				headCount[nums[cur].get(j)]--;
-				if (headCount[nums[cur].get(j)] == 0) {
-					head.offer(nums[cur].get(j));
-				}
-				countDay[nums[cur].get(j)] = Math.max(countDay[nums[cur].get(j)], countDay[cur]);
-			}
-		}
-		for (int i = 0; i < countDay.length; i++) {
-			maxDay = Math.max(maxDay, countDay[i]);
-		}
-		return maxDay;
-	}
+    /**
+     * 按照拓扑的方向去遍历
+     * 选择没有入度的节点去遍历
+     * <p>
+     * 遍历到一个节点的时候，去更新其直接后续节点【也就是依赖该节点的哪些节点】
+     * 默认所有节点的前缀时间都是0 【前缀时间：完成节点的前缀依赖的时间】
+     * <p>
+     * 当前节点的时间为 x 天。
+     * 就将其直接后续节点的 前缀时间与 （当前节点的时间前缀时间+当前节点的完成时间） 做比较 。抓一个大的，作为其直接后续节点的前缀时间
+     * 也就是去更新其直接后续节点的 前缀时间
+     *
+     * @since 2022-06-02 07:35:18
+     */
+    public static int dayCount(ArrayList<Integer>[] nums, int[] days, int[] headCount) {
+        Queue<Integer> head = countHead(headCount);
+        int maxDay = 0;
+        int[] countDay = new int[days.length];
+        while (!head.isEmpty()) {
+            int cur = head.poll();
+            countDay[cur] += days[cur];
+            for (int j = 0; j < nums[cur].size(); j++) {
+                headCount[nums[cur].get(j)]--;
+                if (headCount[nums[cur].get(j)] == 0) {
+                    head.offer(nums[cur].get(j));
+                }
+                countDay[nums[cur].get(j)] = Math.max(countDay[nums[cur].get(j)], countDay[cur]);
+            }
+        }
+        for (int i = 0; i < countDay.length; i++) {
+            maxDay = Math.max(maxDay, countDay[i]);
+        }
+        return maxDay;
+    }
 
-	private static Queue<Integer> countHead(int[] headCount) {
-		Queue<Integer> queue = new LinkedList<>();
-		for (int i = 0; i < headCount.length; i++) {
-			if (headCount[i] == 0) {
-				queue.offer(i); // 没有前驱任务
-			}
-		}
-		return queue;
-	}
+    private static Queue<Integer> countHead(int[] headCount) {
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < headCount.length; i++) {
+            if (headCount[i] == 0) {
+				// 没有前驱任务
+                queue.offer(i);
+            }
+        }
+        return queue;
+    }
 
 }

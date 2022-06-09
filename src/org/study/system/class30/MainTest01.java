@@ -54,6 +54,113 @@ public class MainTest01 {
         }
     }
 
+    public static void morris2(Node head){
+        if (head == null){
+            return;
+        }
+        Node cur = head;
+        Node mostRight = null;
+        while (cur != null){
+            mostRight = cur.left;
+            if (mostRight != null){
+                while (mostRight.right != null && mostRight.right != cur){
+                    mostRight = mostRight.right;
+                }
+                if (mostRight.right == null){
+                    mostRight.right = cur;
+                    cur = cur.left;
+                }else {
+                    mostRight.right = null;
+                    cur = cur.right;
+                }
+            }else{
+                cur = cur.right;
+            }
+        }
+    }
+
+
+    public static void morris2Pre(Node head){
+        if (head == null){
+            return;
+        }
+        Node cur = head;
+        Node mostRight = null;
+        while (cur != null){
+            mostRight = cur.left;
+            if (mostRight != null){
+                while (mostRight.right != null && mostRight.right != cur){
+                    mostRight = mostRight.right;
+                }
+                if (mostRight.right == null){
+                    System.out.println(cur.value);
+                    mostRight.right = cur;
+                    cur = cur.left;
+                }else {
+                    mostRight.right = null;
+                    cur = cur.right;
+                }
+            }else{
+                System.out.println(cur.value);
+                cur = cur.right;
+            }
+        }
+    }
+
+    public static void morris2Min(Node head){
+        if (head == null){
+            return;
+        }
+        Node cur = head;
+        Node mostRight = null;
+        while (cur != null){
+            mostRight = cur.left;
+            if (mostRight != null){
+                while (mostRight.right != null && mostRight.right != cur){
+                    mostRight = mostRight.right;
+                }
+                if (mostRight.right == null){
+                    mostRight.right = cur;
+                    cur = cur.left;
+                }else {
+                    System.out.println(cur.value);
+                    mostRight.right = null;
+                    cur = cur.right;
+                }
+            }else{
+                System.out.println(cur.value);
+                cur = cur.right;
+            }
+        }
+    }
+
+    public static void morris2Pos(Node head){
+        if (head == null){
+            return;
+        }
+        Node cur = head;
+        Node mostRight = null;
+        while (cur != null){
+            mostRight = cur.left;
+            if (mostRight != null){
+                while (mostRight.right != null && mostRight.right != cur){
+                    mostRight = mostRight.right;
+                }
+                if (mostRight.right == null){
+                    mostRight.right = cur;
+                    cur = cur.left;
+                }else {
+                    mostRight.right = null;
+                    printEdge(cur.left);
+                    cur = cur.right;
+                }
+            }else{
+                cur = cur.right;
+            }
+        }
+        printEdge(head);
+    }
+
     public static void morrisPre(Node head) {
         if (null == head) {
             return;
@@ -141,7 +248,7 @@ public class MainTest01 {
                 } else {
                     mostRight.right = null;
 
-                    // 第二次到大
+                    // 第二次到达
                     // 逆序打印其左树的右边界
                     printEdge(cur.left);
                 }
@@ -188,8 +295,26 @@ public class MainTest01 {
         head.right.right = new Node(7);
         process(head);
 
-        // morrisPre(head);
-        // morrisIn(head);
+        System.out.println("================morrisPre=================");
+        morrisPre(head);
+        System.out.println("================morrisPre=================");
+        System.out.println("================morrisIn=================");
+        morrisIn(head);
+        System.out.println("================morrisIn=================");
+        System.out.println("================morrisPos=================");
         morrisPos(head);
+        System.out.println("================morrisPos=================");
+
+        System.out.println("================morris2Pre=================");
+        morris2Pre(head);
+        System.out.println("================morris2Pre=================");
+
+        System.out.println("================morris2Min=================");
+        morris2Min(head);
+        System.out.println("================morris2Min=================");
+
+        System.out.println("================morris2Pos=================");
+        morris2Pos(head);
+        System.out.println("================morris2Pos=================");
     }
 }

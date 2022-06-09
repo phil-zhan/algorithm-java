@@ -55,6 +55,7 @@ public class Problem_0437_PathSumIII {
 
 		// 注意处理前缀和。在遍历完当前节点之后，记得将因为当前节点而产生的前缀和清除出去
 
+		// 考虑以每个节点为最下面一个节点，能推出多少条来。最后累加就是总条数
 		return process(root, sum, 0, preSumMap);
 	}
 
