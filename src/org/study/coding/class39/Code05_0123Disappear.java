@@ -13,10 +13,15 @@ package org.study.coding.class39;
 public class Code05_0123Disappear {
 
 	// str[L...R]上，都能消掉的子序列，最长是多少？
+	// 范围上尝试模型
 	public static int f(char[] str, int L, int R) {
+
+		// 一个字符 或者不是有效范围。
 		if (L >= R) {
 			return 0;
 		}
+
+		// 只有两个字符
 		if (L == R - 1) {
 			return (str[L] == '0' && str[R] == '1') || (str[L] == '2' && str[R] == '3') ? 2 : 0;
 		}
@@ -24,9 +29,16 @@ public class Code05_0123Disappear {
 		// str[L...R]上，都能消掉的子序列，最长是多少？
 		// 可能性1，能消掉的子序列完全不考虑str[L]，最长是多少？
 		int p1 = f(str, L + 1, R);
+
+
+
+		// 要考虑str[L] .而该位置又是1或3，那么就没有可能性2
 		if (str[L] == '1' || str[L] == '3') {
 			return p1;
 		}
+
+		// 可能性2，能消掉的子序列要考虑str[L]，最长是多少？
+
 		// str[L] =='0' 或者 '2'
 		// '0' 去找 '1'
 		// '2' 去找 '3'
@@ -36,6 +48,8 @@ public class Code05_0123Disappear {
 		for (int i = L + 1; i <= R; i++) {
 			// L(0) ..... i(1) i+1....R
 			if (str[i] == find) {
+
+				// 拆成几段来看
 				p2 = Math.max(p2, f(str, L + 1, i - 1) + 2 + f(str, i + 1, R));
 			}
 		}

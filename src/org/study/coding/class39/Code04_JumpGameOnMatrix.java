@@ -25,7 +25,7 @@ public class Code04_JumpGameOnMatrix {
 		if (row == map.length - 1 && col == map[0].length - 1) {
 			return 0;
 		}
-		// 如果没到右下角
+		// 如果没到右下角。【没有步数可以用】
 		if (map[row][col] == 0) {
 			return Integer.MAX_VALUE;
 		}
@@ -49,6 +49,11 @@ public class Code04_JumpGameOnMatrix {
 	// 优化方法, 利用线段树做枚举优化
 	// 因为线段树，下标从1开始
 	// 所以，该方法中所有的下标，请都从1开始，防止乱！
+
+
+	// 每行每列都去做一个线段树【支持最小值的】
+	// 答案从下往上，从右往左开始
+	// 来到 i,j 的时候 当前位置能跳的范围，往右或往下。在对应的范围上取一个最小值。再加1步。就是当前位置的答案
 	public static int jump2(int[][] arr) {
 		int n = arr.length;
 		int m = arr[0].length;
@@ -58,6 +63,10 @@ public class Code04_JumpGameOnMatrix {
 				map[b][d] = arr[a][c];
 			}
 		}
+
+		// 0 行 0列直接舍弃
+		// 每行一个线段树
+		// 每列也是一个线段树
 		SegmentTree[] rowTrees = new SegmentTree[n + 1];
 		for (int i = 1; i <= n; i++) {
 			rowTrees[i] = new SegmentTree(m);
@@ -66,8 +75,12 @@ public class Code04_JumpGameOnMatrix {
 		for (int i = 1; i <= m; i++) {
 			colTrees[i] = new SegmentTree(n);
 		}
+
+		// 最右下角
 		rowTrees[n].update(m, m, 0, 1, m, 1);
 		colTrees[m].update(n, n, 0, 1, n, 1);
+
+		// 左后一行
 		for (int col = m - 1; col >= 1; col--) {
 			if (map[n][col] != 0) {
 				int left = col + 1;
@@ -79,6 +92,8 @@ public class Code04_JumpGameOnMatrix {
 				}
 			}
 		}
+
+		// 最后一列
 		for (int row = n - 1; row >= 1; row--) {
 			if (map[row][m] != 0) {
 				int up = row + 1;
@@ -90,18 +105,28 @@ public class Code04_JumpGameOnMatrix {
 				}
 			}
 		}
+
+		// 普遍位置
 		for (int row = n - 1; row >= 1; row--) {
 			for (int col = m - 1; col >= 1; col--) {
+
+				// 当前位置不等于0.才能跳【也就是有长度可以跳】
 				if (map[row][col] != 0) {
 					// (row,col) 往右是什么范围呢？[left,right]
 					int left = col + 1;
 					int right = Math.min(col + map[row][col], m);
 					int next1 = rowTrees[row].query(left, right, 1, m, 1);
+
+
 					// (row,col) 往下是什么范围呢？[up,down]
 					int up = row + 1;
 					int down = Math.min(row + map[row][col], n);
 					int next2 = colTrees[col].query(up, down, 1, n, 1);
+
+					// 往右或往下取一个最小值
 					int next = Math.min(next1, next2);
+
+					// 更新线段树
 					if (next != Integer.MAX_VALUE) {
 						rowTrees[row].update(col, col, next + 1, 1, m, 1);
 						colTrees[col].update(row, row, next + 1, 1, n, 1);
@@ -109,6 +134,8 @@ public class Code04_JumpGameOnMatrix {
 				}
 			}
 		}
+
+		// return
 		return rowTrees[1].query(1, 1, 1, m, 1);
 	}
 
