@@ -21,10 +21,18 @@ import java.util.HashMap;
 public class Code01_SplitTo01 {
 
 //	public static long nums3(long n, long l, long r) {
+//		// 收集长度信息
 //		HashMap<Long, Long> lenMap = new HashMap<>();
 //		len(n, lenMap);
+//		// 收集1的个数信息
 //		HashMap<Long, Long> onesMap = new HashMap<>();
 //		ones(n, onesMap);
+//		// 利用线段树树的思路解决
+		// 线段树的每一个节点表示一个数字num【从上到下以此二分】。跟节点就是给定的 num。第二层两个节点都是 num/2 .第三层节点都是 num/4 .
+		// 每个数字裂变后的长度，就是该节点数字的负责范围
+		// 利用线段树懒更新机制。构建线段树。也就是每个节点，负责的范围是其裂变后的长度，裂变后的1 的个数，也能求出来
+		// 直接查询。有了懒更新，查询会更快
+//
 //	}
 
 	// n = 100
@@ -34,6 +42,9 @@ public class Code01_SplitTo01 {
 	// ..
 	// n = 1 ,.最终裂变的数组，长度多少？
 	// 请都填写到lenMap中去！
+	// allMap : 长度表
+	// key: 数字n
+	// value:裂变后的长度
 	public static long len(long n, HashMap<Long, Long> lenMap) {
 		if (n == 1 || n == 0) {
 			lenMap.put(n, 1L);
@@ -47,6 +58,8 @@ public class Code01_SplitTo01 {
 		}
 	}
 
+
+	// 方式1：
 	// n = 100
 	// n = 100, 最终裂变的数组中，一共有几个1
 	// n = 50, 最终裂变的数组，一共有几个1
@@ -54,6 +67,9 @@ public class Code01_SplitTo01 {
 	// ..
 	// n = 1 ,.最终裂变的数组，一共有几个1
 	// 请都填写到onesMap中去！
+	// key: 数字n
+	// value:裂变后1的数量
+	// O(logN)
 	public static long ones(long num, HashMap<Long, Long> onesMap) {
 		if (num == 1 || num == 0) {
 			onesMap.put(num, num);
@@ -67,8 +83,13 @@ public class Code01_SplitTo01 {
 		return all;
 	}
 
-	//
 
+
+
+
+	// 方式2：
+	// n 最终的裂变数组里，从l 到 r范围，有多少个1
+	// O(N)
 	public static long nums1(long n, long l, long r) {
 		if (n == 1 || n == 0) {
 			return n == 1 ? 1 : 0;
@@ -89,6 +110,10 @@ public class Code01_SplitTo01 {
 		}
 	}
 
+
+
+	// 就是前面的方式1. 将代码都整合到一起了
+	// 面试的时候，想不到这个方法也没关系
 	public static long nums2(long n, long l, long r) {
 		HashMap<Long, Long> allMap = new HashMap<>();
 		return dp(n, l, r, allMap);
@@ -101,6 +126,8 @@ public class Code01_SplitTo01 {
 		long half = size(n / 2);
 		long all = (half << 1) + 1;
 		long mid = n & 1;
+
+		// 懒更新
 		if (l == 1 && r >= all) {
 			if (allMap.containsKey(n)) {
 				return allMap.get(n);

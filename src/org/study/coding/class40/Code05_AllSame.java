@@ -26,6 +26,7 @@ public class Code05_AllSame {
 
 	public static int allSame1(int[] arr) {
 		int ans = Integer.MAX_VALUE;
+		// 考虑每个位置作为起始位置去刷动态规划
 		for (int i = 0; i < arr.length; i++) {
 			ans = Math.min(ans, process1(arr, i - 1, arr[i], i + 1));
 		}
@@ -39,20 +40,33 @@ public class Code05_AllSame {
 	// left 可能性 : N
 	// right 可能性 : N
 	// midV 可能性 : arr中的最大值！
+	// 可以考虑做值的离散化. 将最小的数用0代替，将第二小的数用1代替，第三小的数用4代替。。。。
+	// 这样midV的最大值就和数组长度 n 一样了
 	public static int process1(int[] arr, int left, int midV, int right) {
+
+		// 检查左边能拉多少进来
 		for (; left >= 0 && arr[left] == midV;) {
 			left--;
 		}
+
+		// 检查右边能拉多少进来
 		for (; right < arr.length && arr[right] == midV;) {
 			right++;
 		}
+
+		// [0...left] mid [right...n-1]
+		// 左右都没有需要刷的数字了，也就是数组里面的数字都是一样的了
 		if (left == -1 && right == arr.length) {
 			return 0;
 		}
+
+		// 情况1：考虑将左边的数拉进来。也就是将当前 midV 的数变的和left位置的一样
 		int p1 = Integer.MAX_VALUE;
 		if (left >= 0) {
 			p1 = process1(arr, left - 1, arr[left], right) + 1;
 		}
+
+		// 情况2：考虑将右边的数拉进来。也就是将当前 midV 的数变的和right位置的一样
 		int p2 = Integer.MAX_VALUE;
 		if (right < arr.length) {
 			p2 = process1(arr, left, arr[right], right + 1) + 1;
@@ -60,8 +74,11 @@ public class Code05_AllSame {
 		return Math.min(p1, p2);
 	}
 
+	// 在第一种方式的基础上，优化了递归部分
 	public static int allSame2(int[] arr) {
 		int ans = Integer.MAX_VALUE;
+
+		// 考虑每个位置作为起始位置去刷动态规划
 		for (int i = 0; i < arr.length; i++) {
 			ans = Math.min(ans, process2(arr, i - 1, true, i + 1));
 		}
@@ -99,7 +116,18 @@ public class Code05_AllSame {
 		}
 		return Math.min(p1, p2);
 	}
+
+
+
+	// ======================================================
+	// ======================================================
+	// ======================================================
 	// 如上的递归，请改动态规划，具体参考体系学习班，动态规划大章节！
+	// ======================================================
+	// ======================================================
+	// ======================================================
+
+
 
 	// 为了测试
 	public static int[] randomArray(int maxSize, int maxNum) {

@@ -12,23 +12,37 @@ import java.util.HashMap;
 // 其中1, 1, 1, 1是AAAA、2, 3, 3, 2是ABBA、4, 3, 4, 3是ABAB、7, 7, 9, 9是AABB
 // 可以看到，整个子序列一直以韵律的方式连接起来，所以这个子序列是有效的
 // 给定一个数组arr, 返回最长的有效子序列长度
-// 题目限制 : arr长度 <= 4000, arr中的值<= 10^9
-// 离散化之后，arr长度 <= 4000,  arr中的值<= 4000
+
+
+/**
+ * 先离散化
+ * 题目限制 : arr长度 <= 4000, arr中的值<= 10^9
+ * 离散化之后，arr长度 <= 4000,  arr中的值<= 4000
+ *
+ *
+ *
+ * @since 2022-06-14 23:44:36
+ */
 public class Code02_PoemProblem {
 
 	// arr[i.....]符合规则连接的最长子序列长度
+	// process2() 来实现
 //	public static int zuo(int[] arr, int i) {
 //		if (i + 4 > arr.length) {
 //			return 0;
 //		}
 //		// 最终的，符合规则连接的最长子序列长度，就是不要i位置的字符
 //		int p0 = zuo(arr, i + 1);
+
 //		// p1使用for循环搞定的！
 //		int p1 = 找到arr[i..s]是最短的，且能搞出AABB来的(4个) + zuo(arr, s + 1);
+
 //		// p2使用for循环搞定的！
 //		int p2 = 找到arr[i..t]是最短的，且能搞出ABAB来的(4个) + zuo(arr, t + 1);
+
 //		// p3使用for循环搞定的！
 //		int p3 = 找到arr[i..k]是最短的，且能搞出ABBA来的(4个) + zuo(arr, k + 1);
+
 //		// p4没用
 //		int p4 = 找到arr[i..f]是最短的，且能搞出AAAA来的(4个) + zuo(arr, f + 1);
 //		return p0~p4的最大值
@@ -38,6 +52,7 @@ public class Code02_PoemProblem {
 	// ABAB
 	// ABBA
 	// AAAA
+	// 纯暴力。生成所有的子序列，一条一条去验证
 	public static int maxLen1(int[] arr) {
 		if (arr == null || arr.length < 4) {
 			return 0;
@@ -76,12 +91,14 @@ public class Code02_PoemProblem {
 				|| (p[i] == p[i + 3] && p[i + 1] == p[i + 2] && p[i] != p[i + 1]);
 	}
 
+	//
 	// 0 : [3,6,9]
 	// 1 : [2,7,13]
 	// 2 : [23]
 	// [
 	// [3,6,9]
 	// ]
+	// 最优解
 	public static int maxLen2(int[] arr) {
 		if (arr == null || arr.length < 4) {
 			return 0;
@@ -116,15 +133,27 @@ public class Code02_PoemProblem {
 	// ABAB
 	// ABBA
 	// AAAA
+	// imap[i] = [...]： i这个下标，在哪些位置出现
+	// imap[1] = [1,3,5,7] 1这个数字在 1、3、5、7 位置出现
+	// varr原始数组离散化后的数组
+	// O(N^2)
+	// 为什么要离散化。imap这个数组，不想用hash表。hash表常数时间慢。离散化后2维数组就能搞定。
+	// 离散化的时候，原数组不能有重复值
 	public static int process2(int[] varr, int[][] imap, int i) {
+		// 不够四个了
 		if (i + 4 > varr.length) {
 			return 0;
 		}
+		// 最终的，符合规则连接的最长子序列长度，就是不要i位置的字符
 		int p0 = process2(varr, imap, i + 1);
+
+		// 找到arr[i..s]是最短的，且能搞出AABB来的(4个) + zuo(arr, s + 1);
 		// AABB
 		int p1 = 0;
 		int rightClosedP1A2 = rightClosed(imap, varr[i], i);
 		if (rightClosedP1A2 != -1) {
+
+			// 从第二个A位置往后都能做B
 			for (int next = rightClosedP1A2 + 1; next < varr.length; next++) {
 				if (varr[i] != varr[next]) {
 					int rightClosedP1B2 = rightClosed(imap, varr[next], next);
@@ -135,8 +164,10 @@ public class Code02_PoemProblem {
 			}
 		}
 
+		// 找到arr[i..t]是最短的，且能搞出ABAB来的(4个) + zuo(arr, t + 1);
 		// ABAB
 		int p2 = 0;
+		// i位置的数做第一个A。i 后面的任何一个数都能做第一个B。之后的两个就是找最近的了
 		for (int p2B1 = i + 1; p2B1 < varr.length; p2B1++) {
 			if (varr[i] != varr[p2B1]) {
 				int rightClosedP2A2 = rightClosed(imap, varr[i], p2B1);
@@ -149,8 +180,11 @@ public class Code02_PoemProblem {
 			}
 		}
 
+		// 找到arr[i..k]是最短的，且能搞出ABBA来的(4个) + zuo(arr, k + 1);
 		// ABBA
 		int p3 = 0;
+
+		// i位置的数做第一个A。i 后面的任何一个数都能做第一个B。之后的两个就是找最近的了
 		for (int p3B1 = i + 1; p3B1 < varr.length; p3B1++) {
 			if (varr[i] != varr[p3B1]) {
 				int rightClosedP3B2 = rightClosed(imap, varr[p3B1], p3B1);
@@ -162,8 +196,11 @@ public class Code02_PoemProblem {
 				}
 			}
 		}
+		// 找到arr[i..f]是最短的，且能搞出AAAA来的(4个) + zuo(arr, f + 1);
 		// AAAA
 		int p4 = 0;
+
+		// i位置的数做第一个A。i 后面的三个就是找最近的了
 		int rightClosedP4A2 = rightClosed(imap, varr[i], i);
 		int rightClosedP4A3 = rightClosedP4A2 == -1 ? -1 : rightClosed(imap, varr[i], rightClosedP4A2);
 		int rightClosedP4A4 = rightClosedP4A3 == -1 ? -1 : rightClosed(imap, varr[i], rightClosedP4A3);
@@ -173,6 +210,7 @@ public class Code02_PoemProblem {
 		return Math.max(p0, Math.max(Math.max(p1, p2), Math.max(p3, p4)));
 	}
 
+	// 返回 imap[i] = [...] 这个一位数字中，找到大于等于 v 的最左位置的数【imap是有序的，用二分】
 	public static int rightClosed(int[][] imap, int v, int i) {
 		int left = 0;
 		int right = imap[v].length - 1;
@@ -189,6 +227,7 @@ public class Code02_PoemProblem {
 		return ans == -1 ? -1 : imap[v][ans];
 	}
 
+	// 方法2改动态规划
 	public static int maxLen3(int[] arr) {
 		if (arr == null || arr.length < 4) {
 			return 0;

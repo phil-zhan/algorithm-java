@@ -8,6 +8,21 @@ import java.util.TreeSet;
 // 给定一个arr，里面的数字都是0~9
 // 你可以随意使用arr中的数字，哪怕打乱顺序也行
 // 请拼出一个能被3整除的，最大的数字，用str形式返回
+
+/**
+ * 1）：数组由大到小排序【同样的组合，大的数字放在前面】
+ *
+ * 	// 递归函数的含义 :
+ * 	// 在arr[index...一直到最后]上做选择，arr[0...index-1]就当不存在
+ * 	// 每个位置的字符可以要、也可以不要，但是！选出来的数字拼完之后的结果，在%3之后，余数一定要是mod！
+ * 	// 返回在上面设定的情况下，最大的数是多少？
+ * 	// 如果存在这样的数，返回字符串的形式
+ * 	// 如果不存在这样的数，返回特殊字符串，比如"$"，代表不可能
+ * 	// 这个递归函数可以很轻易的改出动态规划
+ * 	process2()
+ *
+ * @since 2022-06-14 07:50:53
+ */
 public class Code02_Mod3Max {
 
 	public static String max1(int[] arr) {
@@ -66,23 +81,34 @@ public class Code02_Mod3Max {
 	// 如果存在这样的数，返回字符串的形式
 	// 如果不存在这样的数，返回特殊字符串，比如"$"，代表不可能
 	// 这个递归函数可以很轻易的改出动态规划
+	// 【大致思路就是：考虑index的数要不要】
+	// 改成动态规划 O(N)
 	public static String process2(int[] arr, int index, int mod) {
 		if (index == arr.length) {
 			return mod == 0 ? "" : "$";
 		}
+
+		// 要当前的数
 		String p1 = "$";
 		int nextMod = nextMod(mod, arr[index] % 3);
 		String next = process2(arr, index + 1, nextMod);
 		if (!next.equals("$")) {
 			p1 = String.valueOf(arr[index]) + next;
 		}
+
+
+		// 不要当前的数
 		String p2 = process2(arr, index + 1, mod);
 		if (p1.equals("$") && p2.equals("$")) {
 			return "$";
 		}
+
+		// 做不到
 		if (!p1.equals("$") && !p2.equals("$")) {
 			return smaller(p1, p2) ? p2 : p1;
 		}
+
+		// 因为是从大到小排序的。当前的数能要尽量要
 		return p1.equals("$") ? p2 : p1;
 	}
 

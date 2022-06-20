@@ -12,6 +12,7 @@ public class Code04_LetASorted {
 	// 当前推进到了i位置，对于A和B都是i位置
 	// A[i]前一个数字，lastA
 	// 能否通过题意中的操作，A[i] B[i] 让A整体有序
+	// 从左往右
 	public static boolean process(int[] A, int[] B, int i, int lastA) {
 		if (i == A.length) {
 			return true;
@@ -27,6 +28,7 @@ public class Code04_LetASorted {
 		return false;
 	}
 
+	// 降序
 	public static boolean process2(int[] A, int[] B, int i, int lastA) {
 		if (i == A.length) {
 			return true;
@@ -44,6 +46,7 @@ public class Code04_LetASorted {
 
 	// A B 操作 : A[i] 与 B[i] 交换！
 	// 目的 : 让A和B都有序，能不能做到
+	// 再加个参数 lastB【B数组的i-1位置的数】
 //	public static boolean process3(int[] A, int[] B, int i, int lastA, int lastB) {
 //
 //	}
